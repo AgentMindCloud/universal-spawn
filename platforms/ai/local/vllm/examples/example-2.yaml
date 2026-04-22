@@ -1,0 +1,40 @@
+version: "1.0"
+name: vLLM 8xA100 Cluster
+type: api-service
+summary: Full vLLM deployment on an 8xA100 cluster with tensor parallel 8 and FP8 KV cache.
+description: >
+  Production deployment of Llama-3.3-405B-Instruct-FP8 across 8xA100.
+  Tensor parallel 8, FP8 weights, FP8 KV cache, prefix caching on,
+  128k context length.
+
+platforms:
+  vllm:
+    model: meta-llama/Llama-3.3-405B-Instruct-FP8
+    host: 0.0.0.0
+    port: 8000
+    tensor_parallel_size: 8
+    pipeline_parallel_size: 1
+    quantization: fp8
+    kv_cache_dtype: fp8
+    max_model_len: 131072
+    enable_prefix_caching: true
+    dtype: bf16
+
+safety:
+  min_permissions: [network:inbound, network:outbound:huggingface.co, gpu:compute, fs:read, fs:write]
+  safe_for_auto_spawn: false
+  data_residency: [us]
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: HuggingFace token with access to the gated model.
+    secret: true
+
+deployment:
+  targets: [vllm]
+
+metadata:
+  license: proprietary
+  author: { name: Infra Team, handle: infra-team, org: Acme }
+  source: { type: git, url: https://github.com/acme-infra/vllm-405b }
+  id: com.acme-infra.vllm-405b

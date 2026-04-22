@@ -1,0 +1,30 @@
+version: "1.0"
+name: Cursor Parchment Rules
+type: extension
+summary: Minimal Cursor rule file that teaches Cursor the Residual Frequencies design system.
+description: One .mdc rule file at repository scope.
+
+platforms:
+  cursor:
+    kind: rules
+    rules:
+      files: [.cursor/rules/parchment.mdc]
+      scope: repository
+    features: [agent, chat]
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [cursor]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/cursor-parchment-rules }
+  id: com.plate-studio.cursor-parchment-rules

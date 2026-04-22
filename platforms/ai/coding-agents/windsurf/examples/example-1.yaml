@@ -1,0 +1,27 @@
+version: "1.0"
+name: Windsurf Parchment Rules
+type: extension
+summary: Minimal Windsurf rules that teach Cascade the Residual Frequencies design system.
+description: One .windsurfrules file at repository scope.
+
+platforms:
+  windsurf:
+    kind: rules
+    rules: { file: .windsurfrules, scope: repository }
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [windsurf]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/windsurf-parchment }
+  id: com.plate-studio.windsurf-parchment

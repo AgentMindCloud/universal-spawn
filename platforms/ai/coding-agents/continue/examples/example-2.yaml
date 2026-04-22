@@ -1,0 +1,47 @@
+version: "1.0"
+name: Continue Full Stack
+type: extension
+summary: Full Continue assistant with chat, edit, apply, autocomplete, embed, rerank roles.
+description: >
+  Full six-role assistant. Chat/edit on Claude Opus. Apply on Sonnet.
+  Autocomplete + embed on Ollama. Rerank on Cohere. Works in both
+  VS Code and JetBrains.
+
+platforms:
+  continue:
+    models:
+      - { role: chat, provider: anthropic, model: claude-opus-4-7 }
+      - { role: edit, provider: anthropic, model: claude-opus-4-7 }
+      - { role: apply, provider: anthropic, model: claude-sonnet-4-6 }
+      - { role: autocomplete, provider: ollama, model: qwen2.5-coder:7b }
+      - { role: embed, provider: ollama, model: nomic-embed-text }
+      - { role: rerank, provider: cohere, model: rerank-english-v3.0 }
+    system_prompt_file: .continue/system.md
+    context_providers: [codebase, diff, currentFile, docs, git, terminal]
+    rules_files: [.continuerules]
+    ide: [vscode, jetbrains]
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:api.cohere.com
+    - network:outbound:localhost
+  cost_limit_usd_daily: 15
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+  - name: COHERE_API_KEY
+    description: Cohere key.
+    secret: true
+
+deployment:
+  targets: [continue]
+
+metadata:
+  license: Apache-2.0
+  author: { name: DevEx Co., handle: devex-co, org: DevEx }
+  source: { type: git, url: https://github.com/devex-co/continue-full-stack }
+  id: com.devex-co.continue-full-stack

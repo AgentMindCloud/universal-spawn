@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/coding-agents/continue/continue-spawn.schema.json",
+  "title": "universal-spawn with Continue platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "continue"
+          ],
+          "properties": {
+            "continue": {
+              "$ref": "#/definitions/continue"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "continue": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "provider",
+              "model"
+            ],
+            "properties": {
+              "role": {
+                "type": "string",
+                "enum": [
+                  "chat",
+                  "edit",
+                  "apply",
+                  "autocomplete",
+                  "embed",
+                  "rerank"
+                ]
+              },
+              "provider": {
+                "type": "string",
+                "enum": [
+                  "openai",
+                  "anthropic",
+                  "google",
+                  "mistral",
+                  "cohere",
+                  "together",
+                  "fireworks",
+                  "ollama",
+                  "lmstudio",
+                  "groq"
+                ]
+              },
+              "model": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "system_prompt_file": {
+          "type": "string"
+        },
+        "context_providers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "codebase",
+              "docs",
+              "diff",
+              "currentFile",
+              "open",
+              "git",
+              "terminal",
+              "url",
+              "tree"
+            ]
+          }
+        },
+        "rules_files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ide": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "vscode",
+              "jetbrains"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

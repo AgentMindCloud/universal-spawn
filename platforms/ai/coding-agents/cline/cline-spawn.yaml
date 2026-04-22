@@ -1,0 +1,30 @@
+version: "1.0"
+name: Cline Template
+type: extension
+description: Template for a Cline-targeted universal-spawn manifest.
+
+platforms:
+  cline:
+    provider: anthropic
+    model: claude-sonnet-4-6
+    mode: act
+    auto_approve_tools: [read_file, list_files, search_files]
+    max_requests_per_task: 50
+
+safety:
+  min_permissions: [fs:read, network:outbound:api.anthropic.com]
+  cost_limit_usd_daily: 10
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [cline]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/cline-template }

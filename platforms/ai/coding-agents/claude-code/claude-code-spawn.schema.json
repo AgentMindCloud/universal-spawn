@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/coding-agents/claude-code/claude-code-spawn.schema.json",
+  "title": "universal-spawn with Claude Code platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "claude-code"
+          ],
+          "properties": {
+            "claude-code": {
+              "$ref": "#/definitions/claude-code"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "claude-code": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "slash-command",
+            "subagent",
+            "hook",
+            "mcp-server",
+            "skill"
+          ]
+        },
+        "file": {
+          "type": "string",
+          "description": "Relative path inside `.claude/`."
+        },
+        "model": {
+          "type": "string",
+          "enum": [
+            "claude-opus-4-7",
+            "claude-sonnet-4-6",
+            "claude-haiku-4-5-20251001"
+          ]
+        },
+        "hook": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "event": {
+              "type": "string",
+              "enum": [
+                "SessionStart",
+                "SessionEnd",
+                "UserPromptSubmit",
+                "PreToolUse",
+                "PostToolUse",
+                "Stop",
+                "SubagentStop",
+                "Notification",
+                "PreCompact"
+              ]
+            },
+            "matcher": {
+              "type": "string"
+            },
+            "command": {
+              "type": "string"
+            }
+          }
+        },
+        "subagent": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "tools": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "mcp_ref": {
+          "type": "string"
+        },
+        "min_claude_code_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/local/llamacpp/llamacpp-spawn.schema.json",
+  "title": "universal-spawn with llama.cpp platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "llamacpp"
+          ],
+          "properties": {
+            "llamacpp": {
+              "$ref": "#/definitions/llamacpp"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "llamacpp": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "model_path": {
+          "type": "string"
+        },
+        "model_url": {
+          "type": "string",
+          "pattern": "^https?://"
+        },
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "ngl": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 999
+        },
+        "threads": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "context_length": {
+          "type": "integer",
+          "minimum": 512,
+          "maximum": 1048576
+        },
+        "mlock": {
+          "type": "boolean",
+          "default": false
+        },
+        "batch_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8192
+        }
+      }
+    }
+  }
+}

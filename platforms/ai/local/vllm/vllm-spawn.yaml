@@ -1,0 +1,33 @@
+version: "1.0"
+name: vLLM Template
+type: api-service
+description: Template for a vLLM-targeted universal-spawn manifest.
+
+platforms:
+  vllm:
+    model: meta-llama/Llama-3.3-70B-Instruct
+    host: 0.0.0.0
+    port: 8000
+    tensor_parallel_size: 4
+    quantization: fp8
+    kv_cache_dtype: fp8
+    max_model_len: 32768
+    enable_prefix_caching: true
+    dtype: bf16
+
+safety:
+  min_permissions: [network:inbound, gpu:compute]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: HuggingFace token for gated model access.
+    secret: true
+
+deployment:
+  targets: [vllm]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/vllm-template }

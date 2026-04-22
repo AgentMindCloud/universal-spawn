@@ -1,0 +1,28 @@
+version: "1.0"
+name: Ollama Template
+type: ai-agent
+description: Template for an Ollama-targeted universal-spawn manifest.
+
+platforms:
+  ollama:
+    model: llama3.3
+    server_url: http://localhost:11434
+    quantization: Q5_K_M
+    keep_alive: 5m
+    pre_pull: true
+    num_ctx: 8192
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:localhost]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [ollama]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/ollama-template }

@@ -1,0 +1,33 @@
+version: "1.0"
+name: PreToolUse Auditor
+type: extension
+summary: Full Claude Code PreToolUse hook that audits Bash commands against an allowlist.
+description: >
+  Hook runs before every Bash tool call. Matches on the Bash tool.
+  Command shells out to a Python auditor that checks the command
+  against an allowlist. Block on miss.
+
+platforms:
+  claude-code:
+    kind: hook
+    file: .claude/hooks/bash-auditor.py
+    hook:
+      event: PreToolUse
+      matcher: Bash
+      command: "python3 .claude/hooks/bash-auditor.py"
+    min_claude_code_version: "2.0"
+
+safety:
+  min_permissions: [fs:read, fs:exec:/usr/bin/python3]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [claude-code]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Security Team, handle: security-team, org: Acme }
+  source: { type: git, url: https://github.com/acme-security/claude-code-bash-auditor }
+  id: com.acme-security.claude-code-bash-auditor

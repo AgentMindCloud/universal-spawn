@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/coding-agents/windsurf/windsurf-spawn.schema.json",
+  "title": "universal-spawn with Windsurf platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "windsurf"
+          ],
+          "properties": {
+            "windsurf": {
+              "$ref": "#/definitions/windsurf"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "windsurf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "rules",
+            "mcp-server",
+            "extension",
+            "flow-template"
+          ]
+        },
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string",
+              "enum": [
+                "repository",
+                "workspace",
+                "user"
+              ]
+            }
+          }
+        },
+        "mcp_ref": {
+          "type": "string"
+        },
+        "flow": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "template_file": {
+              "type": "string"
+            },
+            "auto_activate": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "cascade": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "auto_memory": {
+              "type": "boolean",
+              "default": false
+            },
+            "agent_mode": {
+              "type": "string",
+              "enum": [
+                "write",
+                "chat",
+                "legacy"
+              ]
+            }
+          }
+        },
+        "publisher_id": {
+          "type": "string"
+        },
+        "min_windsurf_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+        }
+      }
+    }
+  }
+}

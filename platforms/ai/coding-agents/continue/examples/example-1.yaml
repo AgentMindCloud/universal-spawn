@@ -1,0 +1,29 @@
+version: "1.0"
+name: Continue Minimal
+type: extension
+summary: Minimal Continue assistant with one chat model.
+description: Single assistant. Anthropic Sonnet. VS Code only.
+
+platforms:
+  continue:
+    models:
+      - { role: chat, provider: anthropic, model: claude-sonnet-4-6 }
+    ide: [vscode]
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [continue]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Continue Co., handle: continue-co }
+  source: { type: git, url: https://github.com/continue-co/continue-minimal }
+  id: com.continue-co.continue-minimal

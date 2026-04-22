@@ -1,0 +1,32 @@
+version: "1.0"
+name: Windsurf Plate Sidecar
+type: extension
+summary: Creative Windsurf extension that side-panels the plate archive.
+description: >
+  Adds a side panel to Windsurf showing the Residual Frequencies plate
+  archive next to the editor. Pairs with the Plate Archive MCP.
+
+platforms:
+  windsurf:
+    kind: extension
+    mcp_ref: "../../anthropic-mcp/examples/example-3.yaml"
+    publisher_id: plate-studio.windsurf-plate-sidecar
+    min_windsurf_version: "1.8"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [windsurf, mcp]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/windsurf-plate-sidecar }
+  categories: [graphics, devtools]
+  id: com.plate-studio.windsurf-plate-sidecar

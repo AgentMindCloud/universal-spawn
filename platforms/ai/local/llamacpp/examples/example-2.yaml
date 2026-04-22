@@ -1,0 +1,33 @@
+version: "1.0"
+name: llama-server GPU Host
+type: ai-model
+summary: Full llama.cpp server on a GPU host with remote downloads, mlock, and big context.
+description: >
+  Downloads a 70B model on first spawn. Pins it in RAM. Offloads all
+  layers to GPU. Exposes a 32k context server on port 8080.
+
+platforms:
+  llamacpp:
+    model_url: https://huggingface.co/lmstudio-community/Llama-3.3-70B-Instruct-GGUF/resolve/main/Llama-3.3-70B-Instruct-Q5_K_M.gguf
+    host: 0.0.0.0
+    port: 8080
+    ngl: 99
+    threads: 24
+    context_length: 32768
+    mlock: true
+    batch_size: 1024
+
+safety:
+  min_permissions: [network:inbound, network:outbound:huggingface.co, fs:read, fs:write, gpu:compute]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [llamacpp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: GPU Host Co., handle: gpu-host-co }
+  source: { type: git, url: https://github.com/gpu-host-co/llama-server-gpu }
+  id: com.gpu-host-co.llama-server-gpu

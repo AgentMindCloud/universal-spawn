@@ -1,0 +1,35 @@
+version: "1.0"
+name: Ollama Custom Modelfile
+type: ai-skill
+summary: Full Ollama manifest that builds a custom parchment-tuned Modelfile.
+description: >
+  Builds a custom Ollama model from a local Modelfile that sets the
+  system prompt to enforce Residual Frequencies voice. Keeps the
+  model resident indefinitely.
+
+platforms:
+  ollama:
+    model: parchment-llama:latest
+    modelfile: Modelfile
+    quantization: Q5_K_M
+    keep_alive: "-1"
+    pre_pull: false
+    num_ctx: 16384
+    temperature: 0.7
+
+safety:
+  min_permissions: [network:outbound:localhost, fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [ollama]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/ollama-parchment }
+  id: com.plate-studio.ollama-parchment

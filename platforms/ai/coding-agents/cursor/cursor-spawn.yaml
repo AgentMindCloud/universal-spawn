@@ -1,0 +1,27 @@
+version: "1.0"
+name: Cursor Template
+type: extension
+description: Template for a Cursor-targeted universal-spawn manifest.
+
+platforms:
+  cursor:
+    kind: rules
+    rules:
+      files: [.cursor/rules/main.mdc]
+      scope: repository
+    features: [agent, composer]
+    min_cursor_version: "0.45"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [cursor]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/cursor-template }

@@ -1,0 +1,36 @@
+version: "1.0"
+name: Cursor Plate Critic
+type: extension
+summary: Creative Cursor extension that critiques SVG plates in-editor.
+description: >
+  A VS Code-compatible Cursor extension that adds a `Critique plate`
+  command. When the active file is an SVG plate, runs a Claude-based
+  critique against the Residual Frequencies rubric.
+
+platforms:
+  cursor:
+    kind: extension
+    publisher_id: plate-studio.cursor-plate-critic
+    features: [agent, chat]
+    min_cursor_version: "0.45"
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key supplied by the user at install.
+    secret: true
+
+deployment:
+  targets: [cursor]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/cursor-plate-critic }
+  categories: [ai, graphics, devtools]
+  id: com.plate-studio.cursor-plate-critic

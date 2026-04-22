@@ -1,0 +1,31 @@
+version: "1.0"
+name: Cline Read-only Reviewer
+type: extension
+summary: Minimal Cline profile — read-only review, plan mode only.
+description: Sonnet in plan mode. Only read/list/search tools pre-approved.
+
+platforms:
+  cline:
+    provider: anthropic
+    model: claude-sonnet-4-6
+    mode: plan
+    auto_approve_tools: [read_file, list_files, search_files]
+    max_requests_per_task: 20
+
+safety:
+  min_permissions: [fs:read, network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [cline]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Review Co., handle: review-co }
+  source: { type: git, url: https://github.com/review-co/cline-reviewer }
+  id: com.review-co.cline-reviewer

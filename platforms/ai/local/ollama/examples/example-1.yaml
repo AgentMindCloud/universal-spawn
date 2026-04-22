@@ -1,0 +1,28 @@
+version: "1.0"
+name: Ollama Local Chat
+type: ai-agent
+summary: Minimal Ollama chat on llama3.3 at default localhost URL.
+description: Single-model chat, Q5_K_M quant, 5-minute keep-alive.
+
+platforms:
+  ollama:
+    model: llama3.3
+    quantization: Q5_K_M
+    keep_alive: 5m
+    pre_pull: true
+    num_ctx: 8192
+
+safety:
+  min_permissions: [network:outbound:localhost]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [ollama]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Local Co., handle: local-co }
+  source: { type: git, url: https://github.com/local-co/ollama-chat }
+  id: com.local-co.ollama-chat

@@ -1,0 +1,29 @@
+version: "1.0"
+name: llama-server Local
+type: ai-model
+summary: Minimal llama.cpp server binding one GGUF file at localhost:8080.
+description: One model, CPU only, small context window.
+
+platforms:
+  llamacpp:
+    model_path: ./models/qwen2.5-7b-instruct-q5_k_m.gguf
+    host: 127.0.0.1
+    port: 8080
+    ngl: 0
+    threads: 8
+    context_length: 4096
+
+safety:
+  min_permissions: [network:inbound, fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [llamacpp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Local Co., handle: local-co }
+  source: { type: git, url: https://github.com/local-co/llama-server-local }
+  id: com.local-co.llama-server-local

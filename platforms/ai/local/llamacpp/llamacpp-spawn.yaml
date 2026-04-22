@@ -1,0 +1,29 @@
+version: "1.0"
+name: llama.cpp Template
+type: ai-model
+description: Template for a llama.cpp-server-targeted universal-spawn manifest.
+
+platforms:
+  llamacpp:
+    model_path: /srv/models/llama-3.3-70b-q5_k_m.gguf
+    host: 0.0.0.0
+    port: 8080
+    ngl: 99
+    threads: 16
+    context_length: 8192
+    mlock: true
+    batch_size: 512
+
+safety:
+  min_permissions: [network:inbound, fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [llamacpp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/llamacpp-template }

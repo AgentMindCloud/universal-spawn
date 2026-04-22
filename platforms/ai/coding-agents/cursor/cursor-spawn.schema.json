@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/coding-agents/cursor/cursor-spawn.schema.json",
+  "title": "universal-spawn with Cursor platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "cursor"
+          ],
+          "properties": {
+            "cursor": {
+              "$ref": "#/definitions/cursor"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "cursor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "rules",
+            "mcp-server",
+            "extension"
+          ]
+        },
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "scope": {
+              "type": "string",
+              "enum": [
+                "repository",
+                "workspace",
+                "user"
+              ]
+            }
+          }
+        },
+        "mcp_ref": {
+          "type": "string",
+          "description": "Relative path to an MCP server manifest (typically under platforms/ai/anthropic-mcp/)."
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "agent",
+              "composer",
+              "tab",
+              "chat"
+            ]
+          }
+        },
+        "min_cursor_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+        },
+        "publisher_id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

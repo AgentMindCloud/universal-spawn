@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/local/ollama/ollama-spawn.schema.json",
+  "title": "universal-spawn with Ollama platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "ollama"
+          ],
+          "properties": {
+            "ollama": {
+              "$ref": "#/definitions/ollama"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "ollama": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*(:[a-zA-Z0-9._-]+)?$"
+        },
+        "server_url": {
+          "type": "string",
+          "pattern": "^https?://[A-Za-z0-9._:/-]+$"
+        },
+        "modelfile": {
+          "type": "string"
+        },
+        "quantization": {
+          "type": "string",
+          "enum": [
+            "Q4_K_M",
+            "Q5_K_M",
+            "Q5_K_S",
+            "Q6_K",
+            "Q8_0",
+            "fp16",
+            "bf16"
+          ]
+        },
+        "keep_alive": {
+          "type": "string",
+          "pattern": "^-1$|^[0-9]+(s|m|h)$"
+        },
+        "pre_pull": {
+          "type": "boolean",
+          "default": true
+        },
+        "num_ctx": {
+          "type": "integer",
+          "minimum": 512,
+          "maximum": 1048576
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        }
+      }
+    }
+  }
+}

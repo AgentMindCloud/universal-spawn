@@ -1,0 +1,31 @@
+version: "1.0"
+name: LM Studio Preset Pack
+type: ai-skill
+summary: Full LM Studio preset pack for long-context technical writing.
+description: >
+  Ships three presets for the same Qwen-2.5 32B model tuned for
+  different writing modes (drafting, editing, summarisation). Manifest
+  points at one of the presets; the rest ship as siblings.
+
+platforms:
+  lm-studio:
+    model: lmstudio-community/Qwen2.5-32B-Instruct-GGUF
+    preset_file: presets/drafting.json
+    gpu_offload: 40
+    context_length: 32768
+    temperature: 0.4
+
+safety:
+  min_permissions: [network:outbound:localhost]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [lm-studio]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Writing Co., handle: writing-co }
+  source: { type: git, url: https://github.com/writing-co/lm-studio-preset-pack }
+  id: com.writing-co.lm-studio-preset-pack

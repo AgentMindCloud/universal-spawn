@@ -1,0 +1,32 @@
+version: "1.0"
+name: Ollama GPU Workstation
+type: ai-agent
+summary: Creative manifest that targets an Ollama daemon on a GPU workstation at a fixed LAN IP.
+description: >
+  Targets a shared Ollama server at `ollama.lan:11434`. Runs
+  qwen2.5-coder:32b at bf16 quantisation for coding tasks. Consumers
+  on the LAN share the same resident model.
+
+platforms:
+  ollama:
+    model: qwen2.5-coder:32b
+    server_url: http://ollama.lan:11434
+    quantization: bf16
+    keep_alive: 1h
+    pre_pull: true
+    num_ctx: 32768
+
+safety:
+  min_permissions: [network:outbound:ollama.lan]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [ollama]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Workstation Team, handle: workstation-team }
+  source: { type: git, url: https://github.com/workstation-team/ollama-shared }
+  id: com.workstation-team.ollama-shared

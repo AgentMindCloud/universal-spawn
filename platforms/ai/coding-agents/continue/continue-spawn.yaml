@@ -1,0 +1,31 @@
+version: "1.0"
+name: Continue Template
+type: extension
+description: Template for a Continue-targeted universal-spawn manifest.
+
+platforms:
+  continue:
+    models:
+      - { role: chat, provider: anthropic, model: claude-sonnet-4-6 }
+      - { role: autocomplete, provider: ollama, model: qwen2.5-coder:7b }
+      - { role: embed, provider: ollama, model: nomic-embed-text }
+    context_providers: [codebase, diff, currentFile, docs]
+    rules_files: [.continuerules]
+    ide: [vscode, jetbrains]
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com, network:outbound:localhost]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [continue]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/continue-template }

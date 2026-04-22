@@ -1,0 +1,30 @@
+version: "1.0"
+name: Aider Template
+type: cli-tool
+description: Template for an Aider-targeted universal-spawn manifest.
+
+platforms:
+  aider:
+    provider: anthropic
+    model: claude-sonnet-4-6
+    edit_format: diff
+    auto_commits: true
+    map_tokens: 2048
+    config_file: .aider.conf.yml
+
+safety:
+  min_permissions: [fs:read, fs:write, network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [aider]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/aider-template }

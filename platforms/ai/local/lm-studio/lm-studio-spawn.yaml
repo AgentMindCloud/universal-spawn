@@ -1,0 +1,27 @@
+version: "1.0"
+name: LM Studio Template
+type: ai-agent
+description: Template for an LM-Studio-targeted universal-spawn manifest.
+
+platforms:
+  lm-studio:
+    model: lmstudio-community/Llama-3.3-70B-Instruct-GGUF
+    server_url: http://localhost:1234/v1
+    preset_file: presets/default.json
+    gpu_offload: max
+    context_length: 8192
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:localhost]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [lm-studio]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/lm-studio-template }

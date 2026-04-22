@@ -1,0 +1,34 @@
+version: "1.0"
+name: llama-server Raspberry Pi
+type: ai-model
+summary: Creative llama.cpp manifest for a tiny on-device Pi 5 deployment.
+description: >
+  Runs a 3B model on a Raspberry Pi 5. CPU only, aggressively small
+  context to fit in 8GB. Serves locally; no outbound network.
+
+platforms:
+  llamacpp:
+    model_path: /home/pi/models/llama-3.2-3b-q4_k_m.gguf
+    host: 127.0.0.1
+    port: 8080
+    ngl: 0
+    threads: 4
+    context_length: 2048
+    mlock: false
+    batch_size: 128
+
+safety:
+  min_permissions: [network:inbound, fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [llamacpp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Pi Co., handle: pi-co }
+  source: { type: git, url: https://github.com/pi-co/llama-server-pi5 }
+  categories: [ai, hardware]
+  id: com.pi-co.llama-server-pi5

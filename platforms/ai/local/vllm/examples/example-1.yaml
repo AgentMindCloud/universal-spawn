@@ -1,0 +1,32 @@
+version: "1.0"
+name: vLLM Minimal
+type: api-service
+summary: Minimal vLLM server on one GPU with bf16 Qwen-7B.
+description: Single GPU, no tensor parallel, short context. Starter shape.
+
+platforms:
+  vllm:
+    model: Qwen/Qwen2.5-7B-Instruct
+    host: 0.0.0.0
+    port: 8000
+    tensor_parallel_size: 1
+    quantization: none
+    kv_cache_dtype: auto
+    max_model_len: 8192
+    enable_prefix_caching: true
+    dtype: bf16
+
+safety:
+  min_permissions: [network:inbound, gpu:compute]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [vllm]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Infra Co., handle: infra-co }
+  source: { type: git, url: https://github.com/infra-co/vllm-minimal }
+  id: com.infra-co.vllm-minimal

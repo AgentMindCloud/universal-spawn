@@ -1,0 +1,36 @@
+version: "1.0"
+name: Cline Plate Composer
+type: extension
+summary: Creative Cline profile that composes SVG plates in act mode.
+description: >
+  Mistral-large in act mode. Read + write pre-approved but `execute_command`
+  is NOT — plates are pure file edits. Keeps the agent honest.
+
+platforms:
+  cline:
+    provider: mistral
+    model: mistral-large-latest
+    mode: act
+    auto_approve_tools: [read_file, list_files, write_to_file, replace_in_file]
+    max_requests_per_task: 30
+
+safety:
+  min_permissions: [fs:read, fs:write, network:outbound:api.mistral.ai]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: Mistral key.
+    secret: true
+
+deployment:
+  targets: [cline]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/cline-plate-composer }
+  categories: [ai, graphics, devtools]
+  id: com.plate-studio.cline-plate-composer

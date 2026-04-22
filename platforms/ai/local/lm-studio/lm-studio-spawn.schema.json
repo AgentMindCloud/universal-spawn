@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/local/lm-studio/lm-studio-spawn.schema.json",
+  "title": "universal-spawn with LM Studio platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "lm-studio"
+          ],
+          "properties": {
+            "lm-studio": {
+              "$ref": "#/definitions/lm-studio"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "lm-studio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "pattern": "^[^/\\s]+/[^/\\s]+$"
+        },
+        "server_url": {
+          "type": "string",
+          "pattern": "^https?://"
+        },
+        "preset_file": {
+          "type": "string"
+        },
+        "gpu_offload": {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "max",
+                "auto"
+              ]
+            },
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 200
+            }
+          ]
+        },
+        "context_length": {
+          "type": "integer",
+          "minimum": 512,
+          "maximum": 1048576
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        }
+      }
+    }
+  }
+}

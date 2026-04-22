@@ -1,0 +1,25 @@
+version: "1.0"
+name: Claude Code Template
+type: cli-tool
+description: Template for a Claude-Code-targeted universal-spawn manifest.
+
+platforms:
+  claude-code:
+    kind: slash-command
+    file: .claude/commands/hello.md
+    model: claude-sonnet-4-6
+    min_claude_code_version: "2.0"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [claude-code]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/claude-code-template }

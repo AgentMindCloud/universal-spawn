@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/local/vllm/vllm-spawn.schema.json",
+  "title": "universal-spawn with vLLM platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "vllm"
+          ],
+          "properties": {
+            "vllm": {
+              "$ref": "#/definitions/vllm"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "vllm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "pattern": "^[^/\\s]+/[^/\\s]+$"
+        },
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "tensor_parallel_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "pipeline_parallel_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "quantization": {
+          "type": "string",
+          "enum": [
+            "awq",
+            "gptq",
+            "fp8",
+            "bnb",
+            "none"
+          ]
+        },
+        "kv_cache_dtype": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "fp8",
+            "fp16",
+            "bf16"
+          ]
+        },
+        "max_model_len": {
+          "type": "integer",
+          "minimum": 512,
+          "maximum": 1048576
+        },
+        "enable_prefix_caching": {
+          "type": "boolean",
+          "default": true
+        },
+        "dtype": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "fp16",
+            "bf16",
+            "fp32"
+          ]
+        }
+      }
+    }
+  }
+}

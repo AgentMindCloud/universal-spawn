@@ -1,0 +1,33 @@
+version: "1.0"
+name: Cursor GitHub MCP
+type: extension
+summary: Full Cursor manifest that binds to the GitHub MCP server.
+description: >
+  Binds Cursor to the GitHub MCP server (defined in platforms/ai/
+  anthropic-mcp/examples/example-2.yaml). Exposes PRs, issues, and
+  merge tools to Cursor's Agent mode.
+
+platforms:
+  cursor:
+    kind: mcp-server
+    mcp_ref: "../../anthropic-mcp/examples/example-2.yaml"
+    features: [agent, composer]
+    min_cursor_version: "0.45"
+
+safety:
+  min_permissions: [network:outbound:api.github.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: GITHUB_TOKEN
+    description: GitHub token with repo scope.
+    secret: true
+
+deployment:
+  targets: [cursor, mcp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: MCP Tooling, handle: mcp-tooling }
+  source: { type: git, url: https://github.com/mcp-tooling/cursor-github-mcp }
+  id: com.mcp-tooling.cursor-github-mcp

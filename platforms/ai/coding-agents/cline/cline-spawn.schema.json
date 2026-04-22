@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/coding-agents/cline/cline-spawn.schema.json",
+  "title": "universal-spawn with Cline platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "cline"
+          ],
+          "properties": {
+            "cline": {
+              "$ref": "#/definitions/cline"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "cline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "enum": [
+            "openai",
+            "anthropic",
+            "google",
+            "mistral",
+            "together",
+            "fireworks",
+            "groq",
+            "ollama",
+            "lmstudio"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "plan",
+            "act"
+          ]
+        },
+        "auto_approve_tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "read_file",
+              "list_files",
+              "search_files",
+              "write_to_file",
+              "replace_in_file",
+              "execute_command",
+              "browser_action",
+              "ask_followup_question"
+            ]
+          }
+        },
+        "max_requests_per_task": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      }
+    }
+  }
+}

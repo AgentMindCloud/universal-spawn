@@ -1,0 +1,40 @@
+version: "1.0"
+name: Windsurf Flow Deploy
+type: ai-skill
+summary: Full Windsurf Flow template for shipping a Next.js app to Vercel end-to-end.
+description: >
+  Reusable Flow template for the deploy-to-Vercel task. Cascade auto-
+  activates the flow in write mode. Auto-memory on so context persists
+  across turns.
+
+platforms:
+  windsurf:
+    kind: flow-template
+    flow:
+      template_file: .windsurf/flows/deploy-to-vercel.md
+      auto_activate: true
+    cascade:
+      auto_memory: true
+      agent_mode: write
+    min_windsurf_version: "1.8"
+
+safety:
+  min_permissions:
+    - fs:read
+    - fs:write
+    - network:outbound:api.vercel.com
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: VERCEL_TOKEN
+    description: Vercel deployment token.
+    secret: true
+
+deployment:
+  targets: [windsurf]
+
+metadata:
+  license: MIT
+  author: { name: Ship Co., handle: ship-co }
+  source: { type: git, url: https://github.com/ship-co/windsurf-deploy-flow }
+  id: com.ship-co.windsurf-deploy-flow

@@ -1,0 +1,31 @@
+version: "1.0"
+name: Aider Minimal Config
+type: cli-tool
+summary: Minimal Aider config with Sonnet, diff edits, auto-commits.
+description: Single Aider config for a repo.
+
+platforms:
+  aider:
+    provider: anthropic
+    model: claude-sonnet-4-6
+    edit_format: diff
+    auto_commits: true
+    config_file: .aider.conf.yml
+
+safety:
+  min_permissions: [fs:read, fs:write, network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [aider]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Aider Co., handle: aider-co }
+  source: { type: git, url: https://github.com/aider-co/aider-minimal }
+  id: com.aider-co.aider-minimal

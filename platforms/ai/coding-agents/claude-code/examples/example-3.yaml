@@ -1,0 +1,41 @@
+version: "1.0"
+name: Plate Subagent
+type: ai-agent
+summary: Creative Claude Code subagent that generates Residual Frequencies plate SVG.
+description: >
+  Subagent specialised for plate SVG generation. Tools limited to Read,
+  Write, and WebSearch. Opus 4.7 for best composition quality.
+
+platforms:
+  claude-code:
+    kind: subagent
+    file: .claude/subagents/plate-generator.md
+    model: claude-opus-4-7
+    subagent:
+      file: .claude/subagents/plate-generator.md
+      tools: [Read, Write, WebSearch]
+
+safety:
+  min_permissions:
+    - fs:read
+    - fs:write
+    - network:outbound:api.anthropic.com
+  cost_limit_usd_daily: 10
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [claude-code]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/claude-code-plate-subagent }
+  categories: [ai, graphics, devtools]
+  id: com.plate-studio.claude-code-plate-subagent

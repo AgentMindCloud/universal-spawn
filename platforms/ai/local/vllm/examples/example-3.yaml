@@ -1,0 +1,35 @@
+version: "1.0"
+name: vLLM Edge Embedder
+type: api-service
+summary: Creative vLLM deployment serving only embeddings on a T4 edge box.
+description: >
+  Serves a sentence-transformer embeddings model on a single T4 via
+  vLLM. Max model length 512 tokens, no prefix cache, FP16.
+
+platforms:
+  vllm:
+    model: sentence-transformers/all-mpnet-base-v2
+    host: 0.0.0.0
+    port: 8000
+    tensor_parallel_size: 1
+    quantization: none
+    kv_cache_dtype: fp16
+    max_model_len: 512
+    enable_prefix_caching: false
+    dtype: fp16
+
+safety:
+  min_permissions: [network:inbound, gpu:compute]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [vllm]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Edge Team, handle: edge-team }
+  source: { type: git, url: https://github.com/edge-team/vllm-embedder }
+  categories: [ai, hardware]
+  id: com.edge-team.vllm-embedder

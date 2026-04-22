@@ -1,0 +1,26 @@
+version: "1.0"
+name: LM Studio Minimal
+type: ai-agent
+summary: Minimal LM Studio chat on default localhost URL.
+description: One preset, default URL, auto GPU offload.
+
+platforms:
+  lm-studio:
+    model: lmstudio-community/Qwen2.5-7B-Instruct-GGUF
+    gpu_offload: auto
+    context_length: 8192
+
+safety:
+  min_permissions: [network:outbound:localhost]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [lm-studio]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Local Co., handle: local-co }
+  source: { type: git, url: https://github.com/local-co/lm-studio-minimal }
+  id: com.local-co.lm-studio-minimal

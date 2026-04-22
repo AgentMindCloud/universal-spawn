@@ -1,0 +1,38 @@
+version: "1.0"
+name: Continue Parchment Assistant
+type: extension
+summary: Creative Continue assistant tuned for the Residual Frequencies design system.
+description: >
+  Continue assistant scoped to SVG/CSS edits. Chat on Mistral-large,
+  autocomplete off. Rules file teaches parchment palette, letter-spacing,
+  tick grammar.
+
+platforms:
+  continue:
+    models:
+      - { role: chat, provider: mistral, model: mistral-large-latest }
+    system_prompt_file: .continue/parchment.md
+    context_providers: [codebase, currentFile]
+    rules_files: [.continuerules]
+    ide: [vscode]
+
+safety:
+  min_permissions: [network:outbound:api.mistral.ai]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: Mistral key.
+    secret: true
+
+deployment:
+  targets: [continue]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/continue-parchment }
+  categories: [ai, graphics, devtools]
+  id: com.plate-studio.continue-parchment

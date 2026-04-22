@@ -1,0 +1,26 @@
+version: "1.0"
+name: Slash Hello
+type: cli-tool
+summary: Minimal Claude Code slash command.
+description: One `/hello` slash command that greets the user.
+
+platforms:
+  claude-code:
+    kind: slash-command
+    file: .claude/commands/hello.md
+    model: claude-haiku-4-5-20251001
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [claude-code]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Hello Co., handle: hello-co }
+  source: { type: git, url: https://github.com/hello-co/claude-code-hello }
+  id: com.hello-co.claude-code-hello

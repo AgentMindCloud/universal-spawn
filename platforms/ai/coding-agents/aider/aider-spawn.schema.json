@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/coding-agents/aider/aider-spawn.schema.json",
+  "title": "universal-spawn with Aider platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "aider"
+          ],
+          "properties": {
+            "aider": {
+              "$ref": "#/definitions/aider"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "aider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "enum": [
+            "openai",
+            "anthropic",
+            "google",
+            "mistral",
+            "cohere",
+            "together",
+            "fireworks",
+            "local"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "edit_format": {
+          "type": "string",
+          "enum": [
+            "diff",
+            "whole",
+            "udiff",
+            "editor-diff"
+          ]
+        },
+        "auto_commits": {
+          "type": "boolean",
+          "default": true
+        },
+        "map_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32768
+        },
+        "read": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "config_file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

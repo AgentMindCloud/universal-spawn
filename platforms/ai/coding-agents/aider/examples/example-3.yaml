@@ -1,0 +1,39 @@
+version: "1.0"
+name: Aider Plate Generator
+type: cli-tool
+summary: Creative Aider config that generates SVG plates via whole-file edits.
+description: >
+  Aider configured for plate generation: Mistral-large, whole-file
+  edit format (because SVG diffs are noisy), auto-commits into a
+  dedicated branch.
+
+platforms:
+  aider:
+    provider: mistral
+    model: mistral-large-latest
+    edit_format: whole
+    auto_commits: true
+    map_tokens: 1024
+    read: ["assets/plates/*.svg", "design/residual-frequencies.md"]
+    config_file: .aider.plates.yml
+
+safety:
+  min_permissions: [fs:read, fs:write, network:outbound:api.mistral.ai]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: Mistral key.
+    secret: true
+
+deployment:
+  targets: [aider]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/aider-plate-generator }
+  categories: [ai, graphics, devtools]
+  id: com.plate-studio.aider-plate-generator

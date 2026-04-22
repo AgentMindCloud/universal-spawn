@@ -1,0 +1,44 @@
+version: "1.0"
+name: Cline Coder Act
+type: extension
+summary: Full Cline profile for autonomous coding with act mode and browser access.
+description: >
+  Opus 4.7 in act mode. Read + write + execute tools approved. Browser
+  action approved for web research. Capped at 100 requests per task.
+
+platforms:
+  cline:
+    provider: anthropic
+    model: claude-opus-4-7
+    mode: act
+    auto_approve_tools:
+      - read_file
+      - list_files
+      - search_files
+      - write_to_file
+      - replace_in_file
+      - execute_command
+      - browser_action
+    max_requests_per_task: 100
+
+safety:
+  min_permissions:
+    - fs:read
+    - fs:write
+    - network:outbound
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [cline]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Code Lab, handle: code-lab, org: Lab }
+  source: { type: git, url: https://github.com/code-lab/cline-coder-act }
+  id: com.code-lab.cline-coder-act
