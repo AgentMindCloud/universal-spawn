@@ -1,0 +1,27 @@
+version: "1.0"
+name: Plate Lab Construct Game
+type: game-world
+summary: Full Construct game exporting across HTML5 + iOS + Android + Windows.
+description: Same project, four targets.
+
+platforms:
+  construct:
+    project_file: plate-lab.c3p
+    exports: [html5, ios, android, windows]
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [construct]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/construct-plate-lab }
+  id: com.plate-studio.construct-plate-lab

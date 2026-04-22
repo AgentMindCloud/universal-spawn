@@ -1,0 +1,22 @@
+version: "1.0"
+name: Construct Template
+type: game-world
+description: Template for a Construct-targeted universal-spawn manifest.
+
+platforms:
+  construct:
+    project_file: project.c3p
+    exports: [html5, android]
+
+safety:
+  min_permissions: [fs:read]
+
+env_vars_required: []
+
+deployment:
+  targets: [construct]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/construct-template }

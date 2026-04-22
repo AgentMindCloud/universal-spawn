@@ -1,0 +1,37 @@
+version: "1.0"
+name: Plate Lab Steam Title
+type: game-world
+summary: Full Steamworks Direct title with three platform depots.
+description: Direct-published Steam title across Windows + macOS + Linux depots.
+
+platforms:
+  steam:
+    kind: direct-title
+    appid: "5555555"
+    depots:
+      - { depot_id: "5555556", platform: windows }
+      - { depot_id: "5555557", platform: macos }
+      - { depot_id: "5555558", platform: linux }
+    steampipe_vdf: build/app_build.vdf
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: STEAM_USERNAME
+    description: Steamworks publisher account.
+  - name: STEAM_PASSWORD
+    description: Steamworks publisher password.
+    secret: true
+
+deployment:
+  targets: [steam]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/steam-plate-lab }
+  id: com.plate-studio.steam-plate-lab

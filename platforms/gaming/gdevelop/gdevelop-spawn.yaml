@@ -1,0 +1,23 @@
+version: "1.0"
+name: GDevelop Template
+type: game-world
+description: Template for a GDevelop-targeted universal-spawn manifest.
+
+platforms:
+  gdevelop:
+    project_file: game.json
+    exports: [html5, android]
+    engine_version: "5.4"
+
+safety:
+  min_permissions: [fs:read]
+
+env_vars_required: []
+
+deployment:
+  targets: [gdevelop]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/gdevelop-template }

@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Mini Game
+type: game-world
+summary: Minimal GDevelop game exporting to HTML5.
+description: One game.json. HTML5 export only.
+
+platforms:
+  gdevelop:
+    project_file: game.json
+    exports: [html5]
+    engine_version: "5.4"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [gdevelop]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/gdevelop-plate-mini-game }
+  id: com.plate-studio.gdevelop-plate-mini-game

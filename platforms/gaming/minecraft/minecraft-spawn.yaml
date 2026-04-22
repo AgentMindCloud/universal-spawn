@@ -1,0 +1,24 @@
+version: "1.0"
+name: Minecraft Template
+type: game-mod
+description: Template for a Minecraft-targeted universal-spawn manifest.
+
+platforms:
+  minecraft:
+    kind: datapack
+    minecraft_version: "1.21"
+    pack_format: 48
+    distribution: modrinth
+
+safety:
+  min_permissions: [fs:read]
+
+env_vars_required: []
+
+deployment:
+  targets: [minecraft]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/minecraft-template }

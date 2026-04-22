@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Workshop Mod
+type: game-mod
+summary: Minimal Steam Workshop item for a host game (appid 108600).
+description: Single Workshop item id; subscriber-installable.
+
+platforms:
+  steam:
+    kind: workshop-item
+    host_appid: "108600"
+    workshop_id: "9999988887"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [steam]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/steam-plate-workshop }
+  id: com.plate-studio.steam-plate-workshop

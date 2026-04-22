@@ -1,0 +1,32 @@
+version: "1.0"
+name: Plate Studio Place
+type: game-world
+summary: Minimal Roblox experience deploying a parchment-themed place via Rojo.
+description: Single place id; Rojo project at the repo root.
+
+platforms:
+  roblox:
+    kind: experience
+    universe_id: "1111111111"
+    place_id: "2222222222"
+    rojo_project: default.project.json
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ROBLOX_API_KEY
+    description: Roblox Open Cloud API key.
+    secret: true
+
+deployment:
+  targets: [roblox]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/roblox-plate-place }
+  id: com.plate-studio.roblox-plate-place

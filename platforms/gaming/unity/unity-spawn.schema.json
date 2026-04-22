@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/gaming/unity/unity-spawn.schema.json",
+  "title": "universal-spawn with Unity (gaming) platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "unity"
+          ],
+          "properties": {
+            "unity": {
+              "$ref": "#/definitions/unity"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "unity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "min_editor"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "asset-store-package",
+            "project-template"
+          ]
+        },
+        "min_editor": {
+          "type": "string",
+          "pattern": "^[0-9]{4}\\.[0-9]+(\\.[0-9]+)?(f[0-9]+)?$"
+        },
+        "render_pipeline": {
+          "type": "string",
+          "enum": [
+            "built-in",
+            "urp",
+            "hdrp"
+          ]
+        },
+        "entry_scene": {
+          "type": "string"
+        },
+        "asset_store_category": {
+          "type": "string",
+          "enum": [
+            "3d-models",
+            "animations",
+            "audio",
+            "essentials",
+            "templates",
+            "tools",
+            "vfx",
+            "2d",
+            "add-ons",
+            "ai",
+            "scripting"
+          ]
+        },
+        "upm_packages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9.-]+(@.+)?$"
+          }
+        }
+      }
+    }
+  }
+}

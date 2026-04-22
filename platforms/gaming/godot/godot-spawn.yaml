@@ -1,0 +1,24 @@
+version: "1.0"
+name: Godot Template
+type: game-world
+description: Template for a Godot-targeted universal-spawn manifest.
+
+platforms:
+  godot:
+    kind: project
+    engine_series: "4"
+    renderer: forward+
+    entry_scene: scenes/main.tscn
+
+safety:
+  min_permissions: [fs:read, gpu:compute]
+
+env_vars_required: []
+
+deployment:
+  targets: [godot]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/godot-template }

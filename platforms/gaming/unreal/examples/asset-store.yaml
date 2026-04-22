@@ -1,0 +1,29 @@
+version: "1.0"
+name: Parchment Marketplace Plugin
+type: game-mod
+summary: Unreal Marketplace code plugin adding the Residual Frequencies look.
+description: One Marketplace plugin under code-plugins.
+
+platforms:
+  unreal:
+    kind: marketplace-plugin
+    engine_version: "5.4"
+    target_platforms: [windows, macos]
+    marketplace_category: code-plugins
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [unreal]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/unreal-parchment-plugin }
+  id: com.plate-studio.unreal-parchment-plugin

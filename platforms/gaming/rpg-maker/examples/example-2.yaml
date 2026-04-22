@@ -1,0 +1,28 @@
+version: "1.0"
+name: Parchment Battle System Plugin
+type: extension
+summary: Full RPG Maker MZ plugin replacing the default battle system.
+description: Single .js file inside js/plugins/.
+
+platforms:
+  rpg-maker:
+    engine: mz
+    kind: plugin
+    plugin_file: js/plugins/ParchmentBattleSystem.js
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [rpg-maker]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/rpgmaker-parchment-battle-system }
+  id: com.plate-studio.rpgmaker-parchment-battle-system

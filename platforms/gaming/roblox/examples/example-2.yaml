@@ -1,0 +1,28 @@
+version: "1.0"
+name: Parchment Plugin Asset
+type: extension
+summary: Full Roblox Studio plugin published as a Creator Hub asset.
+description: Roblox Studio plugin asset id; pairs with the experience above.
+
+platforms:
+  roblox:
+    kind: creator-asset
+    asset_kind: plugin
+    creator_hub_id: "3333333333"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [roblox]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/roblox-parchment-plugin }
+  id: com.plate-studio.roblox-parchment-plugin

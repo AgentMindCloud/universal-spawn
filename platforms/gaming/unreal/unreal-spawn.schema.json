@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/gaming/unreal/unreal-spawn.schema.json",
+  "title": "universal-spawn with Unreal Engine platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "unreal"
+          ],
+          "properties": {
+            "unreal": {
+              "$ref": "#/definitions/unreal"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "unreal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "engine_version"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "marketplace-plugin",
+            "project-template"
+          ]
+        },
+        "engine_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)+$"
+        },
+        "target_platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "windows",
+              "macos",
+              "linux",
+              "ios",
+              "android",
+              "ps5",
+              "xbox-series",
+              "switch",
+              "vr"
+            ]
+          }
+        },
+        "marketplace_category": {
+          "type": "string",
+          "enum": [
+            "assets",
+            "blueprints",
+            "code-plugins",
+            "complete-projects",
+            "fab"
+          ]
+        },
+        "entry_uproject": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

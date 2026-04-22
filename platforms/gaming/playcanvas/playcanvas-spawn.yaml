@@ -1,0 +1,23 @@
+version: "1.0"
+name: PlayCanvas Template
+type: game-world
+description: Template for a PlayCanvas-targeted universal-spawn manifest.
+
+platforms:
+  playcanvas:
+    project_id: "1234567"
+    scene_id: "987654"
+    engine_version: "1.74"
+
+safety:
+  min_permissions: [network:inbound, gpu:compute]
+
+env_vars_required: []
+
+deployment:
+  targets: [playcanvas]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/playcanvas-template }

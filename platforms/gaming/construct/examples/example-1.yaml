@@ -1,0 +1,27 @@
+version: "1.0"
+name: Plate Construct Demo
+type: game-world
+summary: Minimal Construct project exported to HTML5.
+description: One .c3p; HTML5 only.
+
+platforms:
+  construct:
+    project_file: plate-demo.c3p
+    exports: [html5]
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [construct]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/construct-plate-demo }
+  id: com.plate-studio.construct-plate-demo

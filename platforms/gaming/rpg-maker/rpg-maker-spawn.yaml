@@ -1,0 +1,23 @@
+version: "1.0"
+name: RPG Maker Template
+type: game-world
+description: Template for an RPG-Maker-targeted universal-spawn manifest.
+
+platforms:
+  rpg-maker:
+    engine: mz
+    kind: project
+    entry_data_dir: data
+
+safety:
+  min_permissions: [fs:read]
+
+env_vars_required: []
+
+deployment:
+  targets: [rpg-maker]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/rpg-maker-template }

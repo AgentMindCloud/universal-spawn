@@ -1,0 +1,33 @@
+version: "1.0"
+name: Parchment Lab Project Template
+type: game-world
+summary: Full Unity project template — start a new lab-notebook scene with the Residual Frequencies palette pre-applied.
+description: Project template. URP. Includes one demo scene + a starter prefabs library.
+
+platforms:
+  unity:
+    kind: project-template
+    min_editor: "2023.2"
+    render_pipeline: urp
+    entry_scene: Assets/Scenes/LabNotebook.unity
+    upm_packages:
+      - com.unity.render-pipelines.universal
+      - com.unity.inputsystem
+      - com.unity.cinemachine
+
+safety:
+  min_permissions: [fs:read, fs:write, gpu:compute]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [unity]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/unity-parchment-lab-template }
+  id: com.plate-studio.unity-parchment-lab-template

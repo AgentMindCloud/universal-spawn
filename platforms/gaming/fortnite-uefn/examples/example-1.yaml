@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Lab Island
+type: game-world
+summary: Minimal UEFN island showcasing the Residual Frequencies design.
+description: One island. Verse main module. Adventure category.
+
+platforms:
+  fortnite-uefn:
+    uefnproject: PlateLab.uefnproject
+    verse_main: src/lab.verse
+    discover_category: adventure
+
+safety:
+  min_permissions: [fs:read, gpu:compute]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [fortnite-uefn]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/uefn-plate-lab }
+  id: com.plate-studio.uefn-plate-lab

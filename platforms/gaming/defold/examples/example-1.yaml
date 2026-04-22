@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Defold Project
+type: game-world
+summary: Minimal Defold 1.9 project for HTML5 + desktop.
+description: Single collection entry; HTML5 + desktop targets.
+
+platforms:
+  defold:
+    kind: project
+    engine_version: "1.9"
+    target_platforms: [windows, macos, linux, html5]
+    entry_collection: main/main.collection
+
+safety:
+  min_permissions: [fs:read, gpu:compute]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [defold]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/defold-plate-project }
+  id: com.plate-studio.defold-plate-project

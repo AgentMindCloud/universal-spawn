@@ -1,0 +1,28 @@
+version: "1.0"
+name: Parchment Native Extension
+type: extension
+summary: Full Defold native extension shading textures via the parchment palette.
+description: Native extension for iOS + Android.
+
+platforms:
+  defold:
+    kind: extension
+    engine_version: "1.9"
+    target_platforms: [ios, android]
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [defold]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/defold-parchment-extension }
+  id: com.plate-studio.defold-parchment-extension

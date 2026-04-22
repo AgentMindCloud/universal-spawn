@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/gaming/godot/godot-spawn.schema.json",
+  "title": "universal-spawn with Godot platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "godot"
+          ],
+          "properties": {
+            "godot": {
+              "$ref": "#/definitions/godot"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "godot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "engine_series"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "addon",
+            "project"
+          ]
+        },
+        "engine_series": {
+          "type": "string",
+          "enum": [
+            "3",
+            "4"
+          ]
+        },
+        "renderer": {
+          "type": "string",
+          "enum": [
+            "forward+",
+            "mobile",
+            "compatibility"
+          ]
+        },
+        "entry_scene": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

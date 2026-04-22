@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Demo PlayCanvas
+type: game-world
+summary: Minimal PlayCanvas project showcasing parchment plates in 3D.
+description: Single scene; engine 1.74.
+
+platforms:
+  playcanvas:
+    project_id: "1111111"
+    scene_id: "222222"
+    engine_version: "1.74"
+
+safety:
+  min_permissions: [network:inbound, gpu:compute]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [playcanvas]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/playcanvas-plate-demo }
+  id: com.plate-studio.playcanvas-plate-demo

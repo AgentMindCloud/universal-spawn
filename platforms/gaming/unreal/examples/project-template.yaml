@@ -1,0 +1,29 @@
+version: "1.0"
+name: Parchment Lab Project
+type: game-world
+summary: Full Unreal project template starting a parchment-themed lab scene.
+description: Project template covering Windows + PS5 + Xbox Series.
+
+platforms:
+  unreal:
+    kind: project-template
+    engine_version: "5.4"
+    target_platforms: [windows, ps5, xbox-series]
+    entry_uproject: ParchmentLab.uproject
+
+safety:
+  min_permissions: [fs:read, fs:write, gpu:compute]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [unreal]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/unreal-parchment-lab-project }
+  id: com.plate-studio.unreal-parchment-lab-project

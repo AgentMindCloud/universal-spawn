@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate Lab Native
+type: game-world
+summary: Full itch.io downloadable build for Windows + macOS + Linux.
+description: Pushed via butler to three native channels.
+
+platforms:
+  itch-io:
+    kind: downloadable
+    butler_channel: stable
+    payment: fixed
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: BUTLER_API_KEY
+    description: butler API key.
+    secret: true
+
+deployment:
+  targets: [itch-io]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/itch-plate-native }
+  id: com.plate-studio.itch-plate-native

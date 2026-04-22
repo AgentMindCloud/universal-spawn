@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/gaming/fortnite-uefn/fortnite-uefn-spawn.schema.json",
+  "title": "universal-spawn with Fortnite UEFN platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "fortnite-uefn"
+          ],
+          "properties": {
+            "fortnite-uefn": {
+              "$ref": "#/definitions/fortnite-uefn"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "fortnite-uefn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "uefnproject"
+      ],
+      "properties": {
+        "island_code": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{4}-[0-9]{4}$"
+        },
+        "uefnproject": {
+          "type": "string"
+        },
+        "verse_main": {
+          "type": "string"
+        },
+        "discover_category": {
+          "type": "string",
+          "enum": [
+            "adventure",
+            "combat",
+            "escape",
+            "discovery",
+            "creative",
+            "horror",
+            "music",
+            "experimental"
+          ]
+        }
+      }
+    }
+  }
+}

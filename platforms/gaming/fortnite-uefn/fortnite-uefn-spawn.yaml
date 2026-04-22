@@ -1,0 +1,22 @@
+version: "1.0"
+name: Fortnite UEFN Template
+type: game-world
+description: Template for a Fortnite UEFN-targeted universal-spawn manifest.
+
+platforms:
+  fortnite-uefn:
+    uefnproject: YourIsland.uefnproject
+    verse_main: src/main.verse
+
+safety:
+  min_permissions: [fs:read, gpu:compute]
+
+env_vars_required: []
+
+deployment:
+  targets: [fortnite-uefn]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/uefn-template }

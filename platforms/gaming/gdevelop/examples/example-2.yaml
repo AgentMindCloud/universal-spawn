@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Lab Game
+type: game-world
+summary: Full GDevelop game exporting to HTML5 + Android + Windows.
+description: Same project, three platforms.
+
+platforms:
+  gdevelop:
+    project_file: game.json
+    exports: [html5, android, windows]
+    engine_version: "5.4"
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [gdevelop]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/gdevelop-plate-lab }
+  id: com.plate-studio.gdevelop-plate-lab

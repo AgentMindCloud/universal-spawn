@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/gaming/gdevelop/gdevelop-spawn.schema.json",
+  "title": "universal-spawn with GDevelop platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "gdevelop"
+          ],
+          "properties": {
+            "gdevelop": {
+              "$ref": "#/definitions/gdevelop"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "gdevelop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_file"
+      ],
+      "properties": {
+        "project_file": {
+          "type": "string"
+        },
+        "exports": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "html5",
+              "android",
+              "ios",
+              "windows",
+              "macos",
+              "linux"
+            ]
+          }
+        },
+        "engine_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)+$"
+        }
+      }
+    }
+  }
+}

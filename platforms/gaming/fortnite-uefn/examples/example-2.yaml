@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Studio Music Island
+type: game-world
+summary: Full UEFN music-experience island with a published code.
+description: Released island with code 1234-5678-9012; music category.
+
+platforms:
+  fortnite-uefn:
+    island_code: "1234-5678-9012"
+    uefnproject: MusicIsland.uefnproject
+    verse_main: src/music.verse
+    discover_category: music
+
+safety:
+  min_permissions: [fs:read, fs:write, gpu:compute]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [fortnite-uefn]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/uefn-music-island }
+  id: com.plate-studio.uefn-music-island

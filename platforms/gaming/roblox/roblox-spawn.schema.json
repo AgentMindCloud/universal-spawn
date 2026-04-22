@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/gaming/roblox/roblox-spawn.schema.json",
+  "title": "universal-spawn with Roblox platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "roblox"
+          ],
+          "properties": {
+            "roblox": {
+              "$ref": "#/definitions/roblox"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "roblox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "experience",
+            "creator-asset"
+          ]
+        },
+        "universe_id": {
+          "type": "string",
+          "pattern": "^[0-9]{6,32}$"
+        },
+        "place_id": {
+          "type": "string",
+          "pattern": "^[0-9]{6,32}$"
+        },
+        "rojo_project": {
+          "type": "string"
+        },
+        "asset_kind": {
+          "type": "string",
+          "enum": [
+            "model",
+            "plugin",
+            "audio",
+            "image",
+            "ui"
+          ]
+        },
+        "creator_hub_id": {
+          "type": "string",
+          "pattern": "^[0-9]{6,32}$"
+        }
+      }
+    }
+  }
+}

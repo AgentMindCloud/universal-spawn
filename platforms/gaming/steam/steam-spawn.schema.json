@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/gaming/steam/steam-spawn.schema.json",
+  "title": "universal-spawn with Steam platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "steam"
+          ],
+          "properties": {
+            "steam": {
+              "$ref": "#/definitions/steam"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "steam": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "workshop-item",
+            "direct-title"
+          ]
+        },
+        "host_appid": {
+          "type": "string",
+          "pattern": "^[0-9]{4,10}$"
+        },
+        "workshop_id": {
+          "type": "string",
+          "pattern": "^[0-9]{6,20}$"
+        },
+        "appid": {
+          "type": "string",
+          "pattern": "^[0-9]{4,10}$"
+        },
+        "depots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "depot_id"
+            ],
+            "properties": {
+              "depot_id": {
+                "type": "string",
+                "pattern": "^[0-9]{4,10}$"
+              },
+              "platform": {
+                "type": "string",
+                "enum": [
+                  "windows",
+                  "macos",
+                  "linux"
+                ]
+              }
+            }
+          }
+        },
+        "steampipe_vdf": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

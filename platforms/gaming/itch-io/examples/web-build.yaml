@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Lab Web Build
+type: game-world
+summary: Minimal itch.io HTML5 web build of the Parchment Lab demo.
+description: Browser-playable build pushed to the `web` channel.
+
+platforms:
+  itch-io:
+    kind: html5
+    butler_channel: web
+    html5_frame: { width: 1280, height: 720, fullscreen_button: true, mobile_friendly: true }
+    payment: name-your-price
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [itch-io]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/itch-plate-web }
+  id: com.plate-studio.itch-plate-web

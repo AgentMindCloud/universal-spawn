@@ -1,0 +1,30 @@
+version: "1.0"
+name: Plate Datapack
+type: game-mod
+summary: Minimal Minecraft datapack adding parchment-themed advancements.
+description: Vanilla 1.21. pack_format 48. Modrinth distribution.
+
+platforms:
+  minecraft:
+    kind: datapack
+    minecraft_version: "1.21"
+    pack_format: 48
+    distribution: modrinth
+    modrinth_id: "abc123"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [minecraft]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/minecraft-plate-datapack }
+  id: com.plate-studio.minecraft-plate-datapack

@@ -1,0 +1,29 @@
+version: "1.0"
+name: Parchment Plate Asset Pack
+type: game-mod
+summary: Unity Asset Store package — 40 parchment-themed props ready to drop into URP scenes.
+description: One asset-store package; URP-ready. Tools / 3D Models cross-listing.
+
+platforms:
+  unity:
+    kind: asset-store-package
+    min_editor: "2023.2"
+    render_pipeline: urp
+    asset_store_category: 3d-models
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [unity]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/unity-plate-asset-pack }
+  id: com.plate-studio.unity-plate-asset-pack

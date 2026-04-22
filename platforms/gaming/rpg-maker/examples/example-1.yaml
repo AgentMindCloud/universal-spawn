@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Lab RPG Project
+type: game-world
+summary: Minimal RPG Maker MZ project — parchment-themed lab notebook RPG.
+description: Whole project tree under data/.
+
+platforms:
+  rpg-maker:
+    engine: mz
+    kind: project
+    entry_data_dir: data
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [rpg-maker]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/rpgmaker-plate-lab }
+  id: com.plate-studio.rpgmaker-plate-lab

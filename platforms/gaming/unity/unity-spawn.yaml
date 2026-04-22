@@ -1,0 +1,24 @@
+version: "1.0"
+name: Unity Template (Gaming)
+type: game-mod
+description: Template for a Unity-targeted universal-spawn manifest.
+
+platforms:
+  unity:
+    kind: project-template
+    min_editor: "2023.2"
+    render_pipeline: urp
+    entry_scene: Assets/Scenes/Main.unity
+
+safety:
+  min_permissions: [fs:read, gpu:compute]
+
+env_vars_required: []
+
+deployment:
+  targets: [unity]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/unity-template }

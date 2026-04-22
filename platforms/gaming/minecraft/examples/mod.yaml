@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate Mod
+type: game-mod
+summary: Full Fabric mod adding a parchment biome (Java code).
+description: Fabric mod for 1.21. Distributed on both CurseForge and Modrinth.
+
+platforms:
+  minecraft:
+    kind: mod
+    minecraft_version: "1.21"
+    loader: fabric
+    distribution: both
+    curseforge_id: "1234567"
+    modrinth_id: "ABCdef12"
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [minecraft]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/minecraft-plate-mod }
+  id: com.plate-studio.minecraft-plate-mod

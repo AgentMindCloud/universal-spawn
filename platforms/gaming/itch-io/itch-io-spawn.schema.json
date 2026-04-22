@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/gaming/itch-io/itch-io-spawn.schema.json",
+  "title": "universal-spawn with itch.io platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "itch-io"
+          ],
+          "properties": {
+            "itch-io": {
+              "$ref": "#/definitions/itch-io"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "itch-io": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "html5",
+            "downloadable",
+            "physical"
+          ]
+        },
+        "butler_channel": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "html5_frame": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "width": {
+              "type": "integer",
+              "minimum": 320,
+              "maximum": 3840
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 240,
+              "maximum": 2160
+            },
+            "fullscreen_button": {
+              "type": "boolean",
+              "default": true
+            },
+            "mobile_friendly": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "payment": {
+          "type": "string",
+          "enum": [
+            "free",
+            "name-your-price",
+            "fixed",
+            "hidden"
+          ]
+        }
+      }
+    }
+  }
+}
