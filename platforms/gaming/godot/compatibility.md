@@ -10,7 +10,7 @@
 
 ## Coexistence with `project.godot + addons/<id>/plugin.cfg`
 
-universal-spawn does NOT replace project.godot + addons/<id>/plugin.cfg. Both files coexist; consumers read both and warn on conflicts.
+universal-spawn does NOT replace `project.godot` + `addons/<id>/plugin.cfg`. Both files coexist; consumers read both and warn on conflicts.
 
 ### `project.godot + addons/<id>/plugin.cfg` (provider-native)
 

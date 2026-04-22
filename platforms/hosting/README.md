@@ -6,7 +6,7 @@ and they can use it without reading anything else.
 
 Every folder follows the same seven-file layout:
 
-```
+```text
 <id>/
 ├── README.md                      # 3-6 paragraphs + compat table
 ├── <id>-spawn.yaml                # canonical platform manifest

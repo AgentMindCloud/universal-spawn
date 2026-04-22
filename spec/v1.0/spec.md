@@ -155,7 +155,7 @@ Authors **SHOULD** prefer observational prose over marketing prose.
 One of the following values. The list is exhaustive in v1.0; additions
 ship in minor revisions.
 
-```
+```text
 ai-agent, ai-skill, ai-model, web-app, api-service, cli-tool,
 library, dataset, notebook, creative-tool, design-template, game-mod,
 game-world, hardware-device, firmware, bot, extension, plugin, site,

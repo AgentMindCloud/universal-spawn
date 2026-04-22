@@ -83,7 +83,7 @@ Adding a platform is how the standard grows horizontally.
    - which entrypoint kinds it supports
    - the minimum extension schema you need
 2. Create the folder:
-   ```
+   ```text
    platforms/<id>/
      README.md
      <id>-spawn.yaml          ← template

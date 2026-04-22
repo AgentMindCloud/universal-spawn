@@ -45,7 +45,7 @@ A repository that ships Grok support may contain any (or all) of:
 
 The discovery order a Grok consumer **SHOULD** follow:
 
-```
+```text
 universal-spawn.yaml (with platforms.grok)
   → grok-spawn.yaml
   → grok-install.yaml

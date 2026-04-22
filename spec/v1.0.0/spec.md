@@ -172,7 +172,7 @@ manifest modulo field ordering.
 
 The `categories` field accepts exactly these values:
 
-```
+```text
 ai, audio, code, data, devtools, education, gaming, graphics, hardware,
 health, music, productivity, research, robotics, science, security,
 social, video, web, writing

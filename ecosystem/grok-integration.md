@@ -10,7 +10,7 @@ neither replaces the other.
 Today, Grok consumers read `grok-install.yaml` from the repo root.
 After integration, the discovery order becomes:
 
-```
+```text
 universal-spawn.yaml (with platforms.grok)
   → grok-spawn.yaml         (optional; mechanically projected from above)
   → grok-install.yaml       (legacy; v2.14)

@@ -16,7 +16,7 @@ without updating the `$id`.
 All v1.0 platform extensions are draft-07 and `allOf` against the v1.0
 master. URL pattern:
 
-```
+```text
 https://universal-spawn.dev/platforms/<subtree>/<id>/<id>-spawn.schema.json
 ```
 

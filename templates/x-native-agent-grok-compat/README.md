@@ -12,7 +12,7 @@ live in code, not in a wiki page.
 
 ## The compat story in one diagram
 
-```
+```text
                 ┌─────────────────────────────────────────┐
                 │         your bot's git repo             │
                 ├─────────────────────────────────────────┤

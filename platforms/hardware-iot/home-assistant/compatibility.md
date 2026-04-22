@@ -12,7 +12,7 @@
 
 ## Coexistence with `custom_components/<domain>/manifest.json`
 
-universal-spawn does NOT replace custom_components/<domain>/manifest.json. Both files coexist; consumers read both and warn on conflicts.
+universal-spawn does NOT replace `custom_components/<domain>/manifest.json`. Both files coexist; consumers read both and warn on conflicts.
 
 ### `custom_components/<domain>/manifest.json` (provider-native)
 

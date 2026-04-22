@@ -87,7 +87,7 @@ enum covers twenty-one categories — from `ai-agent` and `cli-tool` to
 
 ## How it works
 
-```
+```text
                    ┌────────────────────────────────┐
                    │        spawn.yaml (root)       │
                    │  one declarative manifest      │
@@ -144,7 +144,7 @@ That is what this file is.
 
 ## Repository layout
 
-```
+```text
 spec/
   v1.0.0/
     spec.md                   ← normative prose

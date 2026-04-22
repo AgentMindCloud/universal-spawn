@@ -85,7 +85,7 @@ If you maintain a `platforms.<id>` extension under
 `<id>-spawn.schema.json`'s `$id` URL to include the new version
 when you make a breaking change:
 
-```
+```text
 https://universal-spawn.dev/platforms/ai/<id>/v2/<id>-spawn.schema.json
 ```
 

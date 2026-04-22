@@ -7,7 +7,7 @@ else.
 
 Extensions here all follow the same structure:
 
-```
+```text
 <id>/
 ├── README.md                 # 3-6 paragraphs. What the platform
 │                             # cares about, what perks it offers,

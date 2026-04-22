@@ -1,8 +1,8 @@
 # Discord integration guide
 
-For the Discord Developer Portal team. The integration story
-maps naturally to the existing Application + Bot + Slash Commands
-+ Activities surfaces.
+For the Discord Developer Portal team. The integration story maps
+naturally to the existing Application, Bot, Slash Commands, and
+Activities surfaces.
 
 ## Detection
 
@@ -37,7 +37,7 @@ at the repo root. Validate against
 
 The standard URL pattern is:
 
-```
+```text
 https://discord.com/oauth2/authorize?
   client_id={application_id}&
   scope={scopes joined with `+`}&

@@ -30,7 +30,7 @@ Plus at least one of `platforms` or `deployment`.
 
 ## Type enum (pick one)
 
-```
+```text
 ai-agent   ai-skill       ai-model     web-app          api-service
 cli-tool   library        dataset      notebook         creative-tool
 design-template           game-mod     game-world       hardware-device

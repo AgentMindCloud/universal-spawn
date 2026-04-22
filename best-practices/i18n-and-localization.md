@@ -12,7 +12,7 @@ For creations whose primary product is content (templates, docs
 sites, courses), ship one manifest per locale. They share
 `metadata.id` (because the underlying creation is the same).
 
-```
+```text
 your-repo/
 ├── universal-spawn.yaml          ← English (canonical)
 ├── universal-spawn.fr.yaml       ← French

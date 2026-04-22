@@ -20,7 +20,7 @@ A manifest that passes one mode passes the others.
 
 ## CLI command surface (Python + Node share)
 
-```
+```text
 universal-spawn validate [PATH]      # default: ./universal-spawn.yaml
 universal-spawn init [--type TYPE]   # write a starter manifest
 universal-spawn migrate [PATH]       # lift legacy v1.0.0 spawn.yaml → v1.0

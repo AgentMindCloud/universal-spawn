@@ -32,7 +32,7 @@ Three reasons:
 
 The minimum viable integration:
 
-```
+```text
 1. Detect: look for spawn.{yaml,yml,json} or universal-spawn.{yaml,yml,json}
    at the root of the repo, plus your platform-specific aliases.
 2. Validate: run the schema on the master + your platform extension.

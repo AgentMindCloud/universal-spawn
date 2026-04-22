@@ -43,7 +43,7 @@ SHA-256 of the manifest at spawn time and logs it. Reverse this:
 when you discover an abusive manifest, you can revoke it with one
 hash query.
 
-```
+```text
 revoke <hash>
   → all currently-running spawns of this manifest are halted
   → no new spawns of this manifest are allowed

@@ -29,7 +29,7 @@ this quarter, and the perks the standard does not endorse.
   platform's directory listing — name, description, author,
   Spawn-it button. Don't scrape the GitHub README.
 - **Conformance badge.** A manifest passing your platform's
-  extension schema deserves a "spawns on <platform>" badge in the
+  extension schema deserves a "spawns on `<platform>`" badge in the
   directory card. Cheap to ship; surprisingly motivating.
 - **Drift detection.** Compare the canonical hash on a new spawn
   against the hash on the previous spawn. If they differ, surface

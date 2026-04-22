@@ -40,7 +40,7 @@ conflicts (the universal manifest wins).
 A manifest with `platforms.vercel.framework` set is sufficient to
 render the Deploy-to-Vercel button. URL pattern:
 
-```
+```text
 https://vercel.com/new/clone?repository-url={url-encoded source.url}
 ```
 

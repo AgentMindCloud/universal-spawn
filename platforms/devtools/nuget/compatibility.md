@@ -10,7 +10,7 @@
 
 ## Coexistence with `*.csproj / *.nuspec`
 
-universal-spawn does NOT replace *.csproj / *.nuspec. Both files coexist; consumers read both and warn on conflicts.
+universal-spawn does NOT replace `*.csproj` / `*.nuspec`. Both files coexist; consumers read both and warn on conflicts.
 
 ### `*.csproj / *.nuspec` (provider-native)
 

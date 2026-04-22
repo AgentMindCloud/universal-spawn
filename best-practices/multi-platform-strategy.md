@@ -17,7 +17,7 @@ specific manifest alongside.
 
 ## Decision tree
 
-```
+```text
 Are you targeting 2+ platforms?
 ├── No → one manifest. Done.
 └── Yes →
@@ -47,7 +47,7 @@ One manifest, two real deploys. No sibling files needed.
 
 ## Sibling-required example: Grok-native bot
 
-```
+```text
 your-repo/
 ├── universal-spawn.yaml      ← cross-platform; describes everything
 ├── grok-install.yaml         ← legacy; same bot, Grok-specific shape
@@ -111,7 +111,7 @@ shape with a container shape, and ops would never forgive you.
 
 In that case ship two manifests at sibling subdirectories:
 
-```
+```text
 your-repo/
 ├── api/universal-spawn.yaml      ← runtime: lambda
 └── jobs/universal-spawn.yaml     ← runtime: ecs

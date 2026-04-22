@@ -1,7 +1,7 @@
 # Showcase · `inkwell` — a NextJS SaaS starter
 
-**Use case.** A minimal SaaS starter built on Next.js 15 + Postgres
-+ NextAuth + Stripe. Deploys to Vercel; sibling Netlify deploy
+**Use case.** A minimal SaaS starter built on Next.js 15, Postgres,
+NextAuth, and Stripe. Deploys to Vercel; sibling Netlify deploy
 available for failover.
 
 ## The manifest

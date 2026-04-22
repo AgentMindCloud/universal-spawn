@@ -12,7 +12,7 @@
 
 ## Coexistence with `Pulumi.yaml + Pulumi.<stack>.yaml`
 
-universal-spawn does NOT replace Pulumi.yaml + Pulumi.<stack>.yaml. Both files coexist; consumers read both and warn on conflicts.
+universal-spawn does NOT replace `Pulumi.yaml` + `Pulumi.<stack>.yaml`. Both files coexist; consumers read both and warn on conflicts.
 
 ### `Pulumi.yaml + Pulumi.<stack>.yaml` (provider-native)
 

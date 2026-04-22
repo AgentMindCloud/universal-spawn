@@ -24,7 +24,7 @@ That's the bar. Everything else is value-add.
 
 ## The typical stack
 
-```
+```text
 +------------------+
 | Repo crawler     |  → detects manifests
 +------------------+
@@ -58,7 +58,7 @@ mostly about feeding manifest data into them.
 In your repo connector / build pipeline / install handler. The
 filename match list:
 
-```
+```text
 universal-spawn.yaml
 universal-spawn.yml
 universal-spawn.json

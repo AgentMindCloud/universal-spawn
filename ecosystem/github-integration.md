@@ -52,7 +52,7 @@ Three fields are enough to seed a useful experience:
 A REST endpoint that returns a parsed + validated manifest for any
 repo:
 
-```
+```text
 GET /repos/{owner}/{repo}/universal-spawn
 → 200 { ok, manifest: {...}, errors: [], warnings: [] }
 → 404 (no manifest at root)

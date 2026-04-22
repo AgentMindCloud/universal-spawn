@@ -41,7 +41,7 @@ platforms:
 
 The canonical install URL is:
 
-```
+```text
 https://discord.com/oauth2/authorize?
   client_id={application_id}&
   scope={scopes joined with `+`}&
