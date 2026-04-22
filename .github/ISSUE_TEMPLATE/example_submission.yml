@@ -1,0 +1,87 @@
+name: Example submission
+description: Submit a new worked example for spec/v1.0/examples/ or platforms/<id>/examples/.
+title: "[example] "
+labels: ["type/docs", "status/triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Examples are precious — one per project shape, each realistic,
+        each validating. Thank you for contributing.
+
+  - type: input
+    id: project
+    attributes:
+      label: Project name
+      placeholder: "Fielded Research Assistant"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Manifest `type` / `kind`
+      options:
+        - ai-agent
+        - ai-skill
+        - ai-model
+        - web-app
+        - api-service
+        - cli-tool
+        - creative-tool
+        - game-mod
+        - game-world
+        - hardware-device
+        - firmware
+        - bot
+        - site
+        - other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: spec-version
+    attributes:
+      label: Target spec version
+      options:
+        - "1.0 (spec/v1.0)"
+        - "1.0.0 (spec/v1.0.0)"
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Destination path
+      description: "Example: spec/v1.0/examples/13-my-thing.yaml or platforms/claude/examples/my-thing.claude-spawn.yaml"
+    validations:
+      required: true
+
+  - type: textarea
+    id: manifest
+    attributes:
+      label: Manifest content
+      render: yaml
+    validations:
+      required: true
+
+  - type: textarea
+    id: validator-output
+    attributes:
+      label: Validator output
+      description: "Paste the output of `npx ajv-cli validate --spec=draft7 ... -d your-file.yaml`. It must pass."
+      render: shell
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checklist
+      options:
+        - label: Uses the `com.example.*` identifier namespace unless owned by a real project.
+          required: true
+        - label: Realistic values — no placeholder-only descriptions.
+          required: true
+        - label: Not a duplicate of an existing example.
+          required: true

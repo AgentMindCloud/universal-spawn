@@ -1,0 +1,57 @@
+# Example 04 — Discord moderation bot
+# Scoped intents, two slash commands, AutoMod integration.
+version: "1.0"
+name: Parchment Moderator
+type: bot
+summary: Moderation bot with AutoMod integration.
+description: >
+  A moderation bot that listens to guild messages for banned patterns,
+  integrates with Discord AutoMod, and exposes /report and a Flag
+  Message context-menu command. Declares message_content intent
+  explicitly so the verification review is trivial.
+
+platforms:
+  discord:
+    scopes: [bot, applications.commands, messages.read]
+    intents:
+      - guilds
+      - guild_messages
+      - message_content
+      - auto_moderation_execution
+    slash_commands:
+      - file: commands/report.json
+    message_commands:
+      - file: commands/flag-message.json
+
+safety:
+  min_permissions:
+    - network:outbound:discord.com
+    - network:outbound:gateway.discord.gg
+    - messages:read
+  rate_limit_qps: 20
+  safe_for_auto_spawn: false
+
+deployment:
+  targets: [discord]
+
+env_vars_required:
+  - name: DISCORD_BOT_TOKEN
+    description: Discord bot token for Gateway and REST calls.
+    secret: true
+  - name: DISCORD_APP_ID
+    description: Public Application id.
+
+visuals:
+  icon: assets/icon.svg
+  palette: ink
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Mod Co.
+    handle: mod-co
+  source:
+    type: git
+    url: https://github.com/mod-co/parchment-moderator
+  keywords: [discord, moderation, automod]
+  categories: [social, security]

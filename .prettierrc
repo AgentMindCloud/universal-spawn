@@ -1,0 +1,25 @@
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "endOfLine": "lf",
+  "proseWrap": "always",
+  "overrides": [
+    {
+      "files": ["*.md"],
+      "options": {
+        "proseWrap": "always",
+        "printWidth": 80
+      }
+    },
+    {
+      "files": ["*.yaml", "*.yml"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
+}

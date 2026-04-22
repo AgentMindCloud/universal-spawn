@@ -1,0 +1,51 @@
+title: "[Q] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Ask the community
+
+        Before posting:
+        - Search existing discussions first.
+        - For bugs, open an **Issue** instead.
+        - For a spec change, start an **RFC** instead.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What are you trying to do?
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What you've tried
+      description: Manifest excerpts, validator output, links to relevant spec sections.
+      render: yaml
+
+  - type: input
+    id: spec-version
+    attributes:
+      label: Spec version
+      placeholder: "1.0"
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where is this most relevant?
+      multiple: true
+      options:
+        - claude
+        - gemini
+        - openai
+        - vercel
+        - netlify
+        - unity
+        - figma
+        - discord
+        - huggingface
+        - core-spec
+        - other

@@ -1,0 +1,46 @@
+# Example 07 — Figma Dev Mode codegen plugin
+# Emits SwiftUI from selected frames. Runs in both Design and Dev Mode,
+# requires network access to a licensing server.
+version: "1.0"
+name: Swift Codegen
+type: plugin
+summary: Figma Dev Mode codegen plugin that emits SwiftUI.
+description: >
+  A Figma Dev Mode plugin that converts selected frames into SwiftUI
+  views. Uses the Dev Mode API with codegen and inspect capabilities.
+  Requires network access to a licensing server; declares the exact
+  hostnames it will reach.
+
+platforms:
+  figma:
+    manifest_file: figma.manifest.json
+    editor_type: [figma, dev]
+    network_access: allowed-hosts
+    allowed_hosts: ["license.codegen.example"]
+    capabilities: [codegen, inspect]
+
+safety:
+  min_permissions:
+    - network:outbound:license.codegen.example
+  safe_for_auto_spawn: false
+
+deployment:
+  targets: [figma]
+
+env_vars_required: []
+
+visuals:
+  icon: assets/icon.svg
+  palette: ink
+
+metadata:
+  license: proprietary
+  author:
+    name: Codegen Co.
+    handle: codegen-co
+    org: Codegen
+  source:
+    type: git
+    url: https://github.com/codegen-co/figma-swift
+  keywords: [figma, dev-mode, codegen, swiftui]
+  categories: [graphics, code, devtools]

@@ -1,0 +1,314 @@
+# universal-spawn v1.0 — normative JSON Schema (YAML form)
+#
+# This is a human-readable YAML mirror of universal-spawn.schema.json.
+# Both files describe the same data model. When they disagree, the JSON
+# form is authoritative (that is what validators consume).
+#
+# Regenerate with:
+#   python3 -c 'import json,yaml; print(yaml.safe_dump(json.load(open("spec/v1.0/universal-spawn.schema.json")), sort_keys=False, default_flow_style=False, width=88))' > spec/v1.0/universal-spawn.schema.yaml
+#
+$schema: http://json-schema.org/draft-07/schema#
+$id: https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json
+title: Universal Spawn Manifest
+description: Normative JSON Schema for a universal-spawn v1.0 manifest. A single declarative
+  file describing what a creation is, where it runs, what it needs, and what it promises.
+$comment: This schema is draft-07 intentionally. Draft-07 has the broadest validator support
+  across ecosystems (Ajv, python-jsonschema, go-jsonschema, rust-jsonschema, swift-json-schema).
+  A v1.1 draft-2020-12 companion is tracked under spec/v1.0.0/.
+type: object
+additionalProperties: false
+required:
+- version
+- name
+- description
+- type
+anyOf:
+- required:
+  - platforms
+  $comment: Either list at least one platform extension...
+- required:
+  - deployment
+  $comment: '...or a deployment target set. A manifest with neither has nothing for any consumer
+    to act on.'
+properties:
+  version:
+    type: string
+    enum:
+    - '1.0'
+    description: Version of the universal-spawn spec this manifest targets. Only '1.0' is
+      accepted by this schema.
+    $comment: Consumers MUST reject a manifest whose major version they do not implement.
+      Unlike semver packages, spec versions are tightly bounded enums so validators cannot
+      'do their best'.
+  name:
+    type: string
+    minLength: 1
+    maxLength: 80
+    pattern: ^[A-Za-z0-9](?:[A-Za-z0-9 ._-]*[A-Za-z0-9])?$
+    description: Human-readable display name. Alphanumerics, space, dot, underscore, dash.
+      No leading or trailing whitespace. No emoji.
+    $comment: We accept spaces so real product names render correctly ('Hello World', 'Research
+      Agent'). We reject emoji via lint because JSON Schema regex cannot portably express
+      the Unicode property escape needed to detect them; the spec prose forbids emoji explicitly.
+  description:
+    type: string
+    minLength: 10
+    maxLength: 500
+    description: One paragraph, 10-500 characters. First sentence should stand alone as a
+      summary; indexers use it as a snippet.
+    $comment: The lower bound exists to discourage placeholder descriptions. The upper bound
+      exists so description fits in a card.
+  type:
+    type: string
+    description: Primary category of this creation. Determines which platforms can spawn it
+      and what fields are expected.
+    enum:
+    - ai-agent
+    - ai-skill
+    - ai-model
+    - web-app
+    - api-service
+    - cli-tool
+    - library
+    - dataset
+    - notebook
+    - creative-tool
+    - design-template
+    - game-mod
+    - game-world
+    - hardware-device
+    - firmware
+    - bot
+    - extension
+    - plugin
+    - site
+    - container
+    - workflow
+    $comment: Additions happen only on minor spec bumps. Removals never.
+  summary:
+    type: string
+    maxLength: 140
+    description: Optional one-line summary for social cards. <=140 characters.
+    $comment: Sized for the narrowest card surface; longer text is silently truncated by consumers.
+  homepage:
+    type: string
+    format: uri
+    description: Canonical public homepage.
+  platforms:
+    type: object
+    description: Platform-specific extensions. Each key is a platform id (claude, gemini,
+      openai, vercel, netlify, unity, figma, discord, huggingface, ...). Each value is validated
+      separately by that platform's extension schema.
+    additionalProperties:
+      type: object
+    $comment: "Intentionally permissive at this level \u2014 the platform's own schema.extension.json\
+      \ is where strict validation happens. This keeps the master schema decoupled from the\
+      \ platform list."
+  safety:
+    type: object
+    description: Declarative safety envelope. The platform enforces; the manifest declares.
+    additionalProperties: false
+    properties:
+      min_permissions:
+        type: array
+        description: Smallest set of capabilities this creation needs to function.
+        items:
+          type: string
+          pattern: ^[a-z][a-z0-9]*:[a-z][a-z0-9_-]*(:[A-Za-z0-9_./=:-]+)?$
+          $comment: 'Format: ''namespace:action'' or ''namespace:action:scope''. Scope accepts
+            hostnames, filesystem paths, and key=value identifiers.'
+      rate_limit_qps:
+        type: number
+        minimum: 0
+        description: Self-declared maximum outbound request rate, queries per second.
+      cost_limit_usd_daily:
+        type: number
+        minimum: 0
+        description: Self-declared upper bound on daily USD cost.
+      safe_for_auto_spawn:
+        type: boolean
+        description: True only if the author certifies this manifest is safe to spawn without
+          human confirmation under min_permissions and the declared limits.
+        default: false
+      data_residency:
+        type: array
+        description: Regions where data generated by this creation may legally reside.
+        items:
+          type: string
+          enum:
+          - us
+          - eu
+          - uk
+          - ca
+          - au
+          - jp
+          - sg
+          - br
+          - in
+          - any
+  deployment:
+    type: object
+    description: How this creation deploys, if it deploys as a service.
+    additionalProperties: false
+    properties:
+      targets:
+        type: array
+        description: Ordered preference list. First entry is the canonical target.
+        minItems: 1
+        items:
+          type: string
+          minLength: 1
+      regions:
+        type: array
+        description: Preferred deployment regions (platform-specific region codes).
+        items:
+          type: string
+          minLength: 1
+      build:
+        type: object
+        additionalProperties: false
+        properties:
+          command:
+            type: string
+          output:
+            type: string
+          engine:
+            type: string
+            description: Runtime or framework engine (node, python, rust, docker, unity, ...)
+          install:
+            type: string
+          node_version:
+            type: string
+  env_vars_required:
+    type: array
+    description: Environment variables the creation needs. Declare by NAME only; never a value.
+    items:
+      type: object
+      required:
+      - name
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          pattern: ^[A-Z][A-Z0-9_]*$
+          description: SCREAMING_SNAKE_CASE. First character A-Z, remainder A-Z0-9_.
+        description:
+          type: string
+          minLength: 3
+        required:
+          type: boolean
+          default: true
+        secret:
+          type: boolean
+          default: false
+        example:
+          type: string
+      $comment: Secret values are never stored in a manifest; they are supplied by the platform's
+        credential store at spawn time.
+  visuals:
+    type: object
+    description: Visual assets. Following the Residual Frequencies visual system is recommended
+      but not required.
+    additionalProperties: false
+    properties:
+      icon:
+        type: string
+        format: uri-reference
+        description: 512x512 icon. SVG preferred.
+      hero_plate:
+        type: string
+        format: uri-reference
+        description: Hero plate illustration.
+      banner:
+        type: string
+        format: uri-reference
+      palette:
+        type: string
+        enum:
+        - parchment
+        - ink
+        - field
+        description: Residual Frequencies palette id.
+  metadata:
+    type: object
+    description: Identity and licensing. Strongly recommended.
+    additionalProperties: false
+    properties:
+      license:
+        type: string
+        description: SPDX identifier or 'proprietary'.
+      author:
+        $ref: '#/definitions/party'
+      maintainers:
+        type: array
+        items:
+          $ref: '#/definitions/party'
+      source:
+        type: object
+        required:
+        - type
+        - url
+        additionalProperties: false
+        properties:
+          type:
+            type: string
+            enum:
+            - git
+            - hg
+            - svn
+            - archive
+          url:
+            type: string
+            format: uri
+          branch:
+            type: string
+          commit:
+            type: string
+            pattern: ^[a-f0-9]{7,64}$
+          path:
+            type: string
+            default: .
+      keywords:
+        type: array
+        maxItems: 16
+        items:
+          type: string
+          pattern: ^[a-z0-9][a-z0-9-]*$
+          maxLength: 32
+      categories:
+        type: array
+        maxItems: 4
+        items:
+          type: string
+      id:
+        type: string
+        pattern: ^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$
+        description: Optional reverse-DNS stable identifier.
+        $comment: Reverse-DNS ids survive renames, forks, and platform migrations. Recommended
+          but not required; the repo URL + commit in metadata.source is sufficient for uniqueness.
+  x-ext:
+    type: object
+    description: Free-form escape hatch. Keys MUST begin with a reverse-DNS vendor prefix.
+      Consumers MAY ignore all x-ext content.
+    additionalProperties: true
+definitions:
+  party:
+    type: object
+    required:
+    - name
+    additionalProperties: false
+    properties:
+      name:
+        type: string
+        minLength: 1
+      handle:
+        type: string
+        pattern: ^[A-Za-z0-9][A-Za-z0-9_-]{0,38}$
+      url:
+        type: string
+        format: uri
+      email:
+        type: string
+        format: email
+      org:
+        type: string

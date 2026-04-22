@@ -1,0 +1,43 @@
+# Example 08 — CLI developer tool
+# Shipped to multiple package managers (npm, Homebrew, Cargo). No
+# platform block; deployment.targets lists the package managers.
+version: "1.0"
+name: universal-spawn-lint
+type: cli-tool
+summary: Strict linter for universal-spawn manifests.
+description: >
+  Command-line linter that validates a universal-spawn manifest against
+  the master schema, every applicable platform extension schema, and a
+  set of quality rules (realistic descriptions, reachable references,
+  no emoji, permission-scope coverage).
+
+deployment:
+  targets: [npm, homebrew, cargo]
+  build:
+    command: "cargo build --release"
+    output: "target/release/universal-spawn-lint"
+    engine: "rust"
+
+safety:
+  min_permissions:
+    - fs:read
+    - network:outbound
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: UNIVERSAL_SPAWN_SCHEMA_CACHE
+    description: Optional on-disk cache directory for downloaded schemas.
+    required: false
+    example: "~/.cache/universal-spawn"
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Jani Solo
+    handle: JanSol0s
+    org: AgentMindCloud
+  source:
+    type: git
+    url: https://github.com/AgentMindCloud/universal-spawn-lint
+  keywords: [cli, lint, json-schema, validator]
+  categories: [devtools]

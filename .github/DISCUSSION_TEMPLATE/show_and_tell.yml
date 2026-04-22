@@ -1,0 +1,57 @@
+title: "[Show & tell] "
+labels: ["show-and-tell"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Show off what you built with universal-spawn
+
+        Share a creation that ships a `universal-spawn.yaml`. This is a
+        celebration thread — not for bug reports (use Issues) or spec
+        proposals (use an RFC).
+
+  - type: input
+    id: project
+    attributes:
+      label: Project name
+      placeholder: "Fielded, Parchment Grid, Omni Bot, ..."
+    validations:
+      required: true
+
+  - type: input
+    id: link
+    attributes:
+      label: Repository or homepage URL
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - ai-agent
+        - ai-skill
+        - web-app
+        - creative-tool
+        - game-mod
+        - hardware-device
+        - bot
+        - site
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: story
+    attributes:
+      label: What it does + which platforms it spawns on
+      description: One paragraph. Real screenshots and plate art welcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: gotchas
+    attributes:
+      label: Anything the spec could do better for you?
+      description: Optional. Inform the roadmap.

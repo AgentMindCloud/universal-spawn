@@ -1,0 +1,41 @@
+# CODEOWNERS — automatic reviewer assignment.
+#
+# Format: <path-pattern>  <@handle> [<@handle> ...]
+# Later rules override earlier ones.
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-security/customizing-your-repository/about-code-owners
+
+# Default owner — anything not otherwise matched
+*                                       @JanSol0s
+
+# Specification (prose + schemas + examples)
+/spec/                                  @JanSol0s
+/spec/v1.0/                             @JanSol0s
+/spec/v1.0.0/                           @JanSol0s
+
+# Platform extensions
+/platforms/                             @JanSol0s
+/platforms/claude/                      @JanSol0s
+/platforms/gemini/                      @JanSol0s
+/platforms/openai/                      @JanSol0s
+/platforms/vercel/                      @JanSol0s
+/platforms/netlify/                     @JanSol0s
+/platforms/unity/                       @JanSol0s
+/platforms/figma/                       @JanSol0s
+/platforms/discord/                     @JanSol0s
+/platforms/huggingface/                 @JanSol0s
+
+# Creator-facing reference files
+/universal/                             @JanSol0s
+
+# Governance documents
+/GOVERNANCE.md                          @JanSol0s
+/MAINTAINERS.md                         @JanSol0s
+/SECURITY.md                            @JanSol0s
+/CODE_OF_CONDUCT.md                     @JanSol0s
+/NOTICE                                 @JanSol0s
+/LICENSE                                @JanSol0s
+
+# Workflows and CI
+/.github/workflows/                     @JanSol0s
+/.github/dependabot.yml                 @JanSol0s
+/.github/CODEOWNERS                     @JanSol0s

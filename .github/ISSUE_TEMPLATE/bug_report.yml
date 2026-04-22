@@ -1,0 +1,64 @@
+name: Bug report
+description: Report a defect in the specification, schema, or a platform extension.
+title: "[bug] "
+labels: ["type/bug", "status/triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. This form is for
+        **defects** — something the spec, schema, or example does
+        incorrectly. For questions, please start a Discussion.
+
+  - type: dropdown
+    id: spec-version
+    attributes:
+      label: Spec version
+      options:
+        - "1.0 (spec/v1.0)"
+        - "1.0.0 (spec/v1.0.0)"
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: File and line
+      description: Which file contains the defect?
+      placeholder: "spec/v1.0/universal-spawn.schema.json line 42"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What the spec or schema should say or do.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What the spec or schema currently says or does.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Minimal reproducer
+      description: Smallest manifest that triggers the wrong verdict. State the validator and version.
+      render: yaml
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Who is affected?
+      description: Conformant consumers? Only implementers of one platform extension?
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed fix (optional)

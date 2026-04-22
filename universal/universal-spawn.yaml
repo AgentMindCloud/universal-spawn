@@ -1,0 +1,122 @@
+# universal-spawn.yaml — annotated reference manifest
+#
+# Drop this file at the ROOT of your repository. Fill in the fields
+# that apply. Leave the rest out; every field below is either required
+# by the v1.0 schema or there to demonstrate the shape.
+#
+# The four required fields are: version, name, description, type.
+# A manifest also needs at least one of `platforms` or `deployment`.
+#
+# Validate with:
+#   npx ajv-cli validate --all-errors --spec=draft7 -c ajv-formats \
+#     -s spec/v1.0/universal-spawn.schema.json \
+#     -d universal-spawn.yaml
+#
+# Full specification: spec/v1.0/spec.md
+# Creator cheatsheet:  universal/cheatsheet.md
+# Alias rules:         universal/aliases.md
+
+# ─── Required core fields ──────────────────────────────────────────────────
+version: "1.0"
+
+# Display name. Alphanumerics, space, dot, underscore, dash. No emoji.
+name: Your Creation
+
+# One-of from the schema enum. Pick the single type that best describes
+# this creation. If it spans types, pick the one a new user will expect.
+type: cli-tool
+
+# One paragraph, 10-500 characters. The first sentence should stand
+# alone as a summary; indexers use it verbatim.
+description: >
+  Replace this text with a real description. State what the creation
+  does, for whom, and what distinguishes it. Observational prose beats
+  marketing prose.
+
+# ─── Optional card text ────────────────────────────────────────────────────
+
+# Single line, <=140 chars. Used in social cards and compact lists.
+summary: One-line summary for cards.
+
+homepage: https://example.com
+
+# ─── Platform extensions ───────────────────────────────────────────────────
+# Add any platforms you target. Each value is validated by its own
+# extension schema under platforms/<id>/schema.extension.json.
+# This template is commented out because a blank `platforms: {}` is
+# never what you want; delete or replace.
+#
+# platforms:
+#   claude:
+#     skill_type: subagent
+#     model: claude-opus-4-7
+#     surface: [claude-api, claude-code]
+#   vercel:
+#     framework: nextjs
+#     build_command: "pnpm build"
+
+# ─── Safety envelope ───────────────────────────────────────────────────────
+# The platform enforces these numbers. Start conservative: empty
+# min_permissions + safe_for_auto_spawn false is the safest default.
+safety:
+  # Smallest set of capabilities this creation needs. Format:
+  # namespace:action[:scope]. Prefer narrow scopes — the hostname
+  # form beats the blanket namespace form.
+  min_permissions: []
+  # Queries per second limit. Remove or set to 0 to mean "don't care."
+  rate_limit_qps: 1
+  # Daily USD ceiling. The platform halts spawning before this is
+  # exceeded when cost is attributable to the manifest.
+  cost_limit_usd_daily: 0
+  # True only if the author certifies spawn is safe without human
+  # confirmation under the declared permissions/limits.
+  safe_for_auto_spawn: false
+  # Regional residency. Omit or use [any] for no restriction.
+  data_residency: [any]
+
+# ─── Deployment (for services / hosted creations) ──────────────────────────
+# Required only if `platforms` is absent. If both are present, the
+# platform-specific block takes precedence for that platform.
+deployment:
+  targets: [github]
+  regions: []
+  build:
+    command: ""
+    output: ""
+    engine: ""
+
+# ─── Environment variables ─────────────────────────────────────────────────
+# Declare env vars by NAME. Never put secret values in this file.
+env_vars_required:
+  - name: EXAMPLE_API_KEY
+    description: Example secret token used by this creation.
+    required: true
+    secret: true
+    # `example` is an illustrative value. MUST NOT be a real secret.
+    example: "sk_live_..."
+
+# ─── Visual assets ─────────────────────────────────────────────────────────
+visuals:
+  icon: assets/icon.svg
+  hero_plate: assets/hero.svg
+  palette: parchment
+
+# ─── Metadata ──────────────────────────────────────────────────────────────
+metadata:
+  license: Apache-2.0
+  author:
+    name: Your Name
+    handle: yourhandle
+    url: https://github.com/yourhandle
+  maintainers:
+    - name: Co-maintainer Name
+      handle: comaintainer
+  source:
+    type: git
+    url: https://github.com/yourhandle/your-creation
+    branch: main
+    path: .
+  keywords: [your, keywords, here]
+  categories: [devtools]
+  # Optional reverse-DNS stable id. Useful across registries.
+  id: com.yourdomain.your-creation

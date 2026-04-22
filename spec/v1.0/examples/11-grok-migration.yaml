@@ -1,0 +1,57 @@
+# Example 11 — grok-install v2.14 direct migration
+# One-to-one map of a grok-install.yaml into universal-spawn.yaml.
+# Demonstrates the round-trip guarantee.
+version: "1.0"
+name: Grok Telemetry
+type: ai-agent
+summary: Grok-first agent that now ships universally.
+description: >
+  Originally distributed as a grok-install v2.14 manifest. Lifted into
+  universal-spawn with no information loss. Lowering it back produces
+  the same grok-install.yaml modulo field ordering.
+
+platforms:
+  grok:
+    tools:
+      - name: telemetry_ping
+        function_ref: tools/telemetry.json
+    surface: [grok-api]
+
+safety:
+  min_permissions:
+    - network:outbound:api.x.ai
+    - model:call:grok-4
+  rate_limit_qps: 2
+  cost_limit_usd_daily: 5
+  safe_for_auto_spawn: false
+
+deployment:
+  targets: [grok]
+
+env_vars_required:
+  - name: XAI_API_KEY
+    description: API key for the xAI / Grok platform.
+    secret: true
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Jani Solo
+    handle: JanSol0s
+    org: AgentMindCloud
+  source:
+    type: git
+    url: https://github.com/AgentMindCloud/grok-telemetry
+  keywords: [grok, migration, telemetry]
+  categories: [ai]
+  id: org.agentmindcloud.grok-telemetry
+
+x-ext:
+  org.agentmindcloud.grok-install:
+    version: "2.14"
+    # The original grok-install manifest used these exact keys.
+    # Preserved verbatim under x-ext for round-trip fidelity.
+    legacy_keys:
+      tagline: "Grok-first agent that now ships universally."
+      x_handle: "JanSol0s"
+      pinned_commit: "1a2b3c4d5e6f7a8b9c0d"

@@ -1,0 +1,82 @@
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.AppleDouble
+.LSOverride
+
+# Editors / IDEs
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+.history/
+.ionide/
+*.sublime-project
+*.sublime-workspace
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.pnpm-store/
+.yarn/
+.yarn-integrity
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.python-version
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Builds / artifacts
+dist/
+build/
+out/
+.output/
+.next/
+.nuxt/
+.svelte-kit/
+.astro/
+coverage/
+.nyc_output/
+.cache/
+.turbo/
+.parcel-cache/
+tmp/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs
+logs/
+*.log
+
+# Lock files from other package managers we don't use
+# (intentionally keep whichever lock file the project commits)

@@ -1,0 +1,37 @@
+version: 2
+updates:
+  # npm dev-dependencies (validators, linters, formatters)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "AgentMindCloud/maintainers"
+    labels:
+      - "type/chore"
+      - "dependencies"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # GitHub Actions in this repo
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "AgentMindCloud/maintainers"
+    labels:
+      - "type/chore"
+      - "dependencies"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"

@@ -1,0 +1,44 @@
+name: spellcheck
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**/*.md"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - "**/*.json"
+      - ".cspell.json"
+      - ".github/workflows/spellcheck.yml"
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - "**/*.json"
+      - ".cspell.json"
+      - ".github/workflows/spellcheck.yml"
+  workflow_dispatch:
+
+jobs:
+  cspell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install cspell
+        run: npm install --no-save cspell@8
+
+      - name: Run cspell
+        run: |
+          npx cspell --no-progress \
+            "**/*.md" \
+            "**/*.yaml" \
+            "**/*.yml" \
+            "**/*.json" \
+            --exclude "node_modules/**" \
+            --exclude "package-lock.json"

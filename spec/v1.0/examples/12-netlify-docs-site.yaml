@@ -1,0 +1,54 @@
+# Example 12 — Static Astro docs site deployed to Netlify
+# Distinct from example 03 (Vercel). No functions, publish directory
+# only, one env context (production).
+version: "1.0"
+name: universal-spawn Docs
+type: site
+summary: Docs site for universal-spawn.
+description: >
+  A public static documentation site built with Astro 5 and deployed to
+  Netlify. No serverless functions, no edge functions. One publish
+  directory, one env context. Mirrors the content under docs/ in the
+  canonical repo.
+
+platforms:
+  netlify:
+    build_command: "pnpm build"
+    publish: "dist"
+    node_version: "20"
+    env_contexts: [production]
+    headers_file: "public/_headers"
+
+safety:
+  min_permissions:
+    - network:inbound
+  safe_for_auto_spawn: true
+
+deployment:
+  targets: [netlify]
+  regions: [us-east-1]
+  build:
+    command: "pnpm build"
+    output: "dist"
+    engine: "node"
+    install: "pnpm install --frozen-lockfile"
+    node_version: "20"
+
+env_vars_required: []
+
+visuals:
+  icon: public/icon.svg
+  hero_plate: public/hero.svg
+  palette: parchment
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Jani Solo
+    handle: JanSol0s
+    org: AgentMindCloud
+  source:
+    type: git
+    url: https://github.com/AgentMindCloud/universal-spawn-docs
+  keywords: [docs, astro, netlify, parchment]
+  categories: [web, writing]

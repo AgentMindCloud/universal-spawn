@@ -1,0 +1,52 @@
+# Example 06 — Unity OpenXR gallery experience
+# URP + HDRP variants, OpenXR + Oculus loaders, targets Windows and Quest.
+version: "1.0"
+name: Parchment Gallery
+type: game-world
+summary: OpenXR gallery environment for VR headsets.
+description: >
+  A standalone Unity 2023.2 scene rendered with URP. Opens as a gallery
+  of the Residual Frequencies plates A through F; each plate is an
+  interactive triptych. Targets Windows standalone and Quest 2/3.
+
+platforms:
+  unity:
+    target_version: "2023.2"
+    render_pipeline: urp
+    scripting_backend: il2cpp
+    entry_scene: Assets/Scenes/Gallery.unity
+    packages:
+      - com.unity.xr.openxr
+      - com.unity.render-pipelines.universal
+      - com.unity.inputsystem
+    defines: [ENABLE_XR, ENABLE_PARCHMENT]
+    target_platforms: [standalone-windows, android]
+    xr:
+      required: true
+      loaders: [openxr, oculus]
+
+safety:
+  min_permissions:
+    - fs:read
+    - gpu:compute
+  safe_for_auto_spawn: false
+
+deployment:
+  targets: [unity]
+
+env_vars_required: []
+
+visuals:
+  icon: Assets/Icon.svg
+  palette: parchment
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Gallery Co.
+    handle: gallery-co
+  source:
+    type: git
+    url: https://github.com/gallery-co/unity-parchment-gallery
+  keywords: [unity, xr, openxr, gallery, parchment]
+  categories: [gaming, graphics]

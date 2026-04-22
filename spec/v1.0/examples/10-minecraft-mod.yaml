@@ -1,0 +1,51 @@
+# Example 10 — Minecraft mod (Fabric loader)
+# Distinct from Unity: uses the `minecraft` platform key (unregistered
+# today, planned for a future platform folder), and a `game-mod` kind.
+version: "1.0"
+name: Parchment Biome
+type: game-mod
+summary: Fabric mod adding a parchment-themed biome to Minecraft.
+description: >
+  A Minecraft 1.21 Fabric mod that adds a new biome themed on the
+  Residual Frequencies Parchment palette. Ships structures, mobs, and a
+  custom block palette. Requires Fabric Loader 0.16 and Fabric API.
+
+platforms:
+  minecraft:
+    loader: fabric
+    minecraft_version: "1.21"
+    loader_version: ">=0.16.0"
+    mod_id: parchment_biome
+    entry_file: fabric.mod.json
+    dependencies:
+      - "fabric-api@>=0.100.0"
+
+safety:
+  min_permissions:
+    - fs:read
+    - fs:write
+  safe_for_auto_spawn: false
+
+deployment:
+  targets: [modrinth, curseforge]
+  build:
+    command: "./gradlew build"
+    output: "build/libs"
+    engine: "gradle"
+
+env_vars_required: []
+
+visuals:
+  icon: src/main/resources/assets/parchment_biome/icon.png
+  palette: parchment
+
+metadata:
+  license: MIT
+  author:
+    name: Biome Team
+    handle: biome-team
+  source:
+    type: git
+    url: https://github.com/biome-team/minecraft-parchment-biome
+  keywords: [minecraft, fabric, mod, biome, parchment]
+  categories: [gaming]

@@ -1,0 +1,77 @@
+title: "[RFC] "
+labels: ["rfc"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## universal-spawn RFC
+
+        RFCs are how non-trivial changes to the specification are
+        proposed. Keep this structured; reviewers will comment section
+        by section. See GOVERNANCE.md for the decision rules.
+
+  - type: input
+    id: title
+    attributes:
+      label: Short title
+      placeholder: "Example: signed manifests become required in v2.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One paragraph. What is being proposed?
+      placeholder: "In one paragraph, what should change and why is it worth doing?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Concrete scenarios that cannot be expressed today.
+      placeholder: "Give real manifest examples where the current spec falls short."
+    validations:
+      required: true
+
+  - type: textarea
+    id: design
+    attributes:
+      label: Proposed design
+      description: Prose + schema snippet (or link to a draft).
+      render: yaml
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Including "do nothing" and why it is or isn't acceptable.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Change kind
+      options:
+        - Editorial (patch)
+        - Additive (minor)
+        - Breaking (major)
+    validations:
+      required: true
+
+  - type: textarea
+    id: compat
+    attributes:
+      label: Backwards compatibility
+      description: For breaking changes, describe the transition plan.
+
+  - type: textarea
+    id: open-questions
+    attributes:
+      label: Open questions
+      description: List decisions still needed from reviewers.

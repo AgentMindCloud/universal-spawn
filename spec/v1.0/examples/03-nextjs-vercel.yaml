@@ -1,0 +1,72 @@
+# Example 03 — Next.js app on Vercel
+# A production-shaped Next.js web app with one HTTP entrypoint, three
+# regions, and edge-runtime API functions.
+version: "1.0"
+name: Fielded Web
+type: web-app
+summary: Public site for the Fielded research assistant.
+description: >
+  Next.js 15 app that renders Fielded's public marketing site and a
+  small API for waitlist signups. Deploys to Vercel in iad1, cdg1, and
+  hnd1. Uses edge-runtime functions for /api/**.
+
+platforms:
+  vercel:
+    framework: nextjs
+    install_command: "pnpm install --frozen-lockfile"
+    build_command: "pnpm build"
+    output: ".next"
+    node_version: "20"
+    regions: [iad1, cdg1, hnd1]
+    functions:
+      - match: "app/api/**/*.ts"
+        runtime: edge
+        memory_mb: 256
+        max_duration_seconds: 15
+    env_promotion: [production, preview]
+
+deployment:
+  targets: [vercel]
+  regions: [iad1, cdg1, hnd1]
+  build:
+    command: "pnpm build"
+    output: ".next"
+    engine: "node"
+    install: "pnpm install --frozen-lockfile"
+    node_version: "20"
+
+safety:
+  min_permissions:
+    - network:inbound
+    - network:outbound:api.resend.com
+  rate_limit_qps: 100
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Connection string for the Fielded waitlist Postgres.
+    secret: true
+  - name: RESEND_API_KEY
+    description: Resend API key used for transactional email.
+    secret: true
+  - name: NEXT_PUBLIC_SITE_URL
+    description: Public URL the app serves from.
+    required: false
+    example: "https://fielded.lab"
+
+visuals:
+  icon: public/icon.svg
+  palette: parchment
+
+metadata:
+  license: MIT
+  author:
+    name: Jani Solo
+    handle: JanSol0s
+    org: AgentMindCloud
+  source:
+    type: git
+    url: https://github.com/AgentMindCloud/fielded-web
+  keywords: [nextjs, vercel, waitlist, marketing]
+  categories: [web, productivity]

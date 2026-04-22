@@ -1,0 +1,125 @@
+name: New platform proposal
+description: Propose a new platform folder under platforms/.
+title: "[platform] "
+labels: ["type/spec", "status/triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Propose a new platform. Adding a platform is how the standard
+        grows horizontally. See CONTRIBUTING.md#adding-a-platform.
+
+  - type: input
+    id: name
+    attributes:
+      label: Platform name
+      placeholder: "Slack"
+    validations:
+      required: true
+
+  - type: input
+    id: platform-id
+    attributes:
+      label: Platform id (lowercase, single word preferred)
+      placeholder: "slack"
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: Platform homepage URL
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - AI
+        - Hosting / deployment
+        - Creative / design
+        - Game engine / platform
+        - Social / communication
+        - Hardware / firmware
+        - Model hub / dataset hub
+        - Developer tools
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: kinds
+    attributes:
+      label: Which manifest `kind`s does this platform accept?
+      options:
+        - label: ai-agent
+        - label: ai-skill
+        - label: ai-model
+        - label: web-app
+        - label: api-service
+        - label: cli-tool
+        - label: library
+        - label: dataset
+        - label: notebook
+        - label: creative-tool
+        - label: design-template
+        - label: game-mod
+        - label: game-world
+        - label: hardware-device
+        - label: firmware
+        - label: bot
+        - label: extension
+        - label: plugin
+        - label: site
+        - label: container
+        - label: workflow
+
+  - type: checkboxes
+    id: entrypoint-kinds
+    attributes:
+      label: Which entrypoint kinds does this platform support?
+      options:
+        - label: http
+        - label: cli
+        - label: websocket
+        - label: stdio
+        - label: script
+        - label: container
+        - label: webhook
+        - label: scene
+        - label: slash-command
+        - label: tool-call
+        - label: ui-panel
+
+  - type: textarea
+    id: existing
+    attributes:
+      label: Existing config file this extends
+      description: Path or name of the platform's current manifest, if any (e.g. `figma.manifest.json`, `vercel.json`, `.claude/skill.yaml`).
+    validations:
+      required: true
+
+  - type: textarea
+    id: extension-sketch
+    attributes:
+      label: Minimum extension schema sketch
+      description: Which fields do you need under `platforms.<id>`? A rough JSON Schema snippet is ideal.
+      render: json
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this platform belongs in the standard
+      description: Who benefits? What concrete scenario breaks without it?
+    validations:
+      required: true
+
+  - type: input
+    id: maintainer
+    attributes:
+      label: Who will maintain this folder?
+      description: A platform folder merges only when a maintainer signs up to keep it current.
+    validations:
+      required: true

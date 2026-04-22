@@ -1,0 +1,58 @@
+name: validate-schemas
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "spec/**/*.schema.json"
+      - "platforms/**/schema.extension.json"
+      - ".github/workflows/validate-schemas.yml"
+      - "package.json"
+  pull_request:
+    paths:
+      - "spec/**/*.schema.json"
+      - "platforms/**/schema.extension.json"
+      - ".github/workflows/validate-schemas.yml"
+      - "package.json"
+  workflow_dispatch:
+
+jobs:
+  compile:
+    name: Compile all JSON Schemas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install deps
+        run: |
+          npm install --no-save ajv-cli@5 ajv-formats@3
+
+      - name: Compile v1.0 (draft-07) master schema
+        run: |
+          npx ajv-cli compile \
+            --spec=draft7 \
+            -c ajv-formats \
+            -s spec/v1.0/universal-spawn.schema.json
+
+      - name: Compile v1.0.0 (draft 2020-12) master schema (legacy track)
+        run: |
+          npx ajv-cli compile \
+            --spec=draft2020 \
+            -c ajv-formats \
+            -s spec/v1.0.0/manifest.schema.json
+
+      - name: Compile every platform extension schema (draft 2020-12)
+        run: |
+          for f in platforms/*/schema.extension.json; do
+            echo "::group::$f"
+            npx ajv-cli compile \
+              --spec=draft2020 \
+              -c ajv-formats \
+              -s "$f"
+            echo "::endgroup::"
+          done

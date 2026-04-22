@@ -1,0 +1,37 @@
+{
+  "name": "universal-spawn",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Canonical repository for the universal-spawn open standard: declarative spawn manifests across AI, hosting, creative, dev, game, social, and hardware platforms.",
+  "homepage": "https://github.com/AgentMindCloud/universal-spawn",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AgentMindCloud/universal-spawn.git"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Jani Solo",
+    "url": "https://github.com/JanSol0s"
+  },
+  "scripts": {
+    "validate": "ajv validate --all-errors --spec=draft7 -c ajv-formats -s spec/v1.0/universal-spawn.schema.json -d \"spec/v1.0/examples/*.yaml\" -d \"universal/universal-spawn.yaml\" -d \"universal/universal-spawn.json\"",
+    "validate:schemas": "ajv compile --spec=draft7 -s spec/v1.0/universal-spawn.schema.json",
+    "validate:legacy": "python3 scripts/validate.py",
+    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
+    "lint:yaml": "yaml-lint \"spec/**/*.yaml\" \"universal/**/*.yaml\" \"platforms/**/*.yaml\" \"examples/**/*.yaml\"",
+    "format": "prettier --write \"**/*.{md,yaml,yml,json}\" \"!LICENSE\" \"!NOTICE\"",
+    "spellcheck": "cspell \"**/*.md\" \"**/*.yaml\" \"**/*.json\" --no-progress",
+    "test": "npm run validate && npm run validate:legacy && npm run lint:md"
+  },
+  "devDependencies": {
+    "ajv-cli": "^5.0.0",
+    "ajv-formats": "^3.0.1",
+    "cspell": "^8.16.1",
+    "markdownlint-cli2": "^0.14.0",
+    "prettier": "^3.4.2",
+    "yaml-lint": "^1.7.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

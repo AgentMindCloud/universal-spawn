@@ -1,0 +1,50 @@
+name: Security concern (public, low-severity only)
+description: "For PUBLIC low-severity security notes. Do NOT use for vulnerabilities — use private disclosure."
+title: "[security] "
+labels: ["type/bug", "status/triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## STOP
+
+        If your concern is an **actual vulnerability** — something that
+        lets a malicious manifest escape `min_permissions`, forge a
+        signature, or otherwise break the safety model — **use private
+        disclosure**. Do not open a public issue.
+
+        - Security advisories:
+          https://github.com/AgentMindCloud/universal-spawn/security/advisories/new
+        - Email: `security@agentmindcloud.org`
+        - Full policy: [SECURITY.md](../../SECURITY.md)
+
+        This form is only for:
+
+        - Low-severity hygiene notes (typos in SECURITY.md, broken
+          contact links, clarifications that do not expose a hole).
+        - Questions about the safety model that have no exploit
+          content.
+
+        Anything that looks exploitable will be closed and asked for
+        private disclosure.
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirm
+      options:
+        - label: This issue is **not** a vulnerability. It is a documentation, process, or clarification concern.
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: File / path
+      placeholder: "SECURITY.md line 42"

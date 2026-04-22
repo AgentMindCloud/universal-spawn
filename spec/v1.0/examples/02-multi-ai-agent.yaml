@@ -1,0 +1,80 @@
+# Example 02 — Multi-platform research agent (Claude + OpenAI + Gemini)
+# One manifest, three AI targets. Each platform reads only its block.
+version: "1.0"
+name: Research Agent
+type: ai-agent
+summary: Cites and summarizes open-access research papers.
+description: >
+  Tool-calling research agent. Takes a natural-language question, queries
+  OpenAlex for papers, and returns a cited summary. Runs on Claude Opus
+  4.7, OpenAI GPT-5, or Gemini 2.5 Pro depending on the key that is set.
+
+platforms:
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+    surface: [claude-api, claude-code]
+    tools:
+      - name: ask
+        function_ref: tools/ask.json
+    thinking:
+      type: enabled
+      budget_tokens: 16384
+    prompt_cache: true
+
+  openai:
+    model: gpt-5
+    tools:
+      - name: ask
+        function_ref: tools/ask.json
+        strict: true
+    reasoning_effort: medium
+    temperature: 0.2
+
+  gemini:
+    model: gemini-2-5-pro
+    system_instruction_file: prompts/system.md
+    tools:
+      - name: ask
+        function_ref: tools/ask.json
+    grounding:
+      google_search: false
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:api.openai.com
+    - network:outbound:generativelanguage.googleapis.com
+    - network:outbound:api.openalex.org
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 10
+  safe_for_auto_spawn: false
+  data_residency: [us, eu]
+
+deployment:
+  targets: [claude, openai, gemini]
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key used when targeting Claude.
+    required: false
+    secret: true
+  - name: OPENAI_API_KEY
+    description: OpenAI API key used when targeting OpenAI.
+    required: false
+    secret: true
+  - name: GOOGLE_API_KEY
+    description: Google API key used when targeting Gemini.
+    required: false
+    secret: true
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Example Research Co.
+    handle: example-research
+  source:
+    type: git
+    url: https://github.com/example-research/research-agent
+  keywords: [agent, research, citations, tool-use]
+  categories: [ai, research]

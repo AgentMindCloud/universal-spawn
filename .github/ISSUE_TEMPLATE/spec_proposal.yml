@@ -1,0 +1,72 @@
+name: Spec proposal
+description: Propose a change to the specification — editorial, additive, or breaking.
+title: "[spec] "
+labels: ["type/spec", "status/triage", "rfc"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Propose a change to the normative specification. For large
+        design proposals, open an RFC discussion first; this form is
+        for narrower changes with a clear diff.
+
+  - type: input
+    id: field-name
+    attributes:
+      label: Field name
+      placeholder: "safety.cost_limit_usd_daily"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Change type
+      options:
+        - Editorial (patch)
+        - Additive (minor)
+        - Breaking (major)
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Why is the current spec insufficient? Real manifests or scenarios preferred.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-prose
+    attributes:
+      label: Proposed prose change
+      description: Quote or link the paragraph in spec.md you would add or modify.
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-schema
+    attributes:
+      label: Proposed schema change
+      description: Diff against universal-spawn.schema.json. Precise — a spec proposal without a schema diff is a discussion, not a proposal.
+      render: diff
+    validations:
+      required: true
+
+  - type: textarea
+    id: backward-compat
+    attributes:
+      label: Backwards compatibility
+      description: Which existing manifests become invalid? Which platform extensions need updates?
+    validations:
+      required: true
+
+  - type: textarea
+    id: migration
+    attributes:
+      label: Migration plan
+      description: For breaking changes, the deprecation / transition path. For additive, write "n/a".
+    validations:
+      required: true

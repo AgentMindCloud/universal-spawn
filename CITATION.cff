@@ -1,0 +1,52 @@
+cff-version: 1.2.0
+message: "If you reference universal-spawn in academic or industry work, please cite it using this metadata."
+title: "universal-spawn: a declarative manifest standard for cross-platform spawning"
+abstract: >-
+  universal-spawn is an open specification for a single declarative
+  manifest file (spawn.yaml) that makes any creation discoverable,
+  validatable, and one-click spawnable across AI platforms, hosting
+  providers, creative tools, dev ecosystems, games, social apps, and
+  hardware. It defines a strict JSON Schema, a safety envelope
+  (minimum permissions, rate ceilings, cost ceilings), and a
+  registration model for platform-specific extensions.
+authors:
+  - given-names: Jani
+    family-names: Solo
+    alias: JanSol0s
+    affiliation: AgentMindCloud
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+type: software
+version: "1.0.0"
+date-released: "2026-04-22"
+license: Apache-2.0
+repository-code: "https://github.com/AgentMindCloud/universal-spawn"
+url: "https://github.com/AgentMindCloud/universal-spawn"
+keywords:
+  - specification
+  - json-schema
+  - manifest
+  - deployment
+  - ai-agents
+  - interoperability
+  - open-standard
+identifiers:
+  - type: url
+    value: "https://github.com/AgentMindCloud/universal-spawn"
+    description: Canonical source repository
+  # Replace with a DOI once the spec is deposited with a registry
+  # (Zenodo, CrossRef, etc.).
+  - type: other
+    value: "DOI-PENDING"
+    description: DOI placeholder
+preferred-citation:
+  type: software
+  title: "universal-spawn: a declarative manifest standard for cross-platform spawning"
+  authors:
+    - given-names: Jani
+      family-names: Solo
+      alias: JanSol0s
+      affiliation: AgentMindCloud
+  version: "1.0.0"
+  year: 2026
+  url: "https://github.com/AgentMindCloud/universal-spawn"
+  license: Apache-2.0

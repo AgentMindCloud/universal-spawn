@@ -1,0 +1,51 @@
+name: Feature request
+description: Suggest an additive improvement that does not break existing v1 manifests.
+title: "[feature] "
+labels: ["type/feature", "status/triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Feature requests are **additive** only — new optional fields,
+        new enum values, new platforms. Breaking changes belong in a
+        spec proposal or an RFC.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What cannot currently be expressed in a manifest? Describe the concrete authoring or consumption scenario.
+    validations:
+      required: true
+
+  - type: textarea
+    id: shape
+    attributes:
+      label: Proposed shape
+      description: Sketch the field(s) you would add. Keep it additive.
+      render: yaml
+    validations:
+      required: true
+
+  - type: textarea
+    id: universal
+    attributes:
+      label: Why universal and not platform-specific?
+      description: If the proposed field is platform-specific, open a PR against that platform's extension schema instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact on existing manifests
+      options:
+        - "Zero — existing manifests remain valid (additive)"
+        - "Non-zero (if so, open an RFC instead)"
+    validations:
+      required: true

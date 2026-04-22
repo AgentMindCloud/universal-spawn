@@ -1,0 +1,13 @@
+# .mailmap — canonicalize contributor identities for `git shortlog`,
+# `git log --use-mailmap`, and GitHub contributor stats.
+#
+# Format (pick whichever line form matches the fix you need):
+#
+#   Proper Name <commit@email.xx>
+#   Proper Name <proper@email.xx>                    <commit@email.xx>
+#   Proper Name                                      <commit@email.xx>
+#   Proper Name <proper@email.xx>   Commit Name      <commit@email.xx>
+#
+# Lines starting with # are comments.
+
+Jani Solo <jani@agentmindcloud.dev>                  <JanSol0s@users.noreply.github.com>

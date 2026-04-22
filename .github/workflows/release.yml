@@ -1,0 +1,79 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+      - "spec-v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (e.g. spec-v1.0.1)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Derive tag
+        id: tag
+        run: |
+          if [ -n "${{ github.event.inputs.tag }}" ]; then
+            echo "tag=${{ github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${GITHUB_REF##*/}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validate everything before release
+        run: |
+          npm install --no-save ajv-cli@5 ajv-formats@3 yaml@2
+          npx ajv-cli compile --spec=draft7 \
+            -s spec/v1.0/universal-spawn.schema.json
+          npx ajv-cli compile --spec=draft2020 \
+            -s spec/v1.0.0/manifest.schema.json
+
+      - name: Build schema bundle
+        run: |
+          mkdir -p dist/release
+          tar -czf "dist/release/universal-spawn-schemas-${{ steps.tag.outputs.tag }}.tar.gz" \
+            spec/v1.0/universal-spawn.schema.json \
+            spec/v1.0/universal-spawn.schema.yaml \
+            spec/v1.0.0/manifest.schema.json \
+            platforms/*/schema.extension.json
+
+      - name: Extract changelog section
+        id: changelog
+        run: |
+          awk -v tag="${{ steps.tag.outputs.tag }}" '
+            BEGIN { on = 0 }
+            /^## \[/ {
+              if (on) exit
+              # match either [1.0.0] or [spec-v1.0.0] at the tag heading
+              line_tag = $0
+              if (index(line_tag, tag) > 0) on = 1
+              else next
+            }
+            on { print }
+          ' CHANGELOG.md > dist/release/notes.md
+          [ -s dist/release/notes.md ] || echo "See CHANGELOG.md" > dist/release/notes.md
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: "universal-spawn ${{ steps.tag.outputs.tag }}"
+          body_path: dist/release/notes.md
+          files: |
+            dist/release/*.tar.gz
+            spec/v1.0/universal-spawn.schema.json

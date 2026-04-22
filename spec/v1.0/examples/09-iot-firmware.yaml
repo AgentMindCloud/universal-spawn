@@ -1,0 +1,44 @@
+# Example 09 — USB humidity/temperature sensor firmware
+# Hardware scope on min_permissions: usb:claim with a vendor id.
+version: "1.0"
+name: Microlab Sensor
+type: firmware
+summary: Firmware for a USB environmental sensor with MQTT telemetry.
+description: >
+  Firmware for a small USB-attached humidity / temperature sensor.
+  Publishes telemetry to an MQTT broker over TCP. Declares its USB
+  vendor id in min_permissions so a spawn host can wire the device
+  without elevating to blanket USB access.
+
+deployment:
+  targets: [platformio, esp-idf]
+  build:
+    command: "pio run"
+    engine: "rust"
+
+safety:
+  min_permissions:
+    - usb:claim:vid=0x2341
+    - network:outbound
+  rate_limit_qps: 1
+  safe_for_auto_spawn: false
+  data_residency: [us, eu]
+
+env_vars_required:
+  - name: MQTT_BROKER_URL
+    description: Address of the MQTT broker telemetry is published to.
+    example: "mqtt://broker.microlab.example:1883"
+  - name: DEVICE_AUTH_TOKEN
+    description: Per-device authentication token.
+    secret: true
+
+metadata:
+  license: BSD-3-Clause
+  author:
+    name: Microlab Instruments
+    handle: microlab
+  source:
+    type: git
+    url: https://github.com/microlab/microlab-sensor
+  keywords: [firmware, hardware, sensor, humidity, mqtt]
+  categories: [hardware, research, science]

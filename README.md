@@ -305,3 +305,38 @@ Read [`CONTRIBUTING.md`](CONTRIBUTING.md). The short version:
 Apache License 2.0. See [`LICENSE`](LICENSE). The specification itself
 (everything under `spec/`) is also dedicated to the public under the
 same license — you may implement it without permission.
+
+---
+
+## Entry points
+
+Two specification tracks ship in this repository. Pick the one that
+fits your tooling:
+
+| Track               | Location              | Schema draft   | Start here                                              |
+|---------------------|-----------------------|----------------|----------------------------------------------------------|
+| **v1.0** (recommended)  | [`spec/v1.0/`](spec/v1.0/)       | JSON Schema draft-07 | [`spec/v1.0/spec.md`](spec/v1.0/spec.md) — RFC-style prose |
+| v1.0.0 (reference)  | [`spec/v1.0.0/`](spec/v1.0.0/)   | JSON Schema draft 2020-12 | [`spec/v1.0.0/spec.md`](spec/v1.0.0/spec.md)          |
+
+Both tracks describe the same idea; v1.0 uses the widely-supported
+draft-07 and adds RFC-style conformance language. A follow-up release
+will reconcile them.
+
+### For creators
+
+- Copy [`universal/universal-spawn.yaml`](universal/universal-spawn.yaml)
+  (fully annotated reference) to your repo root and fill in the
+  fields.
+- [`universal/cheatsheet.md`](universal/cheatsheet.md) — one page.
+- [`universal/aliases.md`](universal/aliases.md) — accepted filenames.
+- [`spec/v1.0/examples/`](spec/v1.0/examples/) — twelve worked
+  manifests covering every project shape.
+
+### For implementers
+
+- [`spec/v1.0/spec.md`](spec/v1.0/spec.md) — normative prose.
+- [`spec/v1.0/universal-spawn.schema.json`](spec/v1.0/universal-spawn.schema.json) — normative JSON Schema (draft-07).
+- [`spec/v1.0/migration/`](spec/v1.0/migration/) — grok-install and
+  vercel.json walkthroughs.
+- [`docs/safety-model.md`](docs/safety-model.md) — threat analysis
+  and enforcement obligations.

@@ -1,0 +1,93 @@
+name: validate-examples
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "spec/**"
+      - "universal/**"
+      - "examples/**"
+      - "platforms/**"
+      - ".github/workflows/validate-examples.yml"
+      - "package.json"
+  pull_request:
+    paths:
+      - "spec/**"
+      - "universal/**"
+      - "examples/**"
+      - "platforms/**"
+      - ".github/workflows/validate-examples.yml"
+      - "package.json"
+  workflow_dispatch:
+
+jobs:
+  v1_0:
+    name: v1.0 examples (draft-07)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install deps
+        run: |
+          npm install --no-save ajv-cli@5 ajv-formats@3 yaml@2
+
+      - name: Convert YAML examples to JSON
+        run: |
+          mkdir -p .tmp/v1.0-examples
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const yaml = require('yaml');
+            const dir = 'spec/v1.0/examples';
+            for (const name of fs.readdirSync(dir)) {
+              if (!name.endsWith('.yaml') && !name.endsWith('.yml')) continue;
+              const doc = yaml.parse(fs.readFileSync(path.join(dir, name), 'utf8'));
+              const out = path.join('.tmp/v1.0-examples', name.replace(/\.(yaml|yml)$/, '.json'));
+              fs.writeFileSync(out, JSON.stringify(doc, null, 2));
+              console.log('converted', name);
+            }
+          "
+
+      - name: Validate every example against the v1.0 schema
+        run: |
+          npx ajv-cli validate \
+            --all-errors \
+            --spec=draft7 \
+            -c ajv-formats \
+            -s spec/v1.0/universal-spawn.schema.json \
+            -d ".tmp/v1.0-examples/*.json"
+
+      - name: Validate the universal reference files
+        run: |
+          node -e "
+            const fs = require('fs');
+            const yaml = require('yaml');
+            const y = yaml.parse(fs.readFileSync('universal/universal-spawn.yaml','utf8'));
+            fs.writeFileSync('.tmp/universal-from-yaml.json', JSON.stringify(y, null, 2));
+          "
+          npx ajv-cli validate \
+            --all-errors --spec=draft7 -c ajv-formats \
+            -s spec/v1.0/universal-spawn.schema.json \
+            -d .tmp/universal-from-yaml.json \
+            -d universal/universal-spawn.json
+
+  v1_0_0_legacy:
+    name: v1.0.0 legacy track (Python validator)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install jsonschema pyyaml
+
+      - name: Run legacy validator
+        run: python scripts/validate.py

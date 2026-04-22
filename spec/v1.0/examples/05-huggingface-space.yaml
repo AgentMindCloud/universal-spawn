@@ -1,0 +1,56 @@
+# Example 05 — Hugging Face Gradio Space (GPU)
+# A Gradio Space that serves a finetuned image classifier.
+version: "1.0"
+name: Plate Classifier Demo
+type: web-app
+summary: Gradio Space that classifies parchment plate archetypes.
+description: >
+  Gradio Space that takes a plate image and returns the Residual
+  Frequencies archetype (A through F). Runs on a T4 small GPU using a
+  finetuned ViT base model hosted at acme/plate-classifier.
+
+platforms:
+  huggingface:
+    repo_kind: space
+    visibility: public
+    card_file: README.md
+    tags: ["gradio", "image-classification", "parchment"]
+    space_sdk: gradio
+    hardware: t4-small
+    inference:
+      pipeline_tag: image-classification
+      library_name: transformers
+    base_model: google/vit-base-patch16-224
+
+safety:
+  min_permissions:
+    - network:inbound
+    - network:outbound:huggingface.co
+  rate_limit_qps: 2
+  safe_for_auto_spawn: true
+  data_residency: [us, eu]
+
+deployment:
+  targets: [huggingface]
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: Hugging Face access token used to publish the Space.
+    secret: true
+
+visuals:
+  icon: assets/icon.svg
+  hero_plate: assets/hero.svg
+  palette: parchment
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Plate Studio
+    handle: plate-studio
+    url: https://github.com/plate-studio
+  source:
+    type: git
+    url: https://github.com/plate-studio/plate-classifier-demo
+  keywords: [huggingface, gradio, classifier, parchment, vit]
+  categories: [ai, graphics]
