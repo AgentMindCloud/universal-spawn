@@ -1,0 +1,42 @@
+version: "1.0"
+name: Netlify Functions API
+type: api-service
+summary: Netlify Functions API with a Stripe webhook + nextjs plugin.
+description: >
+  HTTP API at /.netlify/functions/api plus a Stripe webhook at
+  /.netlify/functions/stripe. Node 20. Builds on production and
+  deploy-preview contexts.
+
+platforms:
+  netlify:
+    build_command: "pnpm build"
+    publish: dist
+    functions: netlify/functions
+    node_version: "20"
+    env_contexts: [production, deploy-preview]
+    plugins:
+      - package: "@netlify/plugin-nextjs"
+
+safety:
+  min_permissions:
+    - network:inbound
+    - network:outbound:api.stripe.com
+  rate_limit_qps: 50
+  cost_limit_usd_daily: 25
+
+env_vars_required:
+  - name: STRIPE_WEBHOOK_SECRET
+    description: Stripe webhook signing secret.
+    secret: true
+  - name: DATABASE_URL
+    description: Database connection string.
+    secret: true
+
+deployment:
+  targets: [netlify]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Functions Co., handle: functions-co }
+  source: { type: git, url: https://github.com/functions-co/netlify-functions-api }
+  id: com.functions-co.netlify-functions-api

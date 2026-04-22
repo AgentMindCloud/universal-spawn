@@ -1,0 +1,30 @@
+version: "1.0"
+name: Deno Deploy Template
+type: api-service
+description: Template for a Deno-Deploy-targeted universal-spawn manifest.
+
+platforms:
+  deno-deploy:
+    entrypoint: main.ts
+    import_map: import_map.json
+    deno_version: "2"
+    deno_permissions: [allow-net, allow-env]
+    kv_namespaces: [default]
+    regions: [any]
+    compatibility_mode: deno
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: API_SECRET
+    description: API secret.
+    secret: true
+
+deployment:
+  targets: [deno-deploy]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/deno-deploy-template }

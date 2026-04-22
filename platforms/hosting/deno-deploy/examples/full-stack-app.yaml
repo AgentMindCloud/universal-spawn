@@ -1,0 +1,39 @@
+version: "1.0"
+name: Deno Full Stack
+type: web-app
+summary: Full-stack Fresh app using Deno KV and the Node.js compat mode.
+description: >
+  Fresh app with auth + comments. Stores users and posts in Deno KV.
+  Uses the Node.js compatibility mode for a legacy ORM dependency.
+
+platforms:
+  deno-deploy:
+    entrypoint: main.ts
+    import_map: import_map.json
+    deno_version: "2"
+    deno_permissions: [allow-net, allow-env, allow-read]
+    kv_namespaces: [users, posts]
+    regions: [americas]
+    compatibility_mode: node
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:read]
+  cost_limit_usd_daily: 10
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: AUTH_SECRET
+    description: JWT signing secret.
+    secret: true
+  - name: SMTP_URL
+    description: Outbound SMTP URL for email.
+    secret: true
+
+deployment:
+  targets: [deno-deploy]
+
+metadata:
+  license: MIT
+  author: { name: App Co., handle: app-co }
+  source: { type: git, url: https://github.com/app-co/deno-fresh-app }
+  id: com.app-co.deno-fresh-app

@@ -1,0 +1,48 @@
+version: "1.0"
+name: Netlify Full Stack
+type: web-app
+summary: Full-stack Remix app with edge functions, Postgres, and Auth0.
+description: >
+  Remix app with auth (Auth0), a Postgres database (Neon), and edge
+  functions that personalise responses per-region. Builds on every
+  context.
+
+platforms:
+  netlify:
+    build_command: "pnpm build"
+    publish: build/client
+    functions: netlify/functions
+    edge_functions: netlify/edge-functions
+    node_version: "20"
+    env_contexts: [production, deploy-preview, branch-deploy]
+    plugins:
+      - package: "@netlify/plugin-remix"
+    redirects_file: public/_redirects
+    headers_file: public/_headers
+
+safety:
+  min_permissions:
+    - network:inbound
+    - network:outbound:app-co.auth0.com
+    - network:outbound:ep-dark-sun-0.us-east-2.aws.neon.tech
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Neon Postgres connection string.
+    secret: true
+  - name: AUTH0_CLIENT_ID
+    description: Auth0 application client id.
+  - name: AUTH0_CLIENT_SECRET
+    description: Auth0 application client secret.
+    secret: true
+
+deployment:
+  targets: [netlify]
+
+metadata:
+  license: MIT
+  author: { name: App Co., handle: app-co }
+  source: { type: git, url: https://github.com/app-co/netlify-full-stack }
+  id: com.app-co.netlify-full-stack

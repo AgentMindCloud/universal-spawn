@@ -1,0 +1,28 @@
+version: "1.0"
+name: Cloudflare Pages Docs
+type: site
+summary: Minimal Cloudflare Pages docs site with static output.
+description: Astro docs site deployed to Cloudflare Pages.
+
+platforms:
+  cloudflare:
+    surface: pages
+    build:
+      command: "pnpm build"
+      output: dist
+    compatibility_date: "2025-01-15"
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [cloudflare]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Docs Team, handle: docs-team }
+  source: { type: git, url: https://github.com/docs-team/cf-pages-docs }
+  id: com.docs-team.cf-pages-docs

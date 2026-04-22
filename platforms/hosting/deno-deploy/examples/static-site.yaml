@@ -1,0 +1,28 @@
+version: "1.0"
+name: Fresh Static Site
+type: site
+summary: Minimal Fresh static-mode site on Deno Deploy.
+description: Fresh in static-only mode. No KV, no env.
+
+platforms:
+  deno-deploy:
+    entrypoint: main.ts
+    deno_version: "2"
+    deno_permissions: [allow-read]
+    regions: [any]
+    compatibility_mode: deno
+
+safety:
+  min_permissions: [network:inbound, fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [deno-deploy]
+
+metadata:
+  license: MIT
+  author: { name: Fresh Co., handle: fresh-co }
+  source: { type: git, url: https://github.com/fresh-co/fresh-static }
+  id: com.fresh-co.fresh-static

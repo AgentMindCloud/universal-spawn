@@ -1,0 +1,47 @@
+version: "1.0"
+name: Notes App
+type: web-app
+summary: Full-stack Next.js notes app with Postgres and NextAuth.
+description: >
+  Public-facing notes app with authentication and a Postgres database.
+  Deploys to Vercel with preview deploys, env promotion in both
+  production and preview, and one background cron.
+
+platforms:
+  vercel:
+    framework: nextjs
+    install_command: "pnpm install"
+    build_command: "pnpm build"
+    output: .next
+    node_version: "20"
+    regions: [iad1, sfo1]
+    functions:
+      - match: "api/notes/*.ts"
+        runtime: nodejs
+        memory_mb: 512
+        max_duration_seconds: 30
+    env_promotion: [production, preview]
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 20
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Postgres connection string.
+    secret: true
+  - name: NEXTAUTH_SECRET
+    description: NextAuth JWT signing secret.
+    secret: true
+  - name: NEXTAUTH_URL
+    description: Canonical deployment URL.
+
+deployment:
+  targets: [vercel]
+
+metadata:
+  license: MIT
+  author: { name: Notes Co., handle: notes-co }
+  source: { type: git, url: https://github.com/notes-co/notes-app }
+  id: com.notes-co.notes-app

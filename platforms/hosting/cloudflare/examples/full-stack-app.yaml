@@ -1,0 +1,56 @@
+version: "1.0"
+name: CF Full Stack
+type: web-app
+summary: Full-stack Cloudflare app using Workers + Pages + R2 + D1 + Queues + service bindings.
+description: >
+  Workers handle /api routes with D1 (Postgres-style SQLite at the edge)
+  and R2 (uploads). Pages serves the SvelteKit front end. An upload
+  Queue buffers R2 writes. A service binding lets the Pages Worker
+  call the API Worker.
+
+platforms:
+  cloudflare:
+    surface: workers
+    main: src/api.ts
+    compatibility_date: "2025-01-15"
+    nodejs_compat: true
+    routes:
+      - { pattern: "app.example.com/api/*", zone_name: example.com }
+    bindings:
+      r2:
+        - { binding: UPLOADS, bucket_name: app-uploads }
+      d1:
+        - { binding: DB, database_name: app-db, database_id: 22222222-2222-2222-2222-222222222222 }
+      kv:
+        - { binding: SESSIONS, id: "22222222222222222222222222222222" }
+      queues:
+        - { binding: UPLOAD_QUEUE, producer_of: uploads }
+        - { binding: UPLOAD_CONSUMER, consumer_of: uploads }
+      durable_objects:
+        - { name: ROOM, class_name: ChatRoom }
+      services:
+        - { binding: PAGES_ASSETS, service: app-pages }
+
+safety:
+  min_permissions:
+    - network:inbound
+    - network:outbound:api.stripe.com
+  cost_limit_usd_daily: 15
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: STRIPE_SECRET
+    description: Stripe server key.
+    secret: true
+  - name: SESSION_SECRET
+    description: Session cookie signing secret.
+    secret: true
+
+deployment:
+  targets: [cloudflare]
+
+metadata:
+  license: MIT
+  author: { name: App Co., handle: app-co }
+  source: { type: git, url: https://github.com/app-co/cf-full-stack }
+  id: com.app-co.cf-full-stack

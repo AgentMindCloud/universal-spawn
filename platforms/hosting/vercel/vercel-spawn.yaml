@@ -1,0 +1,30 @@
+version: "1.0"
+name: Vercel Template
+type: web-app
+description: Template for a Vercel-targeted universal-spawn manifest.
+
+platforms:
+  vercel:
+    framework: nextjs
+    install_command: "pnpm install"
+    build_command: "pnpm build"
+    output: .next
+    node_version: "20"
+    regions: [iad1]
+    env_promotion: [production, preview]
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Connection string for the primary database.
+    secret: true
+
+deployment:
+  targets: [vercel]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/vercel-template }

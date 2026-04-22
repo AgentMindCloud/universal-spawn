@@ -1,0 +1,224 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/cloudflare/cloudflare-spawn.schema.json",
+  "title": "universal-spawn with Cloudflare platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "cloudflare"
+          ],
+          "properties": {
+            "cloudflare": {
+              "$ref": "#/definitions/cloudflare"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "cloudflare": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface"
+      ],
+      "properties": {
+        "surface": {
+          "type": "string",
+          "enum": [
+            "workers",
+            "pages"
+          ]
+        },
+        "main": {
+          "type": "string"
+        },
+        "build": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "command": {
+              "type": "string"
+            },
+            "output": {
+              "type": "string"
+            },
+            "root_dir": {
+              "type": "string"
+            }
+          }
+        },
+        "compatibility_date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "nodejs_compat": {
+          "type": "boolean",
+          "default": false
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "pattern"
+            ],
+            "properties": {
+              "pattern": {
+                "type": "string"
+              },
+              "zone_name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "bindings": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "r2": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "binding",
+                  "bucket_name"
+                ],
+                "properties": {
+                  "binding": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]{0,63}$"
+                  },
+                  "bucket_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "d1": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "binding",
+                  "database_name"
+                ],
+                "properties": {
+                  "binding": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]{0,63}$"
+                  },
+                  "database_name": {
+                    "type": "string"
+                  },
+                  "database_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "kv": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "binding",
+                  "id"
+                ],
+                "properties": {
+                  "binding": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]{0,63}$"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "queues": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "binding"
+                ],
+                "properties": {
+                  "binding": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]{0,63}$"
+                  },
+                  "producer_of": {
+                    "type": "string"
+                  },
+                  "consumer_of": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "durable_objects": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "class_name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "class_name": {
+                    "type": "string"
+                  },
+                  "script_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "services": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "binding",
+                  "service"
+                ],
+                "properties": {
+                  "binding": {
+                    "type": "string",
+                    "pattern": "^[A-Z][A-Z0-9_]{0,63}$"
+                  },
+                  "service": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

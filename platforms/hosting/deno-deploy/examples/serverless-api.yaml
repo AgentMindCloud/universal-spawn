@@ -1,0 +1,35 @@
+version: "1.0"
+name: Deno Edge API
+type: api-service
+summary: Deno HTTP API with KV-backed rate limiting.
+description: >
+  HTTP API running on Deno Deploy with a KV-backed rate limiter and
+  a simple Hono router. Permissions pared to net + env only.
+
+platforms:
+  deno-deploy:
+    entrypoint: main.ts
+    import_map: import_map.json
+    deno_version: "2"
+    deno_permissions: [allow-net, allow-env]
+    kv_namespaces: [ratelimit]
+    regions: [americas, europe]
+    compatibility_mode: deno
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  rate_limit_qps: 200
+
+env_vars_required:
+  - name: API_SECRET
+    description: API secret for protected routes.
+    secret: true
+
+deployment:
+  targets: [deno-deploy]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Edge Co., handle: edge-co }
+  source: { type: git, url: https://github.com/edge-co/deno-edge-api }
+  id: com.edge-co.deno-edge-api

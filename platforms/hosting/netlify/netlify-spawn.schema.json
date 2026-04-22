@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/netlify/netlify-spawn.schema.json",
+  "title": "universal-spawn with Netlify platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "netlify"
+          ],
+          "properties": {
+            "netlify": {
+              "$ref": "#/definitions/netlify"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "netlify": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base": {
+          "type": "string"
+        },
+        "install_command": {
+          "type": "string"
+        },
+        "build_command": {
+          "type": "string"
+        },
+        "publish": {
+          "type": "string"
+        },
+        "functions": {
+          "type": "string"
+        },
+        "edge_functions": {
+          "type": "string"
+        },
+        "node_version": {
+          "type": "string"
+        },
+        "plugins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "package"
+            ],
+            "properties": {
+              "package": {
+                "type": "string"
+              },
+              "inputs": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "env_contexts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "production",
+              "deploy-preview",
+              "branch-deploy",
+              "dev"
+            ]
+          }
+        },
+        "redirects_file": {
+          "type": "string"
+        },
+        "headers_file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

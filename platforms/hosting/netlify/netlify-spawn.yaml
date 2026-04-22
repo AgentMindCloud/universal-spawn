@@ -1,0 +1,24 @@
+version: "1.0"
+name: Netlify Template
+type: web-app
+description: Template for a Netlify-targeted universal-spawn manifest.
+
+platforms:
+  netlify:
+    build_command: "pnpm build"
+    publish: dist
+    node_version: "20"
+    env_contexts: [production]
+
+safety:
+  min_permissions: [network:inbound]
+
+env_vars_required: []
+
+deployment:
+  targets: [netlify]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/netlify-template }

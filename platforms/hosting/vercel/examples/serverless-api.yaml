@@ -1,0 +1,43 @@
+version: "1.0"
+name: Edge API
+type: api-service
+summary: Stateless edge-runtime API + Stripe webhook in three Vercel regions.
+description: >
+  A stateless HTTP API on Vercel's edge runtime deployed in iad1,
+  cdg1, and hnd1. Demonstrates per-route function config and a
+  Stripe webhook endpoint.
+
+platforms:
+  vercel:
+    framework: nextjs
+    build_command: "pnpm build"
+    output: .next
+    node_version: "20"
+    regions: [iad1, cdg1, hnd1]
+    functions:
+      - match: "api/**/*.ts"
+        runtime: edge
+        memory_mb: 256
+        max_duration_seconds: 15
+    env_promotion: [production, preview]
+
+safety:
+  min_permissions:
+    - network:inbound
+    - network:outbound:api.stripe.com
+  rate_limit_qps: 100
+  cost_limit_usd_daily: 50
+
+env_vars_required:
+  - name: STRIPE_WEBHOOK_SECRET
+    description: Stripe webhook signing secret.
+    secret: true
+
+deployment:
+  targets: [vercel]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Edge Co., handle: edge-co }
+  source: { type: git, url: https://github.com/edge-co/vercel-edge-api }
+  id: com.edge-co.vercel-edge-api

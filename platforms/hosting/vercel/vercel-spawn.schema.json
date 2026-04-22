@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/vercel/vercel-spawn.schema.json",
+  "title": "universal-spawn with Vercel platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "vercel"
+          ],
+          "properties": {
+            "vercel": {
+              "$ref": "#/definitions/vercel"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "vercel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "framework": {
+          "type": "string",
+          "enum": [
+            "nextjs",
+            "next",
+            "remix",
+            "nuxt",
+            "astro",
+            "svelte-kit",
+            "vite",
+            "create-react-app",
+            "solid",
+            "docusaurus",
+            "hugo",
+            "eleventy",
+            "other"
+          ]
+        },
+        "install_command": {
+          "type": "string"
+        },
+        "build_command": {
+          "type": "string"
+        },
+        "dev_command": {
+          "type": "string"
+        },
+        "output": {
+          "type": "string"
+        },
+        "root_directory": {
+          "type": "string"
+        },
+        "node_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+){0,2}$"
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]{3}[0-9]$"
+          }
+        },
+        "functions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "match"
+            ],
+            "properties": {
+              "match": {
+                "type": "string",
+                "description": "Glob matching function files (e.g. `api/*.ts`)."
+              },
+              "runtime": {
+                "type": "string",
+                "enum": [
+                  "nodejs",
+                  "edge",
+                  "python",
+                  "go"
+                ]
+              },
+              "memory_mb": {
+                "type": "integer",
+                "minimum": 128,
+                "maximum": 3009
+              },
+              "max_duration_seconds": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 900
+              }
+            }
+          }
+        },
+        "env_promotion": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "development",
+              "preview",
+              "production"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

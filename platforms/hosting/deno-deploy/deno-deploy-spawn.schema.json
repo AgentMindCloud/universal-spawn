@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/deno-deploy/deno-deploy-spawn.schema.json",
+  "title": "universal-spawn with Deno Deploy platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "deno-deploy"
+          ],
+          "properties": {
+            "deno-deploy": {
+              "$ref": "#/definitions/deno-deploy"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "deno-deploy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entrypoint"
+      ],
+      "properties": {
+        "entrypoint": {
+          "type": "string"
+        },
+        "import_map": {
+          "type": "string"
+        },
+        "deno_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+){0,2}$"
+        },
+        "deno_permissions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "allow-net",
+              "allow-read",
+              "allow-write",
+              "allow-env",
+              "allow-run",
+              "allow-sys",
+              "allow-ffi",
+              "allow-hrtime"
+            ]
+          }
+        },
+        "kv_namespaces": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{0,63}$"
+          }
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "americas",
+              "europe",
+              "asia",
+              "oceania",
+              "africa",
+              "any"
+            ]
+          }
+        },
+        "compatibility_mode": {
+          "type": "string",
+          "enum": [
+            "deno",
+            "node"
+          ]
+        }
+      }
+    }
+  }
+}

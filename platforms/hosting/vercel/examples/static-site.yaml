@@ -1,0 +1,32 @@
+version: "1.0"
+name: Docs Static Site
+type: site
+summary: Minimal Astro docs site deployed to Vercel in iad1.
+description: >
+  A small Astro documentation site. No API routes, one HTTP
+  entrypoint serving the root. Default preset; CDN-only.
+
+platforms:
+  vercel:
+    framework: astro
+    install_command: "pnpm install"
+    build_command: "pnpm build"
+    output: dist
+    node_version: "20"
+    regions: [iad1]
+    env_promotion: [production]
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [vercel]
+
+metadata:
+  license: MIT
+  author: { name: Docs Team, handle: docs-team }
+  source: { type: git, url: https://github.com/docs-team/docs-site }
+  id: com.docs-team.docs-site
