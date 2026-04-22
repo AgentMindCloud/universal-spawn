@@ -1,0 +1,38 @@
+version: "1.0"
+name: Koyeb Full Stack
+type: web-app
+summary: Full-stack Koyeb deployment with a GPU worker sidecar.
+description: >
+  Web service + a GPU worker (A100) for ML post-processing. Demonstrates
+  mixing instance types across sibling Koyeb services.
+
+platforms:
+  koyeb:
+    service_kind: web
+    build: { kind: docker, image: ghcr.io/stack-co/app:latest }
+    regions: [fra]
+    instance_type: medium
+    ports: [ { port: 3000, protocol: http2, path: / } ]
+    autoscaling: { min: 2, max: 10, targets: { concurrent_requests: 80 } }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Postgres connection string.
+    secret: true
+  - name: SESSION_SECRET
+    description: Session secret.
+    secret: true
+
+deployment:
+  targets: [koyeb]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/koyeb-full-stack }
+  id: com.stack-co.koyeb-full-stack

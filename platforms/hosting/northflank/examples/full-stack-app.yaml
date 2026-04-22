@@ -1,0 +1,51 @@
+version: "1.0"
+name: Northflank Full Stack
+type: web-app
+summary: Full-stack Northflank deployment with Postgres, Redis, and ClickHouse addons.
+description: >
+  Combined web service + three addons (Postgres primary, Redis cache,
+  ClickHouse for analytics). Two replicas. GPU sidecar example omitted
+  for brevity.
+
+platforms:
+  northflank:
+    kind: combined
+    build: { git_ref: main, dockerfile_path: Dockerfile }
+    resources: { plan: nf-compute-100, storage_gb: 20 }
+    replicas: 2
+    ports:
+      - { name: web, port: 3000, protocol: HTTP2, public: true }
+    addons:
+      - { kind: postgres,   name: db,    plan: nf-compute-50 }
+      - { kind: redis,      name: cache, plan: nf-compute-20 }
+      - { kind: clickhouse, name: ch,    plan: nf-compute-100 }
+    pipeline: main
+    region: europe-west
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Postgres connection string.
+    secret: true
+  - name: REDIS_URL
+    description: Redis URL.
+    secret: true
+  - name: CLICKHOUSE_URL
+    description: ClickHouse URL.
+    secret: true
+  - name: SESSION_SECRET
+    description: Session secret.
+    secret: true
+
+deployment:
+  targets: [northflank]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/nf-full-stack }
+  id: com.stack-co.nf-full-stack

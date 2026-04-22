@@ -1,0 +1,32 @@
+version: "1.0"
+name: Hetzner Template
+type: api-service
+description: Template for a Hetzner Cloud-targeted universal-spawn manifest.
+
+platforms:
+  hetzner:
+    location: fsn1
+    server_type: cx22
+    image: debian-12
+    ssh_keys: [ops-key]
+    cloud_init: cloud-init.yaml
+    firewall_rules:
+      - { direction: in, protocol: tcp, port_range: "22",  source_cidrs: ["0.0.0.0/0", "::/0"] }
+      - { direction: in, protocol: tcp, port_range: "80",  source_cidrs: ["0.0.0.0/0", "::/0"] }
+      - { direction: in, protocol: tcp, port_range: "443", source_cidrs: ["0.0.0.0/0", "::/0"] }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Postgres connection string.
+    secret: true
+
+deployment:
+  targets: [hetzner]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/hetzner-template }

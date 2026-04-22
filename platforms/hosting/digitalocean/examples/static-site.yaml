@@ -1,0 +1,31 @@
+version: "1.0"
+name: DO Static Docs
+type: site
+summary: Minimal App Platform static site.
+description: Static component only. basic-xxs instance. NYC region.
+
+platforms:
+  digitalocean:
+    surface: app_platform
+    region: nyc
+    services:
+      - name: docs
+        kind: static_site
+        build_command: "pnpm build"
+        instance_size: basic-xxs
+        instance_count: 1
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [digitalocean]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Docs Team, handle: docs-team }
+  source: { type: git, url: https://github.com/docs-team/do-static-docs }
+  id: com.docs-team.do-static-docs

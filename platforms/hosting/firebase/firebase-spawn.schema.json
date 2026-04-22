@@ -1,0 +1,229 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/firebase/firebase-spawn.schema.json",
+  "title": "universal-spawn with Firebase platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "firebase"
+          ],
+          "properties": {
+            "firebase": {
+              "$ref": "#/definitions/firebase"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "firebase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{5,29}$"
+        },
+        "region": {
+          "type": "string",
+          "enum": [
+            "us-central1",
+            "us-east1",
+            "us-east4",
+            "us-west1",
+            "us-west2",
+            "europe-west1",
+            "europe-west2",
+            "europe-west3",
+            "europe-west4",
+            "asia-northeast1",
+            "asia-east1",
+            "asia-south1",
+            "southamerica-east1",
+            "australia-southeast1"
+          ]
+        },
+        "hosting": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "site_id": {
+              "type": "string"
+            },
+            "public_dir": {
+              "type": "string"
+            },
+            "ssr": {
+              "type": "boolean",
+              "default": false
+            },
+            "framework": {
+              "type": "string",
+              "enum": [
+                "next",
+                "nuxt",
+                "astro",
+                "svelte-kit",
+                "angular",
+                "static"
+              ]
+            },
+            "rewrites_to_function": {
+              "type": "string"
+            }
+          }
+        },
+        "functions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "source": {
+              "type": "string"
+            },
+            "runtime": {
+              "type": "string",
+              "enum": [
+                "nodejs20",
+                "nodejs22",
+                "python311",
+                "python312"
+              ]
+            },
+            "functions_list": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-zA-Z0-9]{0,62}$"
+                  },
+                  "trigger": {
+                    "type": "string",
+                    "enum": [
+                      "https",
+                      "firestore",
+                      "auth",
+                      "storage",
+                      "pubsub",
+                      "scheduler"
+                    ]
+                  },
+                  "memory_mb": {
+                    "type": "integer",
+                    "minimum": 128,
+                    "maximum": 32768
+                  },
+                  "timeout_seconds": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 540
+                  }
+                }
+              }
+            }
+          }
+        },
+        "firestore": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "rules_file": {
+              "type": "string"
+            },
+            "indexes_file": {
+              "type": "string"
+            },
+            "database_id": {
+              "type": "string"
+            }
+          }
+        },
+        "realtime_db": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "rules_file": {
+              "type": "string"
+            },
+            "instance": {
+              "type": "string"
+            }
+          }
+        },
+        "storage": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "rules_file": {
+              "type": "string"
+            },
+            "default_bucket": {
+              "type": "string"
+            }
+          }
+        },
+        "auth": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "providers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "email",
+                  "google.com",
+                  "facebook.com",
+                  "twitter.com",
+                  "github.com",
+                  "apple.com",
+                  "microsoft.com",
+                  "phone",
+                  "anonymous"
+                ]
+              }
+            }
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "description": "Extension reference, e.g. firebase/delete-user-data@0.1.24"
+              },
+              "instance_id": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

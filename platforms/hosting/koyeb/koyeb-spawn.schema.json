@@ -1,0 +1,172 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/koyeb/koyeb-spawn.schema.json",
+  "title": "universal-spawn with Koyeb platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "koyeb"
+          ],
+          "properties": {
+            "koyeb": {
+              "$ref": "#/definitions/koyeb"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "koyeb": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "service_kind",
+        "build",
+        "regions"
+      ],
+      "properties": {
+        "service_kind": {
+          "type": "string",
+          "enum": [
+            "web",
+            "worker"
+          ]
+        },
+        "build": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "git",
+                "docker"
+              ]
+            },
+            "image": {
+              "type": "string"
+            },
+            "build_command": {
+              "type": "string"
+            },
+            "run_command": {
+              "type": "string"
+            }
+          }
+        },
+        "regions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "fra",
+              "par",
+              "was",
+              "sfo",
+              "sin",
+              "tyo"
+            ]
+          }
+        },
+        "instance_type": {
+          "type": "string",
+          "enum": [
+            "free",
+            "eco-nano",
+            "eco-micro",
+            "eco-small",
+            "eco-medium",
+            "nano",
+            "micro",
+            "small",
+            "medium",
+            "large",
+            "xlarge",
+            "2xlarge",
+            "gpu-nvidia-a100"
+          ]
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "port"
+            ],
+            "properties": {
+              "port": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "protocol": {
+                "type": "string",
+                "enum": [
+                  "http",
+                  "http2",
+                  "tcp"
+                ]
+              },
+              "path": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "autoscaling": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "min": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "max": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "targets": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "cpu_percent": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 95
+                },
+                "requests_per_second": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "concurrent_requests": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

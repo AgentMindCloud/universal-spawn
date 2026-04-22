@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/linode/linode-spawn.schema.json",
+  "title": "universal-spawn with Linode (Akamai Cloud) platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "linode"
+          ],
+          "properties": {
+            "linode": {
+              "$ref": "#/definitions/linode"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "linode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "region",
+        "instance_type",
+        "image"
+      ],
+      "properties": {
+        "region": {
+          "type": "string",
+          "enum": [
+            "us-east",
+            "us-central",
+            "us-west",
+            "us-southeast",
+            "eu-central",
+            "eu-west",
+            "ap-south",
+            "ap-southeast",
+            "ap-northeast",
+            "ca-central",
+            "au-mel"
+          ]
+        },
+        "instance_type": {
+          "type": "string",
+          "pattern": "^g6-(nanode|standard|dedicated|highmem|premium|gpu)-[a-z0-9]+$"
+        },
+        "image": {
+          "type": "string"
+        },
+        "stackscript": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "udf": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "value"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "volumes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "size_gb"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              },
+              "size_gb": {
+                "type": "integer",
+                "minimum": 10,
+                "maximum": 16384
+              }
+            }
+          }
+        },
+        "private_ip": {
+          "type": "boolean",
+          "default": false
+        },
+        "backups": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

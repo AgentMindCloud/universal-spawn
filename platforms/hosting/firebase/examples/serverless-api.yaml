@@ -1,0 +1,42 @@
+version: "1.0"
+name: Firebase Functions API
+type: api-service
+summary: Firebase Cloud Functions API with Firestore + scheduler.
+description: >
+  HTTPS + Firestore + scheduler triggers. Firestore rules + indexes
+  shipped alongside. One extension: delete-user-data.
+
+platforms:
+  firebase:
+    project_id: orders-api-prod
+    region: us-central1
+    functions:
+      source: functions
+      runtime: nodejs22
+      functions_list:
+        - { name: createOrder, trigger: https,      memory_mb: 512, timeout_seconds: 30 }
+        - { name: onOrder,     trigger: firestore,  memory_mb: 256, timeout_seconds: 30 }
+        - { name: nightlyRoll, trigger: scheduler,  memory_mb: 256, timeout_seconds: 540 }
+    firestore:
+      rules_file: firestore.rules
+      indexes_file: firestore.indexes.json
+    extensions:
+      - { ref: "firebase/delete-user-data@0.1.24", instance_id: delete-user-data }
+
+safety:
+  min_permissions: [network:outbound]
+  rate_limit_qps: 100
+
+env_vars_required:
+  - name: STRIPE_SECRET
+    description: Stripe server key.
+    secret: true
+
+deployment:
+  targets: [firebase]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Orders Co., handle: orders-co }
+  source: { type: git, url: https://github.com/orders-co/firebase-functions-api }
+  id: com.orders-co.firebase-functions-api

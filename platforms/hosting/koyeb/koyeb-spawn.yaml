@@ -1,0 +1,33 @@
+version: "1.0"
+name: Koyeb Template
+type: web-app
+description: Template for a Koyeb-targeted universal-spawn manifest.
+
+platforms:
+  koyeb:
+    service_kind: web
+    build: { kind: git, build_command: "pnpm build", run_command: "pnpm start" }
+    regions: [fra, was]
+    instance_type: nano
+    ports:
+      - { port: 8080, protocol: http, path: / }
+    autoscaling:
+      min: 1
+      max: 5
+      targets: { cpu_percent: 80 }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: API_SECRET
+    description: API signing secret.
+    secret: true
+
+deployment:
+  targets: [koyeb]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/koyeb-template }

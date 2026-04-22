@@ -1,0 +1,31 @@
+version: "1.0"
+name: Linode Caddy Static
+type: site
+summary: Static site on a g6-nanode-1 with caddy via StackScript.
+description: Smallest Linode running caddy serving /srv/site.
+
+platforms:
+  linode:
+    region: eu-west
+    instance_type: g6-nanode-1
+    image: linode/debian12
+    stackscript:
+      id: 654321
+      udf:
+        - { name: site_domain, value: static.example.com }
+    backups: false
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [linode]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Static Co., handle: static-co }
+  source: { type: git, url: https://github.com/static-co/linode-caddy }
+  id: com.static-co.linode-caddy

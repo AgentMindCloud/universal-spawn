@@ -1,0 +1,36 @@
+version: "1.0"
+name: Vultr Docker API
+type: api-service
+summary: Node API on Vultr with a managed Postgres and attached block storage.
+description: vc2-2c-4gb in ewr with cloud-init provisioning Docker + Postgres client, block storage for uploads.
+
+platforms:
+  vultr:
+    region: ewr
+    plan: vc2-2c-4gb
+    os: Ubuntu 24.04 LTS x64
+    cloud_init: cloud-init-docker.yaml
+    block_storage:
+      - { label: uploads, size_gb: 40, block_type: high_perf }
+    managed_databases:
+      - { engine: pg, label: api-db, plan: vultr-dbaas-startup-cc-1-55-2 }
+    firewall_group: api
+    backups: true
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:write]
+  rate_limit_qps: 80
+
+env_vars_required:
+  - name: POSTGRES_PASSWORD
+    description: Postgres password supplied by the managed DB.
+    secret: true
+
+deployment:
+  targets: [vultr]
+
+metadata:
+  license: Apache-2.0
+  author: { name: API Co., handle: api-co }
+  source: { type: git, url: https://github.com/api-co/vultr-docker-api }
+  id: com.api-co.vultr-docker-api

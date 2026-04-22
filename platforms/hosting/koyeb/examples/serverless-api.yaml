@@ -1,0 +1,32 @@
+version: "1.0"
+name: Koyeb Edge API
+type: api-service
+summary: Koyeb HTTP API across three regions with CPU-target autoscaling.
+description: Node API. Three regions. 1-3 instances. CPU target 75%.
+
+platforms:
+  koyeb:
+    service_kind: web
+    build: { kind: git, build_command: "pnpm build", run_command: "node dist/server.js" }
+    regions: [fra, was, sin]
+    instance_type: nano
+    ports: [ { port: 8080, protocol: http, path: / } ]
+    autoscaling: { min: 1, max: 3, targets: { cpu_percent: 75 } }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  rate_limit_qps: 100
+
+env_vars_required:
+  - name: API_SECRET
+    description: API secret.
+    secret: true
+
+deployment:
+  targets: [koyeb]
+
+metadata:
+  license: Apache-2.0
+  author: { name: API Co., handle: api-co }
+  source: { type: git, url: https://github.com/api-co/koyeb-edge-api }
+  id: com.api-co.koyeb-edge-api

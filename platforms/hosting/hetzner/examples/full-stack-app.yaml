@@ -1,0 +1,46 @@
+version: "1.0"
+name: Hetzner Full Stack
+type: web-app
+summary: Full-stack Hetzner deployment with private network, two volumes, k3s, and restrictive firewall.
+description: >
+  Single-node k3s on a cpx41 in helsinki with two volumes (data +
+  logs), attached to a private network, reachable only over TLS + SSH
+  from the office CIDR.
+
+platforms:
+  hetzner:
+    location: hel1
+    server_type: cpx41
+    image: debian-12
+    ssh_keys: [ops-key]
+    cloud_init: cloud-init-k3s.yaml
+    volumes:
+      - { name: data, size_gb: 100, mount: /var/lib/rancher/k3s }
+      - { name: logs, size_gb: 20,  mount: /var/log/app }
+    networks: [private]
+    firewall_rules:
+      - { direction: in,  protocol: tcp, port_range: "443", source_cidrs: ["0.0.0.0/0", "::/0"] }
+      - { direction: in,  protocol: tcp, port_range: "22",  source_cidrs: ["203.0.113.0/24"] }
+      - { direction: out, protocol: tcp, port_range: "1-65535" }
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:read, fs:write]
+  cost_limit_usd_daily: 5
+  safe_for_auto_spawn: false
+  data_residency: [eu]
+
+env_vars_required:
+  - name: ACME_EMAIL
+    description: Email used for Let's Encrypt ACME.
+  - name: POSTGRES_PASSWORD
+    description: Postgres password baked into cloud-init.
+    secret: true
+
+deployment:
+  targets: [hetzner]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/hetzner-full-stack }
+  id: com.stack-co.hetzner-full-stack

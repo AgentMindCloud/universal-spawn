@@ -1,0 +1,29 @@
+version: "1.0"
+name: Vultr Template
+type: web-app
+description: Template for a Vultr-targeted universal-spawn manifest.
+
+platforms:
+  vultr:
+    region: ewr
+    plan: vc2-2c-4gb
+    os: Ubuntu 24.04 LTS x64
+    cloud_init: cloud-init.yaml
+    backups: true
+    firewall_group: web
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: APP_SECRET
+    description: App secret.
+    secret: true
+
+deployment:
+  targets: [vultr]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/vultr-template }

@@ -1,0 +1,44 @@
+version: "1.0"
+name: Linode LKE Full Stack
+type: web-app
+summary: Full-stack LKE-ready node with backups, private IP, and two volumes.
+description: >
+  Premium Linode bootstrapping as a worker node in an LKE cluster (via
+  StackScript). Two volumes (data + logs), backups on, private IP, EU
+  central region for residency.
+
+platforms:
+  linode:
+    region: eu-central
+    instance_type: g6-dedicated-8
+    image: linode/ubuntu24.04
+    stackscript:
+      id: 999999
+      udf:
+        - { name: kube_token, value: "" }
+        - { name: kube_server, value: https://lke-control-plane.example.com:6443 }
+    volumes:
+      - { label: data, size_gb: 200 }
+      - { label: logs, size_gb: 50 }
+    private_ip: true
+    backups: true
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:read, fs:write]
+  cost_limit_usd_daily: 8
+  safe_for_auto_spawn: false
+  data_residency: [eu]
+
+env_vars_required:
+  - name: KUBE_TOKEN
+    description: LKE join token.
+    secret: true
+
+deployment:
+  targets: [linode]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/linode-lke-node }
+  id: com.stack-co.linode-lke-node

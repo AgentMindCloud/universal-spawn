@@ -1,0 +1,30 @@
+version: "1.0"
+name: Firebase Hosting Astro
+type: site
+summary: Minimal Astro static site on Firebase Hosting.
+description: Static Astro site. No Functions. Default site id.
+
+platforms:
+  firebase:
+    project_id: astro-landing-dev
+    region: us-central1
+    hosting:
+      site_id: default
+      public_dir: dist
+      ssr: false
+      framework: astro
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [firebase]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Landing Co., handle: landing-co }
+  source: { type: git, url: https://github.com/landing-co/firebase-astro }
+  id: com.landing-co.firebase-astro

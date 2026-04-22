@@ -1,0 +1,30 @@
+version: "1.0"
+name: Northflank Static Nginx
+type: site
+summary: Static site on Northflank via an nginx image.
+description: Docker deployment of nginx:stable-alpine serving static assets.
+
+platforms:
+  northflank:
+    kind: deployment
+    image: nginx:stable-alpine
+    resources: { plan: nf-compute-10 }
+    replicas: 1
+    ports:
+      - { name: web, port: 80, protocol: HTTP, public: true }
+    region: europe-west
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [northflank]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Static Co., handle: static-co }
+  source: { type: git, url: https://github.com/static-co/nf-static }
+  id: com.static-co.nf-static

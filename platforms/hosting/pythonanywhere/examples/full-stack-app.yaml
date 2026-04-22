@@ -1,0 +1,46 @@
+version: "1.0"
+name: PA Django Full Stack
+type: web-app
+summary: Django app on PythonAnywhere with managed MySQL, always-on worker, and scheduled jobs.
+description: >
+  Django webapp, a managed MySQL database, an always-on Celery worker,
+  and two scheduled tasks (nightly email + weekly cleanup). Typical
+  PythonAnywhere production shape.
+
+platforms:
+  pythonanywhere:
+    python_version: "3.12"
+    wsgi_file: /var/www/yourname_pythonanywhere_com_wsgi.py
+    virtualenv: /home/yourname/.virtualenvs/django
+    static_mappings:
+      - { url: /static/, path: /home/yourname/app/static }
+      - { url: /media/,  path: /home/yourname/app/media }
+    scheduled_tasks:
+      - { command: "python /home/yourname/app/manage.py send_nightly_emails", hour: 4, minute: 0 }
+      - { command: "python /home/yourname/app/manage.py cleanup_stale_sessions", hour: 5, minute: 0 }
+    always_on_tasks:
+      - { command: "celery -A app worker -l info" }
+    databases:
+      - { engine: mysql, name: yourname$app }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 2
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DJANGO_SECRET_KEY
+    description: Django SECRET_KEY.
+    secret: true
+  - name: MYSQL_PASSWORD
+    description: Managed MySQL password.
+    secret: true
+
+deployment:
+  targets: [pythonanywhere]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/pa-django-full-stack }
+  id: com.stack-co.pa-django-full-stack

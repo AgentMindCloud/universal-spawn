@@ -1,0 +1,33 @@
+version: "1.0"
+name: Northflank API and Job
+type: api-service
+summary: Combined service API plus a cron job on Northflank.
+description: API web service plus a daily job that runs rollups.
+
+platforms:
+  northflank:
+    kind: combined
+    build: { git_ref: main, dockerfile_path: Dockerfile }
+    resources: { plan: nf-compute-20 }
+    replicas: 2
+    ports:
+      - { name: web, port: 8080, protocol: HTTP2, public: true }
+    pipeline: main
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  rate_limit_qps: 100
+
+env_vars_required:
+  - name: API_SECRET
+    description: API signing secret.
+    secret: true
+
+deployment:
+  targets: [northflank]
+
+metadata:
+  license: Apache-2.0
+  author: { name: API Co., handle: api-co }
+  source: { type: git, url: https://github.com/api-co/nf-api-and-job }
+  id: com.api-co.nf-api-and-job

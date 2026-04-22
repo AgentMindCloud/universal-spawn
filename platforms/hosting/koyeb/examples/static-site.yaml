@@ -1,0 +1,28 @@
+version: "1.0"
+name: Koyeb Static
+type: site
+summary: Static site served from Koyeb via a nginx container.
+description: Minimal Docker-built nginx serving static assets.
+
+platforms:
+  koyeb:
+    service_kind: web
+    build: { kind: docker, image: nginx:stable-alpine }
+    regions: [fra]
+    instance_type: free
+    ports: [ { port: 80, protocol: http, path: / } ]
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [koyeb]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Static Co., handle: static-co }
+  source: { type: git, url: https://github.com/static-co/koyeb-static }
+  id: com.static-co.koyeb-static

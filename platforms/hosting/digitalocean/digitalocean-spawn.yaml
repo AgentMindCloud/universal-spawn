@@ -1,0 +1,35 @@
+version: "1.0"
+name: DigitalOcean Template
+type: web-app
+description: Template for a DigitalOcean-targeted universal-spawn manifest.
+
+platforms:
+  digitalocean:
+    surface: app_platform
+    region: nyc
+    services:
+      - name: web
+        kind: web
+        instance_size: basic-xs
+        instance_count: 1
+        build_command: "pnpm build"
+        run_command: "pnpm start"
+        http_port: 8080
+    databases:
+      - { name: db, engine: PG, size: db-s-dev }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Injected by the managed Postgres attachment.
+    secret: true
+
+deployment:
+  targets: [digitalocean]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/do-template }

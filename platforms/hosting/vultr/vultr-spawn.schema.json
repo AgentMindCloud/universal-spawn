@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/vultr/vultr-spawn.schema.json",
+  "title": "universal-spawn with Vultr platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "vultr"
+          ],
+          "properties": {
+            "vultr": {
+              "$ref": "#/definitions/vultr"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "vultr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "region",
+        "plan",
+        "os"
+      ],
+      "properties": {
+        "region": {
+          "type": "string",
+          "pattern": "^[a-z]{3,4}$"
+        },
+        "plan": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "os": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9 ._-]+$"
+        },
+        "cloud_init": {
+          "type": "string"
+        },
+        "block_storage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "size_gb"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "size_gb": {
+                "type": "integer",
+                "minimum": 10,
+                "maximum": 40960
+              },
+              "block_type": {
+                "type": "string",
+                "enum": [
+                  "high_perf",
+                  "storage_opt"
+                ]
+              }
+            }
+          }
+        },
+        "vpc": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+          }
+        },
+        "managed_databases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "engine",
+              "label"
+            ],
+            "properties": {
+              "engine": {
+                "type": "string",
+                "enum": [
+                  "pg",
+                  "mysql",
+                  "redis"
+                ]
+              },
+              "label": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "plan": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "firewall_group": {
+          "type": "string"
+        },
+        "backups": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

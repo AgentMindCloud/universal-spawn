@@ -1,0 +1,37 @@
+version: "1.0"
+name: Supabase Landing
+type: site
+summary: Minimal Supabase-backed landing page with a waitlist form.
+description: >
+  Static landing page writes signups to a single Postgres table via
+  the Supabase JS client. One table migration. Email-only auth.
+
+platforms:
+  supabase:
+    project_ref: "landing0000000000000"
+    region: us-east-1
+    db:
+      postgres_major_version: 16
+      migrations_dir: supabase/migrations
+    auth:
+      providers: [email]
+      site_url: https://landing.example.com
+      jwt_expiry_seconds: 3600
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: SUPABASE_ANON_KEY
+    description: Anon key used from the browser.
+    secret: false
+
+deployment:
+  targets: [supabase]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Landing Co., handle: landing-co }
+  source: { type: git, url: https://github.com/landing-co/supabase-landing }
+  id: com.landing-co.supabase-landing

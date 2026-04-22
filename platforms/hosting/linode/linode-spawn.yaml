@@ -1,0 +1,32 @@
+version: "1.0"
+name: Linode Template
+type: api-service
+description: Template for a Linode-targeted universal-spawn manifest.
+
+platforms:
+  linode:
+    region: us-east
+    instance_type: g6-standard-2
+    image: linode/ubuntu24.04
+    stackscript:
+      id: 123456
+      udf:
+        - { name: app_domain, value: example.com }
+    private_ip: true
+    backups: true
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: APP_SECRET
+    description: App secret baked into the StackScript.
+    secret: true
+
+deployment:
+  targets: [linode]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/linode-template }

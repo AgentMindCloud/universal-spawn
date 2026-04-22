@@ -1,0 +1,41 @@
+version: "1.0"
+name: Supabase Edge Functions API
+type: api-service
+summary: Supabase Edge Functions API with three endpoints and JWT verification.
+description: >
+  Three Deno-based Edge Functions (orders, webhooks, reports). Each
+  verifies the incoming JWT. Reads/writes via the service role key.
+
+platforms:
+  supabase:
+    project_ref: "ordersapi0000000000a"
+    region: eu-west-1
+    db:
+      postgres_major_version: 16
+      migrations_dir: supabase/migrations
+      pooler: transaction
+    edge_functions:
+      - { name: orders,   entrypoint: supabase/functions/orders/index.ts,   verify_jwt: true }
+      - { name: webhooks, entrypoint: supabase/functions/webhooks/index.ts, verify_jwt: false }
+      - { name: reports,  entrypoint: supabase/functions/reports/index.ts,  verify_jwt: true }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  rate_limit_qps: 100
+
+env_vars_required:
+  - name: SUPABASE_SERVICE_ROLE_KEY
+    description: Service role key.
+    secret: true
+  - name: STRIPE_WEBHOOK_SECRET
+    description: Stripe webhook signing secret.
+    secret: true
+
+deployment:
+  targets: [supabase]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Orders Co., handle: orders-co }
+  source: { type: git, url: https://github.com/orders-co/supabase-edge-api }
+  id: com.orders-co.supabase-edge-api

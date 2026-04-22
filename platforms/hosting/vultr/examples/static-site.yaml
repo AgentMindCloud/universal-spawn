@@ -1,0 +1,29 @@
+version: "1.0"
+name: Vultr Static Site
+type: site
+summary: Static site on a Vultr Cloud Compute instance with caddy.
+description: vc2-1c-1gb in lax running caddy serving /srv/site.
+
+platforms:
+  vultr:
+    region: lax
+    plan: vc2-1c-1gb
+    os: Debian 12 x64
+    cloud_init: cloud-init-caddy.yaml
+    backups: false
+    firewall_group: web
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [vultr]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Static Co., handle: static-co }
+  source: { type: git, url: https://github.com/static-co/vultr-static }
+  id: com.static-co.vultr-static

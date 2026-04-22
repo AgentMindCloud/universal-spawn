@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/supabase/supabase-spawn.schema.json",
+  "title": "universal-spawn with Supabase platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "supabase"
+          ],
+          "properties": {
+            "supabase": {
+              "$ref": "#/definitions/supabase"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "supabase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_ref"
+      ],
+      "properties": {
+        "project_ref": {
+          "type": "string",
+          "pattern": "^[a-z0-9]{20}$"
+        },
+        "region": {
+          "type": "string",
+          "enum": [
+            "us-east-1",
+            "us-west-1",
+            "eu-west-1",
+            "eu-central-1",
+            "ap-southeast-1",
+            "ap-northeast-1",
+            "ap-south-1",
+            "sa-east-1"
+          ]
+        },
+        "db": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "postgres_major_version": {
+              "type": "integer",
+              "minimum": 14,
+              "maximum": 17
+            },
+            "migrations_dir": {
+              "type": "string"
+            },
+            "seed_file": {
+              "type": "string"
+            },
+            "pooler": {
+              "type": "string",
+              "enum": [
+                "transaction",
+                "session",
+                "none"
+              ]
+            }
+          }
+        },
+        "auth": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "providers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "email",
+                  "github",
+                  "google",
+                  "apple",
+                  "twitter",
+                  "discord",
+                  "azure",
+                  "gitlab",
+                  "slack",
+                  "linkedin_oidc"
+                ]
+              }
+            },
+            "site_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "jwt_expiry_seconds": {
+              "type": "integer",
+              "minimum": 60,
+              "maximum": 604800
+            }
+          }
+        },
+        "storage": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "buckets": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]{0,62}$"
+                  },
+                  "public": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "max_file_size_mb": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 50000
+                  },
+                  "allowed_mime_types": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "realtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "channels": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+              }
+            }
+          }
+        },
+        "edge_functions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+              },
+              "entrypoint": {
+                "type": "string"
+              },
+              "verify_jwt": {
+                "type": "boolean",
+                "default": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

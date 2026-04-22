@@ -1,0 +1,32 @@
+version: "1.0"
+name: PA Flask API
+type: api-service
+summary: Flask API on PythonAnywhere with a nightly scheduled task.
+description: Flask WSGI app, one scheduled task that rolls over logs.
+
+platforms:
+  pythonanywhere:
+    python_version: "3.12"
+    wsgi_file: /var/www/yourname_pythonanywhere_com_wsgi.py
+    virtualenv: /home/yourname/.virtualenvs/api
+    static_mappings:
+      - { url: /static/, path: /home/yourname/api/static }
+    scheduled_tasks:
+      - { command: "python /home/yourname/api/jobs/rotate_logs.py", hour: 3, minute: 30 }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: FLASK_SECRET_KEY
+    description: Flask session secret.
+    secret: true
+
+deployment:
+  targets: [pythonanywhere]
+
+metadata:
+  license: MIT
+  author: { name: API Co., handle: api-co }
+  source: { type: git, url: https://github.com/api-co/pa-flask-api }
+  id: com.api-co.pa-flask-api

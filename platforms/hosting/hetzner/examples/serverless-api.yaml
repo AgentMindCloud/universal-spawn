@@ -1,0 +1,36 @@
+version: "1.0"
+name: Hetzner Docker API
+type: api-service
+summary: Dockerised API on Hetzner Cloud with an attached volume.
+description: cpx31 in nbg1 with docker-compose starting the API and Postgres container; a 20GB volume for Postgres data.
+
+platforms:
+  hetzner:
+    location: nbg1
+    server_type: cpx31
+    image: debian-12
+    ssh_keys: [ops-key]
+    cloud_init: cloud-init-docker.yaml
+    volumes:
+      - { name: postgres, size_gb: 20, mount: /var/lib/postgresql }
+    firewall_rules:
+      - { direction: in, protocol: tcp, port_range: "443", source_cidrs: ["0.0.0.0/0", "::/0"] }
+      - { direction: in, protocol: tcp, port_range: "22",  source_cidrs: ["10.0.0.0/8"] }
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:write:/var/lib/postgresql]
+  rate_limit_qps: 50
+
+env_vars_required:
+  - name: POSTGRES_PASSWORD
+    description: Postgres password baked into cloud-init.
+    secret: true
+
+deployment:
+  targets: [hetzner]
+
+metadata:
+  license: Apache-2.0
+  author: { name: API Co., handle: api-co }
+  source: { type: git, url: https://github.com/api-co/hetzner-docker-api }
+  id: com.api-co.hetzner-docker-api

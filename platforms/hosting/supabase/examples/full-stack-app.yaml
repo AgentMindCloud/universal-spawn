@@ -1,0 +1,57 @@
+version: "1.0"
+name: Supabase Full Stack
+type: web-app
+summary: Full-stack Supabase deployment with Auth, Storage, Realtime, Edge Functions, and migrations.
+description: >
+  Production-shape Supabase manifest: Postgres with migrations + seed,
+  multi-provider auth, two buckets (avatars + uploads), three realtime
+  channels, two Edge Functions. EU region for data residency.
+
+platforms:
+  supabase:
+    project_ref: "stackco00000000000aa"
+    region: eu-central-1
+    db:
+      postgres_major_version: 16
+      migrations_dir: supabase/migrations
+      seed_file: supabase/seed.sql
+      pooler: transaction
+    auth:
+      providers: [email, github, google, apple]
+      site_url: https://app.stack.example.com
+      jwt_expiry_seconds: 3600
+    storage:
+      buckets:
+        - { name: avatars, public: true,  max_file_size_mb: 5,  allowed_mime_types: [image/png, image/jpeg] }
+        - { name: uploads, public: false, max_file_size_mb: 50, allowed_mime_types: [application/pdf, text/csv] }
+    realtime:
+      channels: [chat, presence, alerts]
+    edge_functions:
+      - { name: webhooks, entrypoint: supabase/functions/webhooks/index.ts, verify_jwt: false }
+      - { name: admin,    entrypoint: supabase/functions/admin/index.ts,    verify_jwt: true }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+  data_residency: [eu]
+
+env_vars_required:
+  - name: SUPABASE_SERVICE_ROLE_KEY
+    description: Service role key.
+    secret: true
+  - name: STRIPE_WEBHOOK_SECRET
+    description: Stripe webhook signing secret.
+    secret: true
+  - name: SENDGRID_API_KEY
+    description: SendGrid API key for transactional email.
+    secret: true
+
+deployment:
+  targets: [supabase]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co, org: Stack }
+  source: { type: git, url: https://github.com/stack-co/supabase-full-stack }
+  id: com.stack-co.supabase-full-stack

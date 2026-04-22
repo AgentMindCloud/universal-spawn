@@ -1,0 +1,31 @@
+version: "1.0"
+name: DO Functions API
+type: api-service
+summary: DigitalOcean Functions serverless API.
+description: Node 20 serverless function package.
+
+platforms:
+  digitalocean:
+    surface: functions
+    region: fra
+    functions:
+      runtime: nodejs:20
+      package: packages/api
+
+safety:
+  min_permissions: [network:outbound]
+  rate_limit_qps: 50
+
+env_vars_required:
+  - name: API_SECRET
+    description: API signing secret.
+    secret: true
+
+deployment:
+  targets: [digitalocean]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Functions Co., handle: functions-co }
+  source: { type: git, url: https://github.com/functions-co/do-functions-api }
+  id: com.functions-co.do-functions-api

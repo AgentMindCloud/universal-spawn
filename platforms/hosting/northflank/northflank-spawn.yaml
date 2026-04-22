@@ -1,0 +1,32 @@
+version: "1.0"
+name: Northflank Template
+type: web-app
+description: Template for a Northflank-targeted universal-spawn manifest.
+
+platforms:
+  northflank:
+    kind: combined
+    build: { git_ref: main, dockerfile_path: Dockerfile }
+    resources: { plan: nf-compute-20 }
+    replicas: 1
+    ports:
+      - { name: web, port: 8080, protocol: HTTP, public: true }
+    addons:
+      - { kind: postgres, name: db, plan: nf-compute-20 }
+    region: europe-west
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Injected by the Postgres addon.
+    secret: true
+
+deployment:
+  targets: [northflank]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/northflank-template }

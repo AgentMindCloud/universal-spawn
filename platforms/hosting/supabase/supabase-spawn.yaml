@@ -1,0 +1,39 @@
+version: "1.0"
+name: Supabase Template
+type: web-app
+description: Template for a Supabase-targeted universal-spawn manifest.
+
+platforms:
+  supabase:
+    project_ref: "abcdefghijklmnopqrst"
+    region: us-east-1
+    db:
+      postgres_major_version: 16
+      migrations_dir: supabase/migrations
+      seed_file: supabase/seed.sql
+      pooler: transaction
+    auth:
+      providers: [email, github]
+      site_url: https://your-app.example.com
+      jwt_expiry_seconds: 3600
+    storage:
+      buckets:
+        - { name: avatars, public: true, max_file_size_mb: 5, allowed_mime_types: [image/png, image/jpeg] }
+    edge_functions:
+      - { name: hello, entrypoint: supabase/functions/hello/index.ts, verify_jwt: true }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: SUPABASE_SERVICE_ROLE_KEY
+    description: Service role key for server-side access.
+    secret: true
+
+deployment:
+  targets: [supabase]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/supabase-template }

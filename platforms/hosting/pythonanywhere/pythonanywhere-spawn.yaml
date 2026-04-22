@@ -1,0 +1,30 @@
+version: "1.0"
+name: PythonAnywhere Template
+type: web-app
+description: Template for a PythonAnywhere-targeted universal-spawn manifest.
+
+platforms:
+  pythonanywhere:
+    python_version: "3.12"
+    wsgi_file: /var/www/yourname_pythonanywhere_com_wsgi.py
+    virtualenv: /home/yourname/.virtualenvs/app
+    static_mappings:
+      - { url: /static/, path: /home/yourname/app/static }
+    scheduled_tasks:
+      - { command: "python /home/yourname/app/jobs/nightly.py", hour: 3, minute: 0 }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: DJANGO_SECRET_KEY
+    description: Django SECRET_KEY.
+    secret: true
+
+deployment:
+  targets: [pythonanywhere]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/pythonanywhere-template }

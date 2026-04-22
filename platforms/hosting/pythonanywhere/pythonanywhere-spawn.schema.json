@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/pythonanywhere/pythonanywhere-spawn.schema.json",
+  "title": "universal-spawn with PythonAnywhere platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "pythonanywhere"
+          ],
+          "properties": {
+            "pythonanywhere": {
+              "$ref": "#/definitions/pythonanywhere"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "pythonanywhere": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "python_version",
+        "wsgi_file"
+      ],
+      "properties": {
+        "python_version": {
+          "type": "string",
+          "pattern": "^3\\.(1[0-4])$"
+        },
+        "wsgi_file": {
+          "type": "string"
+        },
+        "virtualenv": {
+          "type": "string"
+        },
+        "static_mappings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "url",
+              "path"
+            ],
+            "properties": {
+              "url": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "scheduled_tasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command",
+              "hour",
+              "minute"
+            ],
+            "properties": {
+              "command": {
+                "type": "string"
+              },
+              "hour": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 23
+              },
+              "minute": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 59
+              }
+            }
+          }
+        },
+        "always_on_tasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command"
+            ],
+            "properties": {
+              "command": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "databases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "engine",
+              "name"
+            ],
+            "properties": {
+              "engine": {
+                "type": "string",
+                "enum": [
+                  "mysql",
+                  "postgres"
+                ]
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

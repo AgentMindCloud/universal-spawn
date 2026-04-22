@@ -1,0 +1,40 @@
+version: "1.0"
+name: Firebase Template
+type: web-app
+description: Template for a Firebase-targeted universal-spawn manifest.
+
+platforms:
+  firebase:
+    project_id: your-firebase-project
+    region: us-central1
+    hosting:
+      site_id: default
+      public_dir: dist
+      ssr: false
+      framework: astro
+    functions:
+      source: functions
+      runtime: nodejs22
+      functions_list:
+        - { name: onUserCreate, trigger: auth, memory_mb: 256, timeout_seconds: 30 }
+    firestore:
+      rules_file: firestore.rules
+      indexes_file: firestore.indexes.json
+    auth:
+      providers: [email, google.com]
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: SENDGRID_KEY
+    description: SendGrid key for transactional email.
+    secret: true
+
+deployment:
+  targets: [firebase]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/firebase-template }

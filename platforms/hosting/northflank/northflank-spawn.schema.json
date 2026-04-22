@@ -1,0 +1,170 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/northflank/northflank-spawn.schema.json",
+  "title": "universal-spawn with Northflank platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "northflank"
+          ],
+          "properties": {
+            "northflank": {
+              "$ref": "#/definitions/northflank"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "northflank": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "combined",
+            "deployment",
+            "job"
+          ]
+        },
+        "build": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "git_ref": {
+              "type": "string",
+              "description": "Git branch, tag, or commit."
+            },
+            "dockerfile_path": {
+              "type": "string"
+            },
+            "context_path": {
+              "type": "string"
+            },
+            "build_args": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "image": {
+          "type": "string"
+        },
+        "resources": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "plan": {
+              "type": "string",
+              "enum": [
+                "nf-compute-10",
+                "nf-compute-20",
+                "nf-compute-50",
+                "nf-compute-100",
+                "nf-compute-200",
+                "nf-compute-400",
+                "nf-compute-gpu-small",
+                "nf-compute-gpu-medium"
+              ]
+            },
+            "storage_gb": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2000
+            }
+          }
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "port"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "port": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "protocol": {
+                "type": "string",
+                "enum": [
+                  "HTTP",
+                  "HTTP2",
+                  "TCP",
+                  "GRPC"
+                ]
+              },
+              "public": {
+                "type": "boolean",
+                "default": true
+              }
+            }
+          }
+        },
+        "addons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "postgres",
+                  "mysql",
+                  "mongodb",
+                  "redis",
+                  "clickhouse"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "plan": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "pipeline": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        }
+      }
+    }
+  }
+}

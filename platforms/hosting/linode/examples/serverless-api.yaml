@@ -1,0 +1,36 @@
+version: "1.0"
+name: Linode API on Docker
+type: api-service
+summary: Node API on a g6-standard-2 with Docker Compose and an attached volume.
+description: Standard Linode running Docker Compose; API + Postgres container with data volume.
+
+platforms:
+  linode:
+    region: us-east
+    instance_type: g6-standard-2
+    image: linode/ubuntu24.04
+    stackscript:
+      id: 111111
+      udf:
+        - { name: app_domain, value: api.example.com }
+    volumes:
+      - { label: data, size_gb: 50 }
+    private_ip: true
+    backups: true
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:write]
+
+env_vars_required:
+  - name: POSTGRES_PASSWORD
+    description: Postgres password baked into the StackScript.
+    secret: true
+
+deployment:
+  targets: [linode]
+
+metadata:
+  license: Apache-2.0
+  author: { name: API Co., handle: api-co }
+  source: { type: git, url: https://github.com/api-co/linode-docker-api }
+  id: com.api-co.linode-docker-api

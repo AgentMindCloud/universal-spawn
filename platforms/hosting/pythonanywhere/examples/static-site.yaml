@@ -1,0 +1,28 @@
+version: "1.0"
+name: PA Static Assets
+type: site
+summary: Serve a static site via PythonAnywhere's static mappings.
+description: WSGI returns 404 for non-static paths; static mappings serve everything else.
+
+platforms:
+  pythonanywhere:
+    python_version: "3.12"
+    wsgi_file: /var/www/yourname_pythonanywhere_com_wsgi.py
+    virtualenv: /home/yourname/.virtualenvs/static
+    static_mappings:
+      - { url: /, path: /home/yourname/site/public }
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [pythonanywhere]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Static Co., handle: static-co }
+  source: { type: git, url: https://github.com/static-co/pa-static }
+  id: com.static-co.pa-static

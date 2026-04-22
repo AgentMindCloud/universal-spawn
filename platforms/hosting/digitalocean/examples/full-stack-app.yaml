@@ -1,0 +1,44 @@
+version: "1.0"
+name: DO Full Stack
+type: web-app
+summary: Full-stack App Platform deployment with web + worker + Postgres + Redis.
+description: >
+  Two components (web + worker) plus managed Postgres and Redis. FRA
+  region for EU data residency.
+
+platforms:
+  digitalocean:
+    surface: app_platform
+    region: fra
+    services:
+      - { name: web,    kind: web,    instance_size: professional-s, instance_count: 2, build_command: "pnpm build",        run_command: "pnpm start",  http_port: 8080 }
+      - { name: worker, kind: worker, instance_size: basic-s,        instance_count: 1, build_command: "pnpm build:worker", run_command: "pnpm worker" }
+    databases:
+      - { name: db,    engine: PG,    size: db-s-1vcpu-2gb }
+      - { name: cache, engine: REDIS, size: db-s-1vcpu-1gb }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 20
+  safe_for_auto_spawn: false
+  data_residency: [eu]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Postgres connection string.
+    secret: true
+  - name: REDIS_URL
+    description: Redis URL.
+    secret: true
+  - name: SESSION_SECRET
+    description: Session secret.
+    secret: true
+
+deployment:
+  targets: [digitalocean]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/do-full-stack }
+  id: com.stack-co.do-full-stack
