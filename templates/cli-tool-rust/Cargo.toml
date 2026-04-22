@@ -1,0 +1,14 @@
+[package]
+name = "your_cli"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.80"
+license = "Apache-2.0"
+description = "Replace with a one-line CLI description."
+repository = "https://github.com/yourhandle/your-cli"
+
+[[bin]]
+name = "your-cli"
+path = "src/main.rs"
+
+[dependencies]

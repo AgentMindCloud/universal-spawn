@@ -1,0 +1,14 @@
+{
+  "name": "@yourhandle/your-cli",
+  "version": "0.1.0",
+  "description": "Replace with a one-line CLI description.",
+  "type": "module",
+  "bin": { "your-cli": "./bin/your-cli.js" },
+  "files": ["bin/", "src/", "README.md", "LICENSE"],
+  "engines": { "node": ">=20" },
+  "license": "MIT",
+  "repository": "github:yourhandle/your-cli",
+  "scripts": {
+    "test": "vitest run"
+  }
+}

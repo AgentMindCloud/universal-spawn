@@ -19,7 +19,13 @@
 
 ### Model providers (`platforms/ai/`)
 
-- _(no entries yet — be the first)_
+<!-- The entry below is a format placeholder, not a real project.
+     It will be replaced by the first real submission. -->
+
+- **_example placeholder_** — [`your-org/your-project`](https://github.com/your-org/your-project) —
+  short one-line description of what it does and why it belongs here.
+  Manifest: [`universal-spawn.yaml`](https://github.com/your-org/your-project/blob/main/universal-spawn.yaml).
+  Targets: `platforms.openai`, `platforms.anthropic`. Author: @your-handle.
 
 ### Multi-agent frameworks (`platforms/ai/multi-agent/`)
 
@@ -63,7 +69,12 @@
 
 ### IDEs + browser extensions
 
-- _(no entries yet)_
+<!-- Format placeholder — replace with the first real devtools submission. -->
+
+- **_example placeholder_** — [`your-org/vscode-your-extension`](https://github.com/your-org/vscode-your-extension) —
+  short one-line description of the extension.
+  Manifest: [`universal-spawn.yaml`](https://github.com/your-org/vscode-your-extension/blob/main/universal-spawn.yaml).
+  Targets: `platforms.vscode`. Author: @your-handle.
 
 ### Infra / container / IaC
 
@@ -89,7 +100,12 @@
 
 ### Engines
 
-- _(no entries yet)_
+<!-- Format placeholder — replace with the first real gaming submission. -->
+
+- **_example placeholder_** — [`your-org/your-godot-game`](https://github.com/your-org/your-godot-game) —
+  short one-line description of the game or asset.
+  Manifest: [`universal-spawn.yaml`](https://github.com/your-org/your-godot-game/blob/main/universal-spawn.yaml).
+  Targets: `platforms.godot`, `platforms.steam`. Author: @your-handle.
 
 ### Stores + mod ecosystems
 
@@ -137,6 +153,8 @@ Each entry is one bullet with these fields:
 4. The PR is merged; your project ships in the next release of the
    list.
 
-The list is intentionally empty at v1.0 launch. The first entries
-land via PR. We'd rather grow slowly with real projects than seed
-with placeholders.
+At v1.0 launch, each top-level section shows at most one
+clearly-labeled _example placeholder_ so newcomers can see the
+exact entry format. Real entries replace the placeholders on first
+submission. We'd rather grow slowly with real projects than fake a
+deep list.

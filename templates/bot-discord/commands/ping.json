@@ -1,0 +1,6 @@
+{
+  "name": "ping",
+  "description": "Ping the bot.",
+  "type": 1,
+  "options": []
+}

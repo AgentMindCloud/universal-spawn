@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Your Firefox Extension",
+  "version": "0.1.0",
+  "description": "Replace with a one-line extension description.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "your-extension@yourhandle.example",
+      "strict_min_version": "120.0"
+    }
+  },
+  "permissions": ["activeTab", "storage"],
+  "background": { "scripts": ["background.js"] }
+}

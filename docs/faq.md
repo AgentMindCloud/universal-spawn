@@ -118,3 +118,65 @@ separate lint).
 Nothing is "pre-public." 1.0.0 is the first public release of this
 spec. Earlier internal drafts (none of which are published) should be
 considered non-existent.
+
+## Do I still need `vercel.json` (or `netlify.toml`, `fly.toml`, …)?
+
+Yes. universal-spawn is **additive**, not a replacement. `vercel.json`
+keeps owning Vercel-specific knobs the universal schema doesn't (yet)
+model — `crons[]`, `headers[]`, `redirects[]`, `rewrites[]`, image-
+optimization config. The same goes for `netlify.toml`, `fly.toml`,
+`render.yaml`, `wrangler.toml`. Both files coexist in the repo;
+conformant consumers read both and warn on conflicts (the universal
+manifest wins). The migration playbook lives in
+[`../best-practices/migration-strategy.md`](../best-practices/migration-strategy.md).
+
+## What about `grok-install.yaml`? Do I delete it?
+
+No. `grok-install.yaml` (AgentMindCloud/grok-install v2.14) is the
+prior Grok-specific manifest and Grok consumers continue to read it
+verbatim. Ship `universal-spawn.yaml` (with a `platforms.grok` block)
+**alongside** it — neither file replaces the other. The discovery
+order Grok consumers SHOULD follow is documented in
+[`../platforms/ai/grok/`](../platforms/ai/grok/), and the
+[`x-native-agent-grok-compat`](../templates/x-native-agent-grok-compat/)
+flagship template ships both files side-by-side as the canonical
+exercise.
+
+## Who owns the standard?
+
+The **canonical source** is
+[`github.com/AgentMindCloud/universal-spawn`](https://github.com/AgentMindCloud/universal-spawn),
+maintained by Jani Solo (`@JanSol0s`) under the AgentMindCloud
+organization. The spec itself is **Apache 2.0 in perpetuity** —
+mirrors are welcome, forks that re-brand the standard are not. The
+roadmap to a technical steering committee, the RFC process, and the
+release cadence all live in
+[`../GOVERNANCE.md`](../GOVERNANCE.md). Practically: nobody can
+revoke or paywall the spec; every implementation can fork the schema
+and ship a derivative.
+
+## Can I monetize a creation that ships a manifest?
+
+Yes. The standard is licensing-neutral. Use the platform's first-class
+billing surface where one exists (Unity Asset Store, GPT Store
+Actions, Vercel Marketplace, Roblox DevEx). For subscription /
+per-spawn / freemium patterns the platform doesn't model, declare it
+under `x-ext.com.universal-spawn.monetization` — see
+[`../best-practices/monetization.md`](../best-practices/monetization.md)
+for the recommended shape. The spec also leaves
+`metadata.license: proprietary` valid for closed creations.
+
+## How is universal-spawn different from OpenAPI?
+
+OpenAPI describes an HTTP API surface — the routes, parameters, and
+response shapes that an HTTP client should expect. universal-spawn
+describes a **creation as a whole** — what it is, who made it, where
+it deploys, what permissions it needs, what platforms it spawns on.
+The two complement each other: a manifest can reference an OpenAPI
+document via `compat.openapi` (or under
+`platforms.openai.action.openapi_ref` for GPT Store Actions and
+`platforms.gemini.extension.openapi_ref` for Vertex AI Extensions).
+Think of OpenAPI as the contract for *one HTTP surface* and
+universal-spawn as the contract for *a spawnable thing* (which may
+expose zero, one, or several HTTP surfaces, and may also be a
+notebook, a bot, a game mod, or a piece of firmware).

@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Your Chrome Extension",
+  "version": "0.1.0",
+  "description": "Replace with a one-line extension description.",
+  "permissions": ["activeTab", "sidePanel", "storage"],
+  "background": { "service_worker": "background.js" },
+  "side_panel": { "default_path": "sidepanel.html" },
+  "minimum_chrome_version": "120"
+}

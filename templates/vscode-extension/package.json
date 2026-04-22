@@ -1,0 +1,20 @@
+{
+  "name": "your-extension",
+  "displayName": "Your Extension",
+  "description": "Replace with a one-line extension description.",
+  "version": "0.1.0",
+  "publisher": "yourhandle",
+  "engines": { "vscode": "^1.90.0" },
+  "license": "MIT",
+  "categories": ["Other"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "your-extension.hello", "title": "Your Extension: Hello" }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "test": "vitest run"
+  }
+}
