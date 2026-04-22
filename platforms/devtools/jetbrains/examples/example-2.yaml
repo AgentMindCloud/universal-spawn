@@ -1,0 +1,31 @@
+version: "1.0"
+name: Lab Notebook Inspector
+type: plugin
+summary: Full JetBrains plugin that inspects Markdown lab-notebooks in-editor.
+description: >
+  Plugin for IDEA + PyCharm + WebStorm that inspects Markdown files
+  against the Residual Frequencies lab-notebook rubric. Listed on the
+  Marketplace.
+
+platforms:
+  jetbrains:
+    plugin_id: com.plate-studio.lab-notebook-inspector
+    ides: [idea, pycharm, webstorm]
+    since_build: "243.0"
+    until_build: "252.*"
+    marketplace_id: 24001
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [jetbrains]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/jetbrains-lab-notebook-inspector }
+  id: com.plate-studio.jetbrains-lab-notebook-inspector

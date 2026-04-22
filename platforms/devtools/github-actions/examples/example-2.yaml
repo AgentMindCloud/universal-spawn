@@ -1,0 +1,29 @@
+version: "1.0"
+name: Parchment Lint Action
+type: workflow
+summary: Reusable composite action that lints SVG plates against the Residual Frequencies rubric.
+description: Published on the Actions Marketplace under Code quality.
+
+platforms:
+  github-actions:
+    kind: reusable-action
+    action_type: composite
+    marketplace_category: Code quality
+    runs_on: [ubuntu-latest]
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [github-actions]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/parchment-lint-action }
+  id: com.plate-studio.parchment-lint-action

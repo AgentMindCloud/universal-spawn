@@ -1,0 +1,30 @@
+version: "1.0"
+name: Parchment Reader FF
+type: extension
+summary: Minimal Firefox extension recoloring pages to the parchment palette.
+description: WebExtension MV3. Active-tab scoped.
+
+platforms:
+  firefox-extension:
+    manifest_version: 3
+    gecko_id: "parchment-reader@plate-studio.example"
+    permissions: [activeTab, storage]
+    background_script: background.js
+    strict_min_version: "120.0"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [firefox-extension]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/firefox-parchment-reader }
+  id: com.plate-studio.firefox-parchment-reader

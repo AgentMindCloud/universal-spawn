@@ -1,0 +1,24 @@
+version: "1.0"
+name: JetBrains Template
+type: extension
+description: Template for a JetBrains-targeted universal-spawn manifest.
+
+platforms:
+  jetbrains:
+    plugin_id: com.yourhandle.yourplugin
+    ides: [idea, pycharm, webstorm]
+    since_build: "243.0"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [jetbrains]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/jetbrains-template }

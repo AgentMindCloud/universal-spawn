@@ -1,0 +1,24 @@
+version: "1.0"
+name: Codespaces Template
+type: container
+description: Template for a Codespaces-targeted universal-spawn manifest.
+
+platforms:
+  codespaces:
+    devcontainer: .devcontainer/devcontainer.json
+    machine: standardLinux32gb
+    prebuild: on-push
+    forward_ports: [3000, 5432]
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:read, fs:write]
+
+env_vars_required: []
+
+deployment:
+  targets: [codespaces]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/codespaces-template }

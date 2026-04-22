@@ -1,0 +1,30 @@
+version: "1.0"
+name: Plate Devbox
+type: container
+summary: Full CodeSandbox devbox running Next.js with custom dev tasks.
+description: microVM-backed devbox; persists dependencies between sessions.
+
+platforms:
+  codesandbox:
+    kind: devbox
+    template: next
+    config_dir: .codesandbox
+    preview_port: 3000
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Postgres URL.
+    secret: true
+
+deployment:
+  targets: [codesandbox]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/codesandbox-next-devbox }
+  id: com.stack-co.codesandbox-next-devbox

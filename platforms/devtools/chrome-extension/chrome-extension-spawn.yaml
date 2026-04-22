@@ -1,0 +1,26 @@
+version: "1.0"
+name: Chrome Extension Template
+type: extension
+description: Template for a Chrome-extension-targeted universal-spawn manifest.
+
+platforms:
+  chrome-extension:
+    manifest_version: 3
+    permissions: [storage, sidePanel]
+    host_permissions: ["https://example.com/*"]
+    service_worker: background.js
+    min_chrome_version: "120"
+
+safety:
+  min_permissions: [network:outbound:example.com, clipboard:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [chrome-extension]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/chrome-extension-template }

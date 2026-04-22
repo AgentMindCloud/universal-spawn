@@ -1,0 +1,26 @@
+version: "1.0"
+name: Maven Template
+type: library
+description: Template for a Maven-targeted universal-spawn manifest.
+
+platforms:
+  maven:
+    group_id: com.yourhandle
+    artifact_id: your-lib
+    packaging: jar
+    java_range: ">=17"
+    repository: maven-central
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [maven]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/maven-template }

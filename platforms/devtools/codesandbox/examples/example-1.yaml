@@ -1,0 +1,26 @@
+version: "1.0"
+name: Plate Sandbox
+type: web-app
+summary: Minimal CodeSandbox sandbox for a Vite + React demo.
+description: Browser-only sandbox.
+
+platforms:
+  codesandbox:
+    kind: sandbox
+    template: vite-react
+    preview_port: 5173
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [codesandbox]
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/codesandbox-plate-demo }
+  id: com.plate-studio.codesandbox-plate-demo

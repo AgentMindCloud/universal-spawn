@@ -1,0 +1,25 @@
+version: "1.0"
+name: StackBlitz Template
+type: web-app
+description: Template for a StackBlitz-targeted universal-spawn manifest.
+
+platforms:
+  stackblitz:
+    starter: vite
+    node_version: "20"
+    open_file: src/main.ts
+    terminal_command: "pnpm dev"
+    embed_view: both
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required: []
+
+deployment:
+  targets: [stackblitz]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/stackblitz-template }

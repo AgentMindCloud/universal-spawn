@@ -1,0 +1,28 @@
+version: "1.0"
+name: Parchment Utils Py
+type: library
+summary: Minimal PyPI library exposing Residual Frequencies palette helpers.
+description: Pure Python library, Python 3.11+, hatchling backend.
+
+platforms:
+  pypi:
+    distribution: parchment-utils
+    python_range: ">=3.11"
+    shape: library
+    repository: pypi
+    build_backend: hatchling
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [pypi]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/pypi-parchment-utils }
+  id: com.plate-studio.pypi-parchment-utils

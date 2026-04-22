@@ -1,0 +1,35 @@
+version: "1.0"
+name: Plate Infra
+type: workflow
+summary: Minimal Terraform root-config for the plate-studio infra.
+description: Provisions an S3 bucket + CloudFront distribution. AWS-only.
+
+platforms:
+  terraform:
+    kind: root-config
+    entry_dir: infra
+    required_providers:
+      aws: "~> 5.0"
+    min_cli_version: ">=1.8"
+    backend: s3
+
+safety:
+  min_permissions: [network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: AWS_ACCESS_KEY_ID
+    description: AWS key.
+    secret: true
+  - name: AWS_SECRET_ACCESS_KEY
+    description: AWS secret.
+    secret: true
+
+deployment:
+  targets: [terraform]
+
+metadata:
+  license: MPL-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/terraform-plate-infra }
+  id: com.plate-studio.terraform-plate-infra

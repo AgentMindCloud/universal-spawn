@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/codespaces/codespaces-spawn.schema.json",
+  "title": "universal-spawn with GitHub Codespaces platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "codespaces"
+          ],
+          "properties": {
+            "codespaces": {
+              "$ref": "#/definitions/codespaces"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "codespaces": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "devcontainer": {
+          "type": "string"
+        },
+        "machine": {
+          "type": "string",
+          "enum": [
+            "basicLinux32gb",
+            "standardLinux32gb",
+            "premiumLinux",
+            "largePremiumLinux",
+            "xLargePremiumLinux"
+          ]
+        },
+        "prebuild": {
+          "type": "string",
+          "enum": [
+            "never",
+            "on-push",
+            "on-pr-merge"
+          ]
+        },
+        "forward_ports": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        "region": {
+          "type": "string",
+          "enum": [
+            "UsEast",
+            "UsWest",
+            "EuropeWest",
+            "SoutheastAsia"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+version: "1.0"
+name: Gitpod Template
+type: container
+description: Template for a Gitpod-targeted universal-spawn manifest.
+
+platforms:
+  gitpod:
+    image: gitpod/workspace-full:latest
+    tasks:
+      - { name: install, init: "pnpm install", command: "pnpm dev" }
+    ports:
+      - { port: 3000, visibility: public, on_open: open-preview }
+    tier: standard
+    tools: [vscode]
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:read, fs:write]
+
+env_vars_required: []
+
+deployment:
+  targets: [gitpod]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/gitpod-template }

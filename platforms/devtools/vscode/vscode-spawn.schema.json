@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/vscode/vscode-spawn.schema.json",
+  "title": "universal-spawn with VS Code platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "vscode"
+          ],
+          "properties": {
+            "vscode": {
+              "$ref": "#/definitions/vscode"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "vscode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "extension",
+            "devcontainer"
+          ]
+        },
+        "publisher_id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9-]{0,31}$"
+        },
+        "extension_id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9-]*\\.[a-zA-Z][a-zA-Z0-9-]*$"
+        },
+        "min_vscode": {
+          "type": "string",
+          "pattern": "^\\^?[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+        },
+        "image": {
+          "type": "string"
+        },
+        "features": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "forks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "vscode",
+              "cursor",
+              "windsurf",
+              "code-oss",
+              "vscodium"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

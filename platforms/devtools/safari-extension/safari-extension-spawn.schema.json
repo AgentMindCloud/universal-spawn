@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/safari-extension/safari-extension-spawn.schema.json",
+  "title": "universal-spawn with Safari Extension platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "safari-extension"
+          ],
+          "properties": {
+            "safari-extension": {
+              "$ref": "#/definitions/safari-extension"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "safari-extension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "xcodeproj",
+        "bundle_id",
+        "host_app"
+      ],
+      "properties": {
+        "xcodeproj": {
+          "type": "string"
+        },
+        "bundle_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9.-]+$"
+        },
+        "host_app": {
+          "type": "string",
+          "enum": [
+            "macos",
+            "ios",
+            "universal"
+          ]
+        },
+        "entitlements": {
+          "type": "string"
+        },
+        "app_store_id": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

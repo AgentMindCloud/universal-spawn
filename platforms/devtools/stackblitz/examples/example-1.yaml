@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Vite Sandbox
+type: web-app
+summary: Minimal StackBlitz Vite project.
+description: Browser-only Vite sandbox.
+
+platforms:
+  stackblitz:
+    starter: vite
+    node_version: "20"
+    open_file: index.html
+    terminal_command: "pnpm dev"
+    embed_view: both
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [stackblitz]
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/stackblitz-vite-plate }
+  id: com.plate-studio.stackblitz-vite-plate

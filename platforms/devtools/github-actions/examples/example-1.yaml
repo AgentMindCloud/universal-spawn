@@ -1,0 +1,27 @@
+version: "1.0"
+name: CI Workflow
+type: workflow
+summary: Minimal universal-spawn CI workflow (lint + validate).
+description: Runs markdownlint and the session validators on every push.
+
+platforms:
+  github-actions:
+    kind: workflow
+    workflow_file: .github/workflows/validate.yaml
+    runs_on: [ubuntu-latest]
+    triggers: [push, pull_request]
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [github-actions]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/github-actions-ci }
+  id: com.plate-studio.github-actions-ci

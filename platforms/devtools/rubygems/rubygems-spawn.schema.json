@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/rubygems/rubygems-spawn.schema.json",
+  "title": "universal-spawn with RubyGems platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "rubygems"
+          ],
+          "properties": {
+            "rubygems": {
+              "$ref": "#/definitions/rubygems"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "rubygems": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gem_name",
+        "ruby_range"
+      ],
+      "properties": {
+        "gem_name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "ruby_range": {
+          "type": "string",
+          "pattern": "^[><=~ |.0-9, ]+$"
+        },
+        "host": {
+          "type": "string",
+          "enum": [
+            "rubygems.org",
+            "private"
+          ]
+        },
+        "bin_name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        }
+      }
+    }
+  }
+}

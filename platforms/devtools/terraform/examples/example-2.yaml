@@ -1,0 +1,34 @@
+version: "1.0"
+name: Parchment Static Site Module
+type: library
+summary: Full Terraform module for a static-site pipeline, published to the Registry.
+description: >
+  Reusable Terraform module provisioning S3 + CloudFront + Route53.
+  Listed on registry.terraform.io under `plate-studio/parchment-static-site/aws`.
+
+platforms:
+  terraform:
+    kind: module
+    entry_dir: .
+    required_providers:
+      aws: "~> 5.0"
+    min_cli_version: ">=1.5"
+    registry:
+      namespace: plate-studio
+      name: parchment-static-site
+      provider: aws
+
+safety:
+  min_permissions: [network:outbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [terraform]
+
+metadata:
+  license: MPL-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/terraform-aws-parchment-static-site }
+  id: com.plate-studio.terraform-parchment-static-site

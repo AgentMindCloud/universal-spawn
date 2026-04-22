@@ -1,0 +1,31 @@
+version: "1.0"
+name: Parchment Dev Container
+type: container
+summary: Reproducible Dev Container for the Residual Frequencies repo.
+description: >
+  Reads a standard .devcontainer/devcontainer.json. Includes Node 20,
+  pnpm, and the SVG-lint feature so plate SVGs validate on save.
+
+platforms:
+  vscode:
+    kind: devcontainer
+    image: mcr.microsoft.com/devcontainers/typescript-node:20
+    features:
+      "ghcr.io/devcontainers/features/github-cli:1": {}
+      "ghcr.io/devcontainers-contrib/features/svg-lint:1": {}
+    forks: [vscode, cursor, windsurf]
+
+safety:
+  min_permissions: [fs:read, fs:write, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [vscode, codespaces, gitpod]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/vscode-devcontainer }
+  id: com.plate-studio.vscode-devcontainer

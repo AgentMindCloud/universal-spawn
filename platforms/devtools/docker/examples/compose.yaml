@@ -1,0 +1,33 @@
+version: "1.0"
+name: Plate Stack Compose
+type: container
+summary: Full Compose stack — web + worker + Postgres + Redis.
+description: docker-compose.yaml with four services. Pairs with the Dockerfile of the web service.
+
+platforms:
+  docker:
+    kind: compose
+    compose_file: compose.yaml
+    build_platforms: [linux/amd64, linux/arm64]
+    registry: ghcr.io
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: POSTGRES_PASSWORD
+    description: Postgres password.
+    secret: true
+  - name: REDIS_PASSWORD
+    description: Redis password.
+    secret: true
+
+deployment:
+  targets: [docker]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/plate-stack-compose }
+  id: com.stack-co.plate-stack-compose

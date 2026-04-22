@@ -1,0 +1,30 @@
+version: "1.0"
+name: Plate Studio Gitpod
+type: container
+summary: Minimal Gitpod workspace for the plate-studio repo.
+description: Standard tier, vscode tool, one task running pnpm dev.
+
+platforms:
+  gitpod:
+    image: gitpod/workspace-full:latest
+    tasks:
+      - { name: dev, init: "pnpm install", command: "pnpm dev" }
+    ports:
+      - { port: 3000, visibility: public, on_open: open-preview }
+    tier: standard
+    tools: [vscode]
+
+safety:
+  min_permissions: [fs:read, fs:write, network:outbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [gitpod]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/gitpod-config }
+  id: com.plate-studio.gitpod-config

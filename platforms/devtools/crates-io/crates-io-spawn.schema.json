@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/crates-io/crates-io-spawn.schema.json",
+  "title": "universal-spawn with crates.io platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "crates-io"
+          ],
+          "properties": {
+            "crates-io": {
+              "$ref": "#/definitions/crates-io"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "crates-io": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "crate_name",
+        "edition"
+      ],
+      "properties": {
+        "crate_name": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_-]{0,63}$"
+        },
+        "edition": {
+          "type": "string",
+          "enum": [
+            "2015",
+            "2018",
+            "2021",
+            "2024"
+          ]
+        },
+        "msrv": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)+$"
+        },
+        "shape": {
+          "type": "string",
+          "enum": [
+            "library",
+            "bin",
+            "both"
+          ]
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/terraform/terraform-spawn.schema.json",
+  "title": "universal-spawn with Terraform platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "terraform"
+          ],
+          "properties": {
+            "terraform": {
+              "$ref": "#/definitions/terraform"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "terraform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "entry_dir"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "root-config",
+            "module"
+          ]
+        },
+        "entry_dir": {
+          "type": "string"
+        },
+        "required_providers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "min_cli_version": {
+          "type": "string",
+          "pattern": "^[><=~^]*[0-9]+(\\.[0-9]+)*$"
+        },
+        "registry": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "namespace": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,63}$"
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,63}$"
+            },
+            "provider": {
+              "type": "string"
+            }
+          }
+        },
+        "backend": {
+          "type": "string",
+          "enum": [
+            "s3",
+            "gcs",
+            "azurerm",
+            "remote",
+            "local",
+            "http",
+            "kubernetes"
+          ]
+        }
+      }
+    }
+  }
+}

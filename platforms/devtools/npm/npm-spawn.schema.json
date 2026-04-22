@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/npm/npm-spawn.schema.json",
+  "title": "universal-spawn with npm platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "npm"
+          ],
+          "properties": {
+            "npm": {
+              "$ref": "#/definitions/npm"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "npm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_name",
+        "shape"
+      ],
+      "properties": {
+        "package_name": {
+          "type": "string",
+          "pattern": "^(@[a-z0-9-][a-z0-9_.-]*/)?[a-z0-9-][a-z0-9_.-]*$"
+        },
+        "shape": {
+          "type": "string",
+          "enum": [
+            "library",
+            "cli",
+            "workspace"
+          ]
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "public",
+            "restricted"
+          ]
+        },
+        "node_range": {
+          "type": "string",
+          "pattern": "^[><=~^ |.0-9*x-]+$"
+        },
+        "bin_map": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "peer_deps": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

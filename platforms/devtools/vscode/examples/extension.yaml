@@ -1,0 +1,30 @@
+version: "1.0"
+name: Parchment Theme
+type: extension
+summary: Minimal VS Code color theme in the Residual Frequencies palette.
+description: Theme extension for VS Code and its forks.
+
+platforms:
+  vscode:
+    kind: extension
+    publisher_id: plate-studio
+    extension_id: plate-studio.parchment-theme
+    min_vscode: "^1.90.0"
+    forks: [vscode, cursor, windsurf, vscodium]
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [vscode]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/vscode-parchment-theme }
+  id: com.plate-studio.vscode-parchment-theme

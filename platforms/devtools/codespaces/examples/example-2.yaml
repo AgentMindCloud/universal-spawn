@@ -1,0 +1,32 @@
+version: "1.0"
+name: ML Workspace Codespace
+type: container
+summary: Full GPU-class Codespace for ML notebook work with prebuilds enabled.
+description: xLargePremiumLinux + on-push prebuilds; useful for cold-start research.
+
+platforms:
+  codespaces:
+    devcontainer: .devcontainer/devcontainer.json
+    machine: xLargePremiumLinux
+    prebuild: on-push
+    forward_ports: [8888, 6006]
+    region: EuropeWest
+
+safety:
+  min_permissions: [fs:read, fs:write, network:outbound]
+  safe_for_auto_spawn: false
+  cost_limit_usd_daily: 30
+
+env_vars_required:
+  - name: WANDB_API_KEY
+    description: Weights & Biases key.
+    secret: true
+
+deployment:
+  targets: [codespaces]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Research Lab, handle: research-lab }
+  source: { type: git, url: https://github.com/research-lab/codespaces-ml-workspace }
+  id: com.research-lab.codespaces-ml-workspace

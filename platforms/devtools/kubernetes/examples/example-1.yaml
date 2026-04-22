@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Helm Chart
+type: container
+summary: Minimal Helm-packaged chart for a single web service.
+description: Chart with Deployment + Service + Ingress. Targets k8s 1.28+.
+
+platforms:
+  kubernetes:
+    style: helm
+    chart_path: charts/plate-web
+    values_file: charts/plate-web/values.yaml
+    min_kube_version: "1.28"
+    namespace: plate
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [kubernetes]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/k8s-plate-helm }
+  id: com.plate-studio.k8s-plate-helm

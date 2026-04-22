@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate Android Aar
+type: library
+summary: Full Maven Android AAR with Java 21 target, published to GitHub Packages.
+description: Android library (AAR packaging). Java 21. Private GitHub Packages feed.
+
+platforms:
+  maven:
+    group_id: studio.plate
+    artifact_id: plate-android
+    packaging: aar
+    java_range: ">=21"
+    repository: github-packages
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: GITHUB_TOKEN
+    description: GitHub token with `read:packages` / `write:packages`.
+    secret: true
+
+deployment:
+  targets: [maven]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/maven-plate-android }
+  id: com.plate-studio.maven-plate-android

@@ -1,0 +1,26 @@
+version: "1.0"
+name: Plate Studio Codespace
+type: container
+summary: Minimal Codespaces config for the plate-studio repo.
+description: 4-core machine. Devcontainer with Node 20 + pnpm + svg-lint.
+
+platforms:
+  codespaces:
+    devcontainer: .devcontainer/devcontainer.json
+    machine: basicLinux32gb
+    forward_ports: [3000]
+
+safety:
+  min_permissions: [fs:read, fs:write, network:outbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [codespaces]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/codespaces-config }
+  id: com.plate-studio.codespaces-config

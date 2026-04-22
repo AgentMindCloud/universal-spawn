@@ -1,0 +1,26 @@
+version: "1.0"
+name: crates.io Template
+type: library
+description: Template for a crates.io-targeted universal-spawn manifest.
+
+platforms:
+  crates-io:
+    crate_name: your_crate
+    edition: "2021"
+    msrv: "1.78"
+    shape: library
+    features: [default, serde]
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [crates-io]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/crates-io-template }

@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/maven/maven-spawn.schema.json",
+  "title": "universal-spawn with Maven platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "maven"
+          ],
+          "properties": {
+            "maven": {
+              "$ref": "#/definitions/maven"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "maven": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "group_id",
+        "artifact_id"
+      ],
+      "properties": {
+        "group_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z0-9_]*(\\.[a-z][a-zA-Z0-9_]*)*$"
+        },
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_.-]{0,63}$"
+        },
+        "packaging": {
+          "type": "string",
+          "enum": [
+            "jar",
+            "war",
+            "pom",
+            "aar"
+          ]
+        },
+        "java_range": {
+          "type": "string",
+          "pattern": "^[><=~ |.0-9, ]+$"
+        },
+        "repository": {
+          "type": "string",
+          "enum": [
+            "maven-central",
+            "github-packages",
+            "azure-artifacts",
+            "nexus",
+            "artifactory",
+            "private"
+          ]
+        }
+      }
+    }
+  }
+}

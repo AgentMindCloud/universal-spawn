@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/stackblitz/stackblitz-spawn.schema.json",
+  "title": "universal-spawn with StackBlitz platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "stackblitz"
+          ],
+          "properties": {
+            "stackblitz": {
+              "$ref": "#/definitions/stackblitz"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "stackblitz": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "starter": {
+          "type": "string",
+          "enum": [
+            "node",
+            "vite",
+            "angular",
+            "react",
+            "vue",
+            "svelte",
+            "nextjs",
+            "remix",
+            "astro",
+            "static"
+          ]
+        },
+        "node_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)*$"
+        },
+        "open_file": {
+          "type": "string"
+        },
+        "terminal_command": {
+          "type": "string"
+        },
+        "embed_view": {
+          "type": "string",
+          "enum": [
+            "editor",
+            "preview",
+            "both"
+          ]
+        }
+      }
+    }
+  }
+}

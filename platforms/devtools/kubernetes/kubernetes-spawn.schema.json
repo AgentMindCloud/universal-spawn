@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/kubernetes/kubernetes-spawn.schema.json",
+  "title": "universal-spawn with Kubernetes platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "kubernetes"
+          ],
+          "properties": {
+            "kubernetes": {
+              "$ref": "#/definitions/kubernetes"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "kubernetes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "style"
+      ],
+      "properties": {
+        "style": {
+          "type": "string",
+          "enum": [
+            "helm",
+            "kustomize",
+            "manifests"
+          ]
+        },
+        "chart_path": {
+          "type": "string"
+        },
+        "overlay_path": {
+          "type": "string"
+        },
+        "manifests_path": {
+          "type": "string"
+        },
+        "values_file": {
+          "type": "string"
+        },
+        "min_kube_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+        },
+        "namespace": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,62}$"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/jetbrains/jetbrains-spawn.schema.json",
+  "title": "universal-spawn with JetBrains platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "jetbrains"
+          ],
+          "properties": {
+            "jetbrains": {
+              "$ref": "#/definitions/jetbrains"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "jetbrains": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plugin_id",
+        "ides",
+        "since_build"
+      ],
+      "properties": {
+        "plugin_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9.-]*\\.[a-z][a-z0-9-]*$"
+        },
+        "ides": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "idea",
+              "pycharm",
+              "webstorm",
+              "goland",
+              "rustrover",
+              "rider",
+              "clion",
+              "appcode",
+              "rubymine",
+              "phpstorm",
+              "datagrip",
+              "datasPell",
+              "aqua",
+              "writerside"
+            ]
+          }
+        },
+        "since_build": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.([0-9]+|\\*))+$"
+        },
+        "until_build": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.([0-9]+|\\*))+$"
+        },
+        "marketplace_id": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

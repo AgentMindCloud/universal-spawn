@@ -1,0 +1,26 @@
+version: "1.0"
+name: Parchment Palette Ruby
+type: library
+summary: Minimal RubyGem with Residual Frequencies palette helpers.
+description: Pure Ruby gem, Ruby 3.2+, rubygems.org host.
+
+platforms:
+  rubygems:
+    gem_name: parchment-palette
+    ruby_range: ">= 3.2"
+    host: rubygems.org
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [rubygems]
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/ruby-parchment-palette }
+  id: com.plate-studio.ruby-parchment-palette

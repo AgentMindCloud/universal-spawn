@@ -1,0 +1,27 @@
+version: "1.0"
+name: Plate Gem CLI
+type: cli-tool
+summary: Full RubyGem with a `plate` executable.
+description: Gem with a bin/plate executable. Private host.
+
+platforms:
+  rubygems:
+    gem_name: plate-cli
+    ruby_range: ">= 3.1"
+    host: private
+    bin_name: plate
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [rubygems]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/ruby-plate-cli }
+  id: com.plate-studio.ruby-plate-cli

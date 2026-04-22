@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate CLI
+type: cli-tool
+summary: Full npm CLI with a bin entry and a peer dep on React 18+.
+description: CLI shape. One bin entry exposed as `plate`.
+
+platforms:
+  npm:
+    package_name: "@plate-studio/plate-cli"
+    shape: cli
+    access: public
+    node_range: ">=20"
+    bin_map:
+      plate: "./bin/plate.js"
+    peer_deps:
+      react: ">=18"
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [npm]
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/npm-plate-cli }
+  id: com.plate-studio.npm-plate-cli

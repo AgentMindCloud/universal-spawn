@@ -1,0 +1,28 @@
+version: "1.0"
+name: Parchment Color Scheme
+type: extension
+summary: Minimal JetBrains color scheme matching the Residual Frequencies palette.
+description: Single plugin exposing one color scheme.
+
+platforms:
+  jetbrains:
+    plugin_id: com.plate-studio.parchment-scheme
+    ides: [idea, pycharm, webstorm, goland, rustrover, rider]
+    since_build: "243.0"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [jetbrains]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/jetbrains-parchment-scheme }
+  id: com.plate-studio.jetbrains-parchment-scheme

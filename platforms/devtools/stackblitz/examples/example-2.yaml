@@ -1,0 +1,28 @@
+version: "1.0"
+name: Tutorial Workspace
+type: web-app
+summary: Full StackBlitz tutorial workspace with auto-opened README.
+description: Astro starter; auto-opens the lesson README; embeds preview-only mode.
+
+platforms:
+  stackblitz:
+    starter: astro
+    node_version: "20"
+    open_file: src/pages/lesson-01.md
+    terminal_command: "pnpm dev"
+    embed_view: preview
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [stackblitz]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Tutorial Co., handle: tutorial-co }
+  source: { type: git, url: https://github.com/tutorial-co/stackblitz-astro-tutorial }
+  id: com.tutorial-co.stackblitz-astro-tutorial

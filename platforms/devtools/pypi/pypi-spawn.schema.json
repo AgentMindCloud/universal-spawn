@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/pypi/pypi-spawn.schema.json",
+  "title": "universal-spawn with PyPI platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "pypi"
+          ],
+          "properties": {
+            "pypi": {
+              "$ref": "#/definitions/pypi"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "pypi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "distribution",
+        "python_range"
+      ],
+      "properties": {
+        "distribution": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]*$"
+        },
+        "python_range": {
+          "type": "string",
+          "pattern": "^[><=!~*.0-9, ]+$"
+        },
+        "shape": {
+          "type": "string",
+          "enum": [
+            "library",
+            "cli",
+            "plugin"
+          ]
+        },
+        "entry_points": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "repository": {
+          "type": "string",
+          "enum": [
+            "pypi",
+            "testpypi"
+          ]
+        },
+        "build_backend": {
+          "type": "string",
+          "enum": [
+            "hatchling",
+            "setuptools",
+            "poetry-core",
+            "flit-core",
+            "pdm-backend",
+            "maturin"
+          ]
+        }
+      }
+    }
+  }
+}

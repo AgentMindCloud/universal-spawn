@@ -1,0 +1,26 @@
+version: "1.0"
+name: Firefox Extension Template
+type: extension
+description: Template for a Firefox-extension-targeted universal-spawn manifest.
+
+platforms:
+  firefox-extension:
+    manifest_version: 3
+    gecko_id: "your-ext@yourhandle.example"
+    permissions: [storage]
+    background_script: background.js
+    strict_min_version: "120.0"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [firefox-extension]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/firefox-extension-template }

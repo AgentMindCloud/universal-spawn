@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate Pulumi Program
+type: workflow
+summary: Minimal Pulumi TypeScript program that provisions a bucket + CDN.
+description: One stack (`dev`). Pulumi Cloud backend. No registry publication.
+
+platforms:
+  pulumi:
+    kind: program
+    runtime: nodejs
+    project: plate-infra
+    stack: dev
+    backend: service
+
+safety:
+  min_permissions: [network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: PULUMI_ACCESS_TOKEN
+    description: Pulumi Cloud access token.
+    secret: true
+
+deployment:
+  targets: [pulumi]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/pulumi-plate-infra }
+  id: com.plate-studio.pulumi-plate-infra

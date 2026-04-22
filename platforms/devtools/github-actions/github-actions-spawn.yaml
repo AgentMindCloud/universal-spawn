@@ -1,0 +1,25 @@
+version: "1.0"
+name: GitHub Actions Template
+type: workflow
+description: Template for a GitHub-Actions-targeted universal-spawn manifest.
+
+platforms:
+  github-actions:
+    kind: workflow
+    workflow_file: .github/workflows/ci.yaml
+    runs_on: [ubuntu-latest]
+    triggers: [push, pull_request]
+
+safety:
+  min_permissions: [network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [github-actions]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/github-actions-template }

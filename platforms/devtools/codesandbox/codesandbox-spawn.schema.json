@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/codesandbox/codesandbox-spawn.schema.json",
+  "title": "universal-spawn with CodeSandbox platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "codesandbox"
+          ],
+          "properties": {
+            "codesandbox": {
+              "$ref": "#/definitions/codesandbox"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "codesandbox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "sandbox",
+            "devbox"
+          ]
+        },
+        "template": {
+          "type": "string",
+          "enum": [
+            "node",
+            "vite-react",
+            "vite-vue",
+            "vite-svelte",
+            "next",
+            "remix",
+            "astro",
+            "static",
+            "nextjs",
+            "create-react-app",
+            "custom"
+          ]
+        },
+        "config_dir": {
+          "type": "string"
+        },
+        "preview_port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        }
+      }
+    }
+  }
+}

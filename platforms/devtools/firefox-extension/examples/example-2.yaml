@@ -1,0 +1,33 @@
+version: "1.0"
+name: Privacy Proxy
+type: extension
+summary: Full Firefox extension routing outbound traffic through a declared proxy, listed on AMO.
+description: Full MV2 extension (uses the historical proxy API). AMO-listed with a public slug.
+
+platforms:
+  firefox-extension:
+    manifest_version: 2
+    amo_slug: privacy-proxy
+    gecko_id: "privacy-proxy@privacy.example"
+    permissions: [proxy, storage, webRequest, webRequestBlocking]
+    host_permissions: ["<all_urls>"]
+    background_script: background.js
+    strict_min_version: "115.0"
+
+safety:
+  min_permissions: [network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: PROXY_URL
+    description: Proxy endpoint.
+    secret: true
+
+deployment:
+  targets: [firefox-extension]
+
+metadata:
+  license: MPL-2.0
+  author: { name: Privacy Co., handle: privacy-co }
+  source: { type: git, url: https://github.com/privacy-co/firefox-privacy-proxy }
+  id: com.privacy-co.firefox-privacy-proxy

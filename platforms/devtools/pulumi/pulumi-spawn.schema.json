@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/pulumi/pulumi-spawn.schema.json",
+  "title": "universal-spawn with Pulumi platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "pulumi"
+          ],
+          "properties": {
+            "pulumi": {
+              "$ref": "#/definitions/pulumi"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "pulumi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "runtime",
+        "project"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "program",
+            "component-package"
+          ]
+        },
+        "runtime": {
+          "type": "string",
+          "enum": [
+            "nodejs",
+            "python",
+            "go",
+            "dotnet",
+            "java"
+          ]
+        },
+        "project": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "stack": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "backend": {
+          "type": "string",
+          "enum": [
+            "service",
+            "s3",
+            "gcs",
+            "azblob",
+            "file"
+          ]
+        },
+        "registry": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "namespace": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

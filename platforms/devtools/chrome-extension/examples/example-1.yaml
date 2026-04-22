@@ -1,0 +1,29 @@
+version: "1.0"
+name: Parchment Reader
+type: extension
+summary: Minimal Chrome extension recoloring readable pages to the parchment palette.
+description: Side-panel button; no host permissions beyond content-script injection on the active tab.
+
+platforms:
+  chrome-extension:
+    manifest_version: 3
+    permissions: [activeTab, sidePanel, storage]
+    service_worker: background.js
+    min_chrome_version: "120"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [chrome-extension]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/chrome-parchment-reader }
+  id: com.plate-studio.chrome-parchment-reader

@@ -1,0 +1,33 @@
+version: "1.0"
+name: Plate Kustomize Overlay
+type: container
+summary: Full kustomize overlay for production + preview environments.
+description: >
+  Uses kustomize overlays — one base + two overlays (production,
+  preview). Targets k8s 1.30+.
+
+platforms:
+  kubernetes:
+    style: kustomize
+    overlay_path: deploy/overlays/production
+    min_kube_version: "1.30"
+    namespace: plate-prod
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  safe_for_auto_spawn: false
+  data_residency: [eu]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Postgres connection string (sealed-secret).
+    secret: true
+
+deployment:
+  targets: [kubernetes]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/k8s-kustomize-overlay }
+  id: com.stack-co.k8s-kustomize-overlay

@@ -1,0 +1,34 @@
+version: "1.0"
+name: GPU Notebook Workspace
+type: container
+summary: Full Gitpod workspace at the x-large tier with both VS Code and JetBrains.
+description: Provisioned with GPU-friendly base image; private ports for Jupyter.
+
+platforms:
+  gitpod:
+    image: gitpod/workspace-python:latest
+    tasks:
+      - { name: install, init: "pip install -r requirements.txt", command: "jupyter lab" }
+    ports:
+      - { port: 8888, visibility: private, on_open: notify }
+    tier: x-large
+    tools: [vscode, jetbrains, ssh]
+
+safety:
+  min_permissions: [fs:read, fs:write, network:outbound]
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: WANDB_API_KEY
+    description: W&B key.
+    secret: true
+
+deployment:
+  targets: [gitpod]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Research Lab, handle: research-lab }
+  source: { type: git, url: https://github.com/research-lab/gitpod-gpu-notebook }
+  id: com.research-lab.gitpod-gpu-notebook

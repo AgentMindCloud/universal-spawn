@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/nuget/nuget-spawn.schema.json",
+  "title": "universal-spawn with NuGet platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "nuget"
+          ],
+          "properties": {
+            "nuget": {
+              "$ref": "#/definitions/nuget"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "nuget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_id",
+        "target_frameworks"
+      ],
+      "properties": {
+        "package_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._-]{0,63}$"
+        },
+        "target_frameworks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9.-]+$"
+          }
+        },
+        "feed": {
+          "type": "string",
+          "enum": [
+            "nuget.org",
+            "github-packages",
+            "azure-artifacts",
+            "private"
+          ]
+        },
+        "is_tool": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

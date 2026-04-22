@@ -1,0 +1,28 @@
+version: "1.0"
+name: Pulumi Template
+type: workflow
+description: Template for a Pulumi-targeted universal-spawn manifest.
+
+platforms:
+  pulumi:
+    kind: program
+    runtime: nodejs
+    project: your-infra
+    stack: dev
+    backend: service
+
+safety:
+  min_permissions: [network:outbound]
+
+env_vars_required:
+  - name: PULUMI_ACCESS_TOKEN
+    description: Pulumi Cloud access token.
+    secret: true
+
+deployment:
+  targets: [pulumi]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/pulumi-template }

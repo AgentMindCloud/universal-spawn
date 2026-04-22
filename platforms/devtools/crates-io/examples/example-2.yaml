@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate CLI Rust
+type: cli-tool
+summary: Full crates.io binary crate with named features.
+description: Rust 2024 binary `plate`. Two features (json, yaml) controlling optional deps.
+
+platforms:
+  crates-io:
+    crate_name: plate
+    edition: "2024"
+    msrv: "1.80"
+    shape: bin
+    features: [default, json, yaml]
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [crates-io]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/rust-plate-cli }
+  id: com.plate-studio.rust-plate-cli

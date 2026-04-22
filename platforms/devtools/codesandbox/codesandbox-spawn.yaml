@@ -1,0 +1,23 @@
+version: "1.0"
+name: CodeSandbox Template
+type: web-app
+description: Template for a CodeSandbox-targeted universal-spawn manifest.
+
+platforms:
+  codesandbox:
+    kind: sandbox
+    template: vite-react
+    preview_port: 5173
+
+safety:
+  min_permissions: [network:inbound, network:outbound, fs:read, fs:write]
+
+env_vars_required: []
+
+deployment:
+  targets: [codesandbox]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/codesandbox-template }

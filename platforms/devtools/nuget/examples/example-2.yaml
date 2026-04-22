@@ -1,0 +1,27 @@
+version: "1.0"
+name: Plate Dotnet Tool
+type: cli-tool
+summary: Full `dotnet tool` CLI distributed via GitHub Packages.
+description: Global tool installable via `dotnet tool install -g plate-cli`.
+
+platforms:
+  nuget:
+    package_id: PlateStudio.PlateCli
+    target_frameworks: [net8.0]
+    feed: github-packages
+    is_tool: true
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [nuget]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/nuget-plate-cli }
+  id: com.plate-studio.nuget-plate-cli

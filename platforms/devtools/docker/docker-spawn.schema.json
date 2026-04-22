@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/docker/docker-spawn.schema.json",
+  "title": "universal-spawn with Docker platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "docker"
+          ],
+          "properties": {
+            "docker": {
+              "$ref": "#/definitions/docker"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "docker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "single-container",
+            "compose"
+          ]
+        },
+        "dockerfile": {
+          "type": "string"
+        },
+        "compose_file": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "build_platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "linux/amd64",
+              "linux/arm64",
+              "linux/arm/v7",
+              "linux/386",
+              "linux/ppc64le",
+              "linux/riscv64",
+              "linux/s390x"
+            ]
+          }
+        },
+        "build_args": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "registry": {
+          "type": "string",
+          "enum": [
+            "docker.io",
+            "ghcr.io",
+            "mcr.microsoft.com",
+            "quay.io",
+            "registry.gitlab.com",
+            "private"
+          ]
+        }
+      }
+    }
+  }
+}

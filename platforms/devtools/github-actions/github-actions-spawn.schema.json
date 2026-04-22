@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/github-actions/github-actions-spawn.schema.json",
+  "title": "universal-spawn with GitHub Actions platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "github-actions"
+          ],
+          "properties": {
+            "github-actions": {
+              "$ref": "#/definitions/github-actions"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "github-actions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "workflow",
+            "reusable-action"
+          ]
+        },
+        "workflow_file": {
+          "type": "string"
+        },
+        "action_type": {
+          "type": "string",
+          "enum": [
+            "docker",
+            "composite",
+            "javascript"
+          ]
+        },
+        "runs_on": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "triggers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "push",
+              "pull_request",
+              "schedule",
+              "workflow_dispatch",
+              "release",
+              "issues",
+              "deployment",
+              "repository_dispatch"
+            ]
+          }
+        },
+        "marketplace_category": {
+          "type": "string",
+          "enum": [
+            "CI",
+            "Deployment",
+            "Code quality",
+            "Utilities",
+            "Monitoring",
+            "Security",
+            "Publishing",
+            "API management",
+            "Code review",
+            "Project management",
+            "Learning"
+          ]
+        }
+      }
+    }
+  }
+}

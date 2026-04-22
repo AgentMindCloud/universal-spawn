@@ -1,0 +1,25 @@
+version: "1.0"
+name: Safari Extension Template
+type: extension
+description: Template for a Safari-extension-targeted universal-spawn manifest.
+
+platforms:
+  safari-extension:
+    xcodeproj: SafariExt.xcodeproj
+    bundle_id: com.yourhandle.safariext
+    host_app: macos
+    entitlements: SafariExt/SafariExt.entitlements
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [safari-extension]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/safari-extension-template }

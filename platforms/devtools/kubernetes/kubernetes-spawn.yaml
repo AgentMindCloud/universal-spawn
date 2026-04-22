@@ -1,0 +1,25 @@
+version: "1.0"
+name: Kubernetes Template
+type: container
+description: Template for a Kubernetes-targeted universal-spawn manifest.
+
+platforms:
+  kubernetes:
+    style: helm
+    chart_path: charts/your-app
+    values_file: charts/your-app/values.yaml
+    min_kube_version: "1.28"
+    namespace: default
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required: []
+
+deployment:
+  targets: [kubernetes]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/k8s-template }

@@ -1,0 +1,25 @@
+version: "1.0"
+name: Docker Template
+type: container
+description: Template for a Docker-targeted universal-spawn manifest.
+
+platforms:
+  docker:
+    kind: single-container
+    dockerfile: Dockerfile
+    image: ghcr.io/yourhandle/your-app:latest
+    build_platforms: [linux/amd64, linux/arm64]
+    registry: ghcr.io
+
+safety:
+  min_permissions: [network:outbound]
+
+env_vars_required: []
+
+deployment:
+  targets: [docker]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/docker-template }

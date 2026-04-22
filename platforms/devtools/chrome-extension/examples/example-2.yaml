@@ -1,0 +1,42 @@
+version: "1.0"
+name: Receipt Catcher
+type: extension
+summary: Full Chrome extension that catches receipts from three vendor sites and forwards them.
+description: >
+  Listed on the Web Store. Declares narrow host permissions for three
+  vendor domains; forwards captured receipts to a private endpoint
+  over HTTPS.
+
+platforms:
+  chrome-extension:
+    manifest_version: 3
+    permissions: [activeTab, storage, scripting, webRequest]
+    host_permissions:
+      - "https://vendor-a.example.com/*"
+      - "https://vendor-b.example.com/*"
+      - "https://vendor-c.example.com/*"
+    service_worker: dist/background.js
+    web_store_id: "abcdefghijklmnopabcdefghijklmnop"
+    min_chrome_version: "120"
+
+safety:
+  min_permissions:
+    - network:outbound:vendor-a.example.com
+    - network:outbound:vendor-b.example.com
+    - network:outbound:vendor-c.example.com
+    - network:outbound:api.receipts.example
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: RECEIPTS_API_TOKEN
+    description: API token stored via the identity permission.
+    secret: true
+
+deployment:
+  targets: [chrome-extension]
+
+metadata:
+  license: proprietary
+  author: { name: Receipts Co., handle: receipts-co }
+  source: { type: git, url: https://github.com/receipts-co/chrome-receipt-catcher }
+  id: com.receipts-co.chrome-receipt-catcher

@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/devtools/chrome-extension/chrome-extension-spawn.schema.json",
+  "title": "universal-spawn with Chrome Extension platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "chrome-extension"
+          ],
+          "properties": {
+            "chrome-extension": {
+              "$ref": "#/definitions/chrome-extension"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "chrome-extension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_version"
+      ],
+      "properties": {
+        "manifest_version": {
+          "const": 3
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "activeTab",
+              "alarms",
+              "bookmarks",
+              "clipboardRead",
+              "clipboardWrite",
+              "contextMenus",
+              "cookies",
+              "downloads",
+              "history",
+              "identity",
+              "notifications",
+              "scripting",
+              "storage",
+              "tabs",
+              "webNavigation",
+              "webRequest",
+              "offscreen",
+              "sidePanel"
+            ]
+          }
+        },
+        "host_permissions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "service_worker": {
+          "type": "string"
+        },
+        "web_store_id": {
+          "type": "string",
+          "pattern": "^[a-p]{32}$"
+        },
+        "min_chrome_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)*$"
+        }
+      }
+    }
+  }
+}

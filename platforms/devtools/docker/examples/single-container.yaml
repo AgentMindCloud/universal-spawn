@@ -1,0 +1,31 @@
+version: "1.0"
+name: Parchment API Image
+type: container
+summary: Minimal single-container manifest for a Node API image.
+description: Build-and-publish a Node 22 Alpine image for amd64 + arm64 to GHCR.
+
+platforms:
+  docker:
+    kind: single-container
+    dockerfile: Dockerfile
+    image: ghcr.io/plate-studio/parchment-api:latest
+    build_platforms: [linux/amd64, linux/arm64]
+    registry: ghcr.io
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: API_SECRET
+    description: API secret at runtime.
+    secret: true
+
+deployment:
+  targets: [docker]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/parchment-api-image }
+  id: com.plate-studio.parchment-api-image

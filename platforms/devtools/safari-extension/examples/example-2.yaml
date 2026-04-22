@@ -1,0 +1,28 @@
+version: "1.0"
+name: Universal Content Blocker
+type: extension
+summary: Full Safari content blocker spanning macOS + iOS with an App Store listing.
+description: Content blocker shipping a universal host app. App Store id linked. Entitlements narrowly scoped.
+
+platforms:
+  safari-extension:
+    xcodeproj: Blocker.xcodeproj
+    bundle_id: com.privacy-co.blocker
+    host_app: universal
+    entitlements: Blocker/Blocker.entitlements
+    app_store_id: 6700000000
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [safari-extension]
+
+metadata:
+  license: proprietary
+  author: { name: Privacy Co., handle: privacy-co }
+  source: { type: git, url: https://github.com/privacy-co/safari-universal-blocker }
+  id: com.privacy-co.safari-universal-blocker
