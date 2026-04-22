@@ -1,0 +1,24 @@
+version: "1.0"
+name: SketchUp Template
+type: creative-tool
+description: Template for a SketchUp-targeted universal-spawn manifest.
+
+platforms:
+  sketchup:
+    kind: rbz-extension
+    min_year: 2024
+    entry_file: dist/your-extension.rbz
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [sketchup]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/sketchup-template }

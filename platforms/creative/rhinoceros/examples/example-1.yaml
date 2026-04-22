@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Lattice GH
+type: creative-tool
+summary: Minimal Grasshopper definition that draws a parchment plate lattice.
+description: Single `.gh` file, Rhino 8+.
+
+platforms:
+  rhinoceros:
+    kind: grasshopper
+    min_version: "8"
+    entry_file: gh/plate-lattice.gh
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [rhinoceros]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/rhino-plate-lattice }
+  id: com.plate-studio.rhino-plate-lattice

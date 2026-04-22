@@ -1,0 +1,23 @@
+version: "1.0"
+name: Webflow Template
+type: site
+description: Template for a Webflow-targeted universal-spawn manifest.
+
+platforms:
+  webflow:
+    kind: site
+    site_id: "000000000000000000000000"
+    custom_domain: your-site.example.com
+
+safety:
+  min_permissions: [network:inbound]
+
+env_vars_required: []
+
+deployment:
+  targets: [webflow]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/webflow-template }

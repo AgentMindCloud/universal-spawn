@@ -1,0 +1,28 @@
+version: "1.0"
+name: Lab Notebook Template
+type: design-template
+summary: Minimal Notion template for a parchment-style lab notebook.
+description: Public Notion template page with the Residual Frequencies plate review rubric preloaded.
+
+platforms:
+  notion:
+    page_url: "https://notion.so/plate-studio/lab-notebook-0123456789abcdef0123456789abcdef"
+    page_id: "0123456789abcdef0123456789abcdef"
+    kind: template
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [notion]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/notion-lab-notebook }
+  id: com.plate-studio.notion-lab-notebook

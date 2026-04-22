@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/creative/houdini/houdini-spawn.schema.json",
+  "title": "universal-spawn with Houdini platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "houdini"
+          ],
+          "properties": {
+            "houdini": {
+              "$ref": "#/definitions/houdini"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "houdini": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "min_build",
+        "entry_file"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "hda",
+            "hip",
+            "shelf"
+          ]
+        },
+        "min_build": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)+$"
+        },
+        "context": {
+          "type": "string",
+          "enum": [
+            "obj",
+            "sop",
+            "dop",
+            "cop2",
+            "shop",
+            "vop",
+            "chop",
+            "top",
+            "lop"
+          ]
+        },
+        "entry_file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+version: "1.0"
+name: Notion Template
+type: design-template
+description: Template for a Notion-targeted universal-spawn manifest.
+
+platforms:
+  notion:
+    page_url: "https://notion.so/yourhandle/0000000000000000000000000000"
+    kind: template
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [notion]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/notion-template }

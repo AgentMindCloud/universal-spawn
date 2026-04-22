@@ -1,0 +1,33 @@
+version: "1.0"
+name: Residual Frequencies Design System
+type: design-template
+summary: Community-file template that duplicates the Residual Frequencies design system into the viewer Figma workspace.
+description: >
+  No code. One community-file URL. The consumer renders a
+  "Duplicate to your Figma" button; clicking it opens Figma's
+  duplicate flow so the template lands in the user's own workspace.
+
+platforms:
+  figma:
+    kind: template
+    editor_type: [figma]
+    network_access: none
+    community_file: "https://www.figma.com/community/file/0000000000000000000"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [figma]
+
+visuals: { palette: parchment, icon: assets/icon.svg, hero_plate: assets/hero.svg }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/figma-residual-frequencies }
+  categories: [graphics]
+  id: com.plate-studio.figma-residual-frequencies

@@ -1,0 +1,24 @@
+version: "1.0"
+name: Rhinoceros Template
+type: creative-tool
+description: Template for a Rhinoceros-targeted universal-spawn manifest.
+
+platforms:
+  rhinoceros:
+    kind: grasshopper
+    min_version: "8"
+    entry_file: gh/plate-lattice.gh
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [rhinoceros]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/rhino-template }

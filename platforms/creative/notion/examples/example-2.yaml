@@ -1,0 +1,30 @@
+version: "1.0"
+name: CRM Database Pack
+type: design-template
+summary: Full Notion workspace pack — CRM database plus seeded CSV.
+description: >
+  Duplicatable workspace pack: one CRM database, two related views,
+  and a seed CSV with 200 sample rows so the receiver can see how the
+  views behave before entering real data.
+
+platforms:
+  notion:
+    page_url: "https://notion.so/stack-co/crm-pack-abcdef0123456789abcdef0123456789"
+    page_id: "abcdef0123456789abcdef0123456789"
+    kind: workspace-pack
+    seed_csv: data/crm-seed.csv
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [notion]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/notion-crm-pack }
+  id: com.stack-co.notion-crm-pack

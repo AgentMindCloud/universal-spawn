@@ -1,0 +1,24 @@
+version: "1.0"
+name: Obsidian Template
+type: extension
+description: Template for an Obsidian-targeted universal-spawn manifest.
+
+platforms:
+  obsidian:
+    kind: plugin
+    manifest_file: manifest.json
+    min_app_version: "1.5.0"
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [obsidian]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/obsidian-template }

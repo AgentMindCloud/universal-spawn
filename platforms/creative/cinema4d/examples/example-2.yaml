@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Asset Library
+type: design-template
+summary: .lib4d asset library with 20 Residual Frequencies props.
+description: Distributed as a Cinema 4D asset library archive.
+
+platforms:
+  cinema4d:
+    kind: asset-library
+    min_version: "2024"
+    entry_file: dist/plate-props.lib4d
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [cinema4d]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/c4d-plate-asset-library }
+  id: com.plate-studio.c4d-plate-asset-library

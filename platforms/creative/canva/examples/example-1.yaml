@@ -1,0 +1,29 @@
+version: "1.0"
+name: Canva App
+type: creative-tool
+summary: Minimal Canva Apps SDK app that adds Residual Frequencies swatches.
+description: Object-panel app adding parchment palette swatches.
+
+platforms:
+  canva:
+    kind: app
+    app_json: app.json
+    surface: [object-panel]
+    categories: [color, swatches]
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [canva]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/canva-parchment-swatches }
+  id: com.plate-studio.canva-parchment-swatches

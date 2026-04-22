@@ -1,0 +1,30 @@
+version: "1.0"
+name: Research Vault Snapshot
+type: design-template
+summary: Full vault snapshot for a research workflow.
+description: >
+  Distributable vault archive. Unzipped, it becomes a ready-to-use
+  Obsidian vault with three starter notes and a review-rubric
+  template. Desktop only because it depends on Dataview.
+
+platforms:
+  obsidian:
+    kind: vault-snapshot
+    vault_archive: dist/vault.zip
+    min_app_version: "1.5.0"
+    desktop_only: true
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [obsidian]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Research Lab, handle: research-lab }
+  source: { type: git, url: https://github.com/research-lab/obsidian-research-vault }
+  id: com.research-lab.obsidian-research-vault

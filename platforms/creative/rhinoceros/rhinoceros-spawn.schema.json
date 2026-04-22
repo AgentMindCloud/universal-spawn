@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/creative/rhinoceros/rhinoceros-spawn.schema.json",
+  "title": "universal-spawn with Rhinoceros 3D platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "rhinoceros"
+          ],
+          "properties": {
+            "rhinoceros": {
+              "$ref": "#/definitions/rhinoceros"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "rhinoceros": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "min_version"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "rhp-plugin",
+            "grasshopper",
+            "yak-package"
+          ]
+        },
+        "min_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?$"
+        },
+        "entry_file": {
+          "type": "string"
+        },
+        "yak": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "yak_file": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

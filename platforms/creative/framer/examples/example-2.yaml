@@ -1,0 +1,35 @@
+version: "1.0"
+name: Parchment Components
+type: creative-tool
+summary: Framer code-component pack listed on the marketplace at a fixed price.
+description: >
+  Eight reusable code components that implement the Residual
+  Frequencies visual language. Listed in the marketplace under the
+  "component" category.
+
+platforms:
+  framer:
+    kind: component-pack
+    project_id: parchment-components
+    marketplace:
+      listed: true
+      category: component
+      price_usd: 19
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [framer]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/framer-parchment-components }
+  categories: [graphics]
+  id: com.plate-studio.framer-parchment-components

@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/creative/framer/framer-spawn.schema.json",
+  "title": "universal-spawn with Framer platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "framer"
+          ],
+          "properties": {
+            "framer": {
+              "$ref": "#/definitions/framer"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "framer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "site",
+            "component-pack",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{8,64}$"
+        },
+        "custom_domain": {
+          "type": "string",
+          "format": "hostname"
+        },
+        "marketplace": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "listed": {
+              "type": "boolean",
+              "default": false
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "website",
+                "template",
+                "component",
+                "plugin"
+              ]
+            },
+            "price_usd": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 999
+            }
+          }
+        }
+      }
+    }
+  }
+}

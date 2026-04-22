@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate Components Pack
+type: design-template
+summary: SketchUp component library with parchment-themed props, listed on the Warehouse.
+description: Extension Warehouse-listed .skp component pack.
+
+platforms:
+  sketchup:
+    kind: component
+    min_year: 2023
+    entry_file: components/plate-props.skp
+    extension_warehouse:
+      listed: true
+      category: "Models"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [sketchup]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/sketchup-plate-components }
+  id: com.plate-studio.sketchup-plate-components

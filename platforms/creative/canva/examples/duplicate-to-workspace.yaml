@@ -1,0 +1,32 @@
+version: "1.0"
+name: Residual Frequencies Social Pack
+type: design-template
+summary: Canva design pack — one-click duplicate into the viewer Canva workspace.
+description: >
+  Social-post pack (12 designs) hosted as a public Canva design. The
+  consumer renders a "Use this template" button; clicking it opens
+  Canva with the duplicate-to-your-account flow prefilled.
+
+platforms:
+  canva:
+    kind: template
+    design_id: DAF9988776655
+    design_url: "https://www.canva.com/design/DAF9988776655/view"
+    categories: [social, instagram, template]
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [canva]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/canva-social-pack }
+  id: com.plate-studio.canva-social-pack

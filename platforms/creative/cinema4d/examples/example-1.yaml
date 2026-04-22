@@ -1,0 +1,28 @@
+version: "1.0"
+name: C4D Parchment Procedural
+type: creative-tool
+summary: Minimal Cinema 4D Python generator producing a parchment-plate lattice.
+description: Single .pyp plugin registering one Object generator.
+
+platforms:
+  cinema4d:
+    kind: plugin
+    min_version: "2024"
+    entry_file: src/plate_lattice.pyp
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [cinema4d]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/c4d-parchment-procedural }
+  id: com.plate-studio.c4d-parchment-procedural

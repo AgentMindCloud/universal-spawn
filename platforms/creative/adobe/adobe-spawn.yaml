@@ -1,0 +1,25 @@
+version: "1.0"
+name: Adobe Template
+type: creative-tool
+description: Template for an Adobe-targeted universal-spawn manifest.
+
+platforms:
+  adobe:
+    platform: uxp
+    manifest_file: manifest.json
+    hosts: [photoshop]
+    min_host_version: "25.0"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [adobe]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/adobe-template }

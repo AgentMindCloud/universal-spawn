@@ -1,0 +1,27 @@
+version: "1.0"
+name: Parchment Grid
+type: creative-tool
+summary: Minimal Figma plugin that lays a parchment grid on a frame.
+description: One plugin manifest, no network access, Figma + FigJam only.
+
+platforms:
+  figma:
+    kind: plugin
+    manifest_file: figma.manifest.json
+    editor_type: [figma, figjam]
+    network_access: none
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [figma]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/figma-parchment-grid }
+  id: com.plate-studio.figma-parchment-grid

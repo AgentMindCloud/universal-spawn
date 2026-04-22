@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Asset Library
+type: design-template
+summary: Distributable asset library with 40 Residual Frequencies props.
+description: Blender asset library (a directory full of .blend files) for drag-and-drop from the Asset Browser.
+
+platforms:
+  blender:
+    kind: asset-library
+    blender_version: "4.2"
+    asset_library_path: lib/parchment-props
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [blender]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/blender-plate-asset-library }
+  id: com.plate-studio.blender-plate-asset-library

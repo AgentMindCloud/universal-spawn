@@ -1,0 +1,28 @@
+version: "1.0"
+name: Parchment Palette Extension
+type: creative-tool
+summary: Minimal SketchUp extension that ships the Residual Frequencies palette.
+description: Single RBZ. Applies the parchment palette to selected faces.
+
+platforms:
+  sketchup:
+    kind: rbz-extension
+    min_year: 2024
+    entry_file: dist/parchment-palette.rbz
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [sketchup]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/sketchup-parchment-palette }
+  id: com.plate-studio.sketchup-parchment-palette

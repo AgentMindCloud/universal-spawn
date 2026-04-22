@@ -1,0 +1,29 @@
+version: "1.0"
+name: Lab Notebook Theme
+type: extension
+summary: Minimal Obsidian theme in the Residual Frequencies palette.
+description: Pure CSS theme. No plugin code. Desktop + mobile.
+
+platforms:
+  obsidian:
+    kind: theme
+    manifest_file: manifest.json
+    min_app_version: "1.5.0"
+    desktop_only: false
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [obsidian]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/obsidian-lab-notebook-theme }
+  id: com.plate-studio.obsidian-lab-notebook-theme

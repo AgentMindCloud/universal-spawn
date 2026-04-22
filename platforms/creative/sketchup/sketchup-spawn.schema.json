@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/creative/sketchup/sketchup-spawn.schema.json",
+  "title": "universal-spawn with SketchUp platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "sketchup"
+          ],
+          "properties": {
+            "sketchup": {
+              "$ref": "#/definitions/sketchup"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "sketchup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "min_year"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "rbz-extension",
+            "component"
+          ]
+        },
+        "min_year": {
+          "type": "integer",
+          "minimum": 2017,
+          "maximum": 2099
+        },
+        "entry_file": {
+          "type": "string"
+        },
+        "extension_warehouse": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "listed": {
+              "type": "boolean",
+              "default": false
+            },
+            "category": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

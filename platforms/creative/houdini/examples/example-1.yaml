@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Lattice HDA
+type: creative-tool
+summary: Minimal Houdini HDA producing a parchment plate lattice.
+description: Single SOP-context HDA.
+
+platforms:
+  houdini:
+    kind: hda
+    min_build: "20.5"
+    context: sop
+    entry_file: otls/plate_lattice.hda
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [houdini]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/houdini-plate-lattice }
+  id: com.plate-studio.houdini-plate-lattice

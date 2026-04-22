@@ -1,0 +1,33 @@
+version: "1.0"
+name: Webflow Docs with CMS
+type: web-app
+summary: Webflow docs site with three CMS collections and two locales.
+description: >
+  Full Webflow deployment — docs site with `posts`, `authors`, and
+  `categories` CMS collections, localized to en and fr.
+
+platforms:
+  webflow:
+    kind: site
+    site_id: "222222222222222222222222"
+    custom_domain: docs.example.com
+    collections:
+      - { name: posts,      singular: post,     fields_file: collections/posts.fields.json }
+      - { name: authors,    singular: author,   fields_file: collections/authors.fields.json }
+      - { name: categories, singular: category, fields_file: collections/categories.fields.json }
+    localization: [en, fr]
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [webflow]
+
+metadata:
+  license: proprietary
+  author: { name: Docs Co., handle: docs-co }
+  source: { type: git, url: https://github.com/docs-co/webflow-docs-cms }
+  id: com.docs-co.webflow-docs-cms

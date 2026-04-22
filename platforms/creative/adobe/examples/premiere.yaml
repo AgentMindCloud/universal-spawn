@@ -1,0 +1,34 @@
+version: "1.0"
+name: Premiere Plate Captioner
+type: creative-tool
+summary: Premiere Pro CEP extension that captions timelines in lab-notebook voice.
+description: >
+  CEP-based Premiere Pro panel that scans the active sequence and
+  auto-captions each clip in Residual Frequencies voice.
+
+platforms:
+  adobe:
+    platform: cep
+    manifest_file: CSXS/manifest.xml
+    hosts: [premiere]
+    min_host_version: "24.0"
+
+safety:
+  min_permissions: [fs:read, network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key for the captioner.
+    secret: true
+
+deployment:
+  targets: [adobe]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/adobe-premiere-captioner }
+  id: com.plate-studio.adobe-premiere-captioner

@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Studio Shelf
+type: creative-tool
+summary: Houdini shelf bundling six Residual Frequencies quick-start tools.
+description: Python shelf with shortcuts for plate setup, palette apply, and scene notes.
+
+platforms:
+  houdini:
+    kind: shelf
+    min_build: "20.0"
+    entry_file: shelves/plate-studio.shelf
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [houdini]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/houdini-plate-shelf }
+  id: com.plate-studio.houdini-plate-shelf

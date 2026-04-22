@@ -1,0 +1,26 @@
+version: "1.0"
+name: Framer Landing
+type: site
+summary: Minimal Framer site with a custom domain.
+description: Single published Framer site; no component pack.
+
+platforms:
+  framer:
+    kind: site
+    project_id: landing1
+    custom_domain: landing.example.com
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [framer]
+
+metadata:
+  license: proprietary
+  author: { name: Landing Co., handle: landing-co }
+  source: { type: git, url: https://github.com/landing-co/framer-landing }
+  id: com.landing-co.framer-landing

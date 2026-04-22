@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/creative/webflow/webflow-spawn.schema.json",
+  "title": "universal-spawn with Webflow platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "webflow"
+          ],
+          "properties": {
+            "webflow": {
+              "$ref": "#/definitions/webflow"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "webflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "site",
+            "library",
+            "collection"
+          ]
+        },
+        "site_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{24}$"
+        },
+        "custom_domain": {
+          "type": "string",
+          "format": "hostname"
+        },
+        "collections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+              },
+              "singular": {
+                "type": "string"
+              },
+              "fields_file": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "localization": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+          }
+        }
+      }
+    }
+  }
+}

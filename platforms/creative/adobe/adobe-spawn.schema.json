@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/creative/adobe/adobe-spawn.schema.json",
+  "title": "universal-spawn with Adobe platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "adobe"
+          ],
+          "properties": {
+            "adobe": {
+              "$ref": "#/definitions/adobe"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "adobe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform",
+        "hosts"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "enum": [
+            "cep",
+            "uxp"
+          ]
+        },
+        "manifest_file": {
+          "type": "string"
+        },
+        "hosts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "photoshop",
+              "illustrator",
+              "premiere",
+              "xd",
+              "indesign",
+              "after-effects",
+              "lightroom"
+            ]
+          }
+        },
+        "min_host_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)*$"
+        },
+        "adobe_exchange": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "listed": {
+              "type": "boolean",
+              "default": false
+            },
+            "price_usd": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    }
+  }
+}

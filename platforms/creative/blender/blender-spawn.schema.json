@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/creative/blender/blender-spawn.schema.json",
+  "title": "universal-spawn with Blender platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "blender"
+          ],
+          "properties": {
+            "blender": {
+              "$ref": "#/definitions/blender"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "blender": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "blender_version"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "addon",
+            "project",
+            "asset-library"
+          ]
+        },
+        "blender_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+        },
+        "entry_module": {
+          "type": "string"
+        },
+        "entry_blend": {
+          "type": "string"
+        },
+        "asset_library_path": {
+          "type": "string"
+        },
+        "render_engine": {
+          "type": "string",
+          "enum": [
+            "cycles",
+            "eevee",
+            "workbench"
+          ]
+        }
+      }
+    }
+  }
+}

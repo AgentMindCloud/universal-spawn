@@ -1,0 +1,25 @@
+version: "1.0"
+name: Houdini Template
+type: creative-tool
+description: Template for a Houdini-targeted universal-spawn manifest.
+
+platforms:
+  houdini:
+    kind: hda
+    min_build: "20.5"
+    context: sop
+    entry_file: otls/your_hda.hda
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [houdini]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/houdini-template }

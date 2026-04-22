@@ -1,0 +1,29 @@
+version: "1.0"
+name: XD Plate Gallery
+type: creative-tool
+summary: Adobe XD plugin that imports a plate gallery into the current document.
+description: CEP-based XD plugin; imports the Residual Frequencies plate set.
+
+platforms:
+  adobe:
+    platform: cep
+    manifest_file: CSXS/manifest.xml
+    hosts: [xd]
+    min_host_version: "55.0"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [adobe]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/adobe-xd-plate-gallery }
+  id: com.plate-studio.adobe-xd-plate-gallery

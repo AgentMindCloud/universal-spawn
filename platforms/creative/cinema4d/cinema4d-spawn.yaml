@@ -1,0 +1,24 @@
+version: "1.0"
+name: Cinema 4D Template
+type: creative-tool
+description: Template for a Cinema-4D-targeted universal-spawn manifest.
+
+platforms:
+  cinema4d:
+    kind: plugin
+    min_version: "2025"
+    entry_file: src/plugin.pyp
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [cinema4d]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/cinema4d-template }

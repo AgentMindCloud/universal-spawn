@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/creative/notion/notion-spawn.schema.json",
+  "title": "universal-spawn with Notion platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "notion"
+          ],
+          "properties": {
+            "notion": {
+              "$ref": "#/definitions/notion"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "notion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "page_url",
+        "kind"
+      ],
+      "properties": {
+        "page_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "page_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "template",
+            "database",
+            "workspace-pack"
+          ]
+        },
+        "seed_csv": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

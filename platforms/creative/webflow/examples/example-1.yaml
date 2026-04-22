@@ -1,0 +1,26 @@
+version: "1.0"
+name: Webflow Marketing Site
+type: site
+summary: Minimal Webflow site deployed to a custom domain.
+description: Single site; no CMS collections.
+
+platforms:
+  webflow:
+    kind: site
+    site_id: "111111111111111111111111"
+    custom_domain: marketing.example.com
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [webflow]
+
+metadata:
+  license: proprietary
+  author: { name: Marketing Co., handle: marketing-co }
+  source: { type: git, url: https://github.com/marketing-co/webflow-marketing-site }
+  id: com.marketing-co.webflow-marketing-site
