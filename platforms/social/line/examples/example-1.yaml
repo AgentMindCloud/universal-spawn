@@ -1,0 +1,33 @@
+version: "1.0"
+name: Plate LINE Bot
+type: bot
+summary: Minimal LINE Messaging API bot replying with the plate of the day.
+description: Webhook receiver. Rich menu image. No LIFF surface.
+
+platforms:
+  line:
+    channel_id: "2222222222"
+    channel_kind: messaging-api
+    webhook_url: "https://api.plate.example/line/webhook"
+    rich_menu_image: assets/rich-menu.png
+
+safety:
+  min_permissions: [network:inbound, network:outbound:api.line.me]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: LINE_CHANNEL_ACCESS_TOKEN
+    description: Channel access token.
+    secret: true
+  - name: LINE_CHANNEL_SECRET
+    description: Channel secret.
+    secret: true
+
+deployment:
+  targets: [line]
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/line-plate-bot }
+  id: com.plate-studio.line-plate-bot

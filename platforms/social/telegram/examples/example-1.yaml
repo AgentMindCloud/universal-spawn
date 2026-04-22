@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate Telegram Bot
+type: bot
+summary: Minimal Telegram long-poll bot with two commands.
+description: /start and /help. No Web App.
+
+platforms:
+  telegram:
+    bot_username: plate_studio_bot
+    transport: long-poll
+    commands:
+      - { command: start, description: "Start the plate bot." }
+      - { command: help,  description: "Show help." }
+
+safety:
+  min_permissions: [network:outbound:api.telegram.org]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: TELEGRAM_BOT_TOKEN
+    description: Bot token.
+    secret: true
+
+deployment:
+  targets: [telegram]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/telegram-plate-bot }
+  id: com.plate-studio.telegram-plate-bot

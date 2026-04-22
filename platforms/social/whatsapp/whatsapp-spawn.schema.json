@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/social/whatsapp/whatsapp-spawn.schema.json",
+  "title": "universal-spawn with WhatsApp platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "whatsapp"
+          ],
+          "properties": {
+            "whatsapp": {
+              "$ref": "#/definitions/whatsapp"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "whatsapp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phone_number_id",
+        "api_kind"
+      ],
+      "properties": {
+        "phone_number_id": {
+          "type": "string",
+          "pattern": "^[0-9]{8,20}$"
+        },
+        "business_account_id": {
+          "type": "string",
+          "pattern": "^[0-9]{8,20}$"
+        },
+        "webhook_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "templates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "language"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]{0,63}$"
+              },
+              "language": {
+                "type": "string",
+                "pattern": "^[a-z]{2}(_[A-Z]{2})?$"
+              }
+            }
+          }
+        },
+        "api_kind": {
+          "type": "string",
+          "enum": [
+            "cloud",
+            "on-premise"
+          ]
+        }
+      }
+    }
+  }
+}

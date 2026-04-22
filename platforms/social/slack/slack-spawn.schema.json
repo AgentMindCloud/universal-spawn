@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/social/slack/slack-spawn.schema.json",
+  "title": "universal-spawn with Slack platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "slack"
+          ],
+          "properties": {
+            "slack": {
+              "$ref": "#/definitions/slack"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "slack": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "manifest_file": {
+          "type": "string"
+        },
+        "bot_scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "user_scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "slash_commands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command"
+            ],
+            "properties": {
+              "command": {
+                "type": "string",
+                "pattern": "^/[a-z][a-z0-9_-]{0,31}$"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "event_subscriptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "socket_mode": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

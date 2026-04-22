@@ -1,0 +1,37 @@
+version: "1.0"
+name: Acme Support WhatsApp
+type: bot
+summary: Full WhatsApp Business bot with five templates and on-premise transport.
+description: On-premise WhatsApp Business with five message templates and an internal webhook receiver.
+
+platforms:
+  whatsapp:
+    phone_number_id: "555555555555555"
+    business_account_id: "666666666666666"
+    webhook_url: "https://internal.acme.com/whatsapp/webhook"
+    api_kind: on-premise
+    templates:
+      - { name: order_confirmation, language: en_US }
+      - { name: order_shipped,      language: en_US }
+      - { name: order_delivered,    language: en_US }
+      - { name: support_followup,   language: en_US }
+      - { name: feedback_request,   language: en_US }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  safe_for_auto_spawn: false
+  data_residency: [eu]
+
+env_vars_required:
+  - name: WHATSAPP_ACCESS_TOKEN
+    description: On-premise client token.
+    secret: true
+
+deployment:
+  targets: [whatsapp]
+
+metadata:
+  license: proprietary
+  author: { name: Acme Support, handle: acme-support, org: Acme }
+  source: { type: git, url: https://github.com/acme-support/whatsapp-business }
+  id: com.acme-support.whatsapp-business

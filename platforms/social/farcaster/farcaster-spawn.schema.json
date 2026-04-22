@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/social/farcaster/farcaster-spawn.schema.json",
+  "title": "universal-spawn with Farcaster platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "farcaster"
+          ],
+          "properties": {
+            "farcaster": {
+              "$ref": "#/definitions/farcaster"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "farcaster": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "frame",
+            "mini-app",
+            "bot"
+          ]
+        },
+        "fid": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "frame_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "miniapp_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "signer_uuid": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F-]{32,36}$"
+        }
+      }
+    }
+  }
+}

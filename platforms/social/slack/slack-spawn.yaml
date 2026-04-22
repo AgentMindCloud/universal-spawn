@@ -1,0 +1,31 @@
+version: "1.0"
+name: Slack Template
+type: bot
+description: Template for a Slack-targeted universal-spawn manifest.
+
+platforms:
+  slack:
+    manifest_file: slack.manifest.json
+    bot_scopes: [chat:write, commands]
+    slash_commands:
+      - { command: "/ping", description: "Ping the bot." }
+    socket_mode: false
+
+safety:
+  min_permissions: [network:outbound:slack.com]
+
+env_vars_required:
+  - name: SLACK_BOT_TOKEN
+    description: Bot xoxb token.
+    secret: true
+  - name: SLACK_SIGNING_SECRET
+    description: Signing secret for incoming requests.
+    secret: true
+
+deployment:
+  targets: [slack]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/slack-template }

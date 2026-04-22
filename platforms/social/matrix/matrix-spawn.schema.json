@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/social/matrix/matrix-spawn.schema.json",
+  "title": "universal-spawn with Matrix platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "matrix"
+          ],
+          "properties": {
+            "matrix": {
+              "$ref": "#/definitions/matrix"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "homeserver"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "bot",
+            "appservice"
+          ]
+        },
+        "homeserver": {
+          "type": "string",
+          "format": "uri"
+        },
+        "identifier": {
+          "type": "string",
+          "pattern": "^[@!#][^:]+:[^/]+$|^[a-z][a-z0-9._-]*$"
+        },
+        "registration_file": {
+          "type": "string"
+        },
+        "namespaces": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "users": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "aliases": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rooms": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

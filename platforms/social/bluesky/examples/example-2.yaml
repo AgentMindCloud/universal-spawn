@@ -1,0 +1,30 @@
+version: "1.0"
+name: Parchment Feed Generator
+type: extension
+summary: Full Bluesky feed generator surfacing parchment-style posts.
+description: Custom feed generator with one record (`parchment-feed`) and an owned lexicon NSID.
+
+platforms:
+  bluesky:
+    kind: feed-generator
+    service_did: "did:web:feed.plate.example"
+    feed_record: parchment-feed
+    nsids: ["com.plate-studio.feed.getParchment"]
+    pds_url: "https://bsky.social"
+
+safety:
+  min_permissions: [network:inbound, network:outbound:bsky.social]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [bluesky]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/bluesky-parchment-feed }
+  id: com.plate-studio.bluesky-parchment-feed

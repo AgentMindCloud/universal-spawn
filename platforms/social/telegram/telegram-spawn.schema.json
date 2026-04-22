@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/social/telegram/telegram-spawn.schema.json",
+  "title": "universal-spawn with Telegram platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "telegram"
+          ],
+          "properties": {
+            "telegram": {
+              "$ref": "#/definitions/telegram"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "telegram": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bot_username",
+        "transport"
+      ],
+      "properties": {
+        "bot_username": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_]{5,32}_?bot$"
+        },
+        "transport": {
+          "type": "string",
+          "enum": [
+            "long-poll",
+            "webhook"
+          ]
+        },
+        "webhook_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command",
+              "description"
+            ],
+            "properties": {
+              "command": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]{0,31}$"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "web_app_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/social/discord/discord-spawn.schema.json",
+  "title": "universal-spawn with Discord platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "discord"
+          ],
+          "properties": {
+            "discord": {
+              "$ref": "#/definitions/discord"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "discord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "application_id",
+        "scopes"
+      ],
+      "properties": {
+        "application_id": {
+          "type": "string",
+          "pattern": "^[0-9]{17,20}$"
+        },
+        "scopes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "bot",
+              "applications.commands",
+              "applications.commands.update",
+              "applications.entitlements",
+              "identify",
+              "email",
+              "guilds",
+              "guilds.members.read",
+              "messages.read",
+              "webhook.incoming"
+            ]
+          }
+        },
+        "intents": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "guilds",
+              "guild_members",
+              "guild_messages",
+              "message_content",
+              "guild_voice_states",
+              "direct_messages",
+              "auto_moderation_execution"
+            ]
+          }
+        },
+        "permissions": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "slash_commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "message_commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "activity": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "supported_platforms": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "web",
+                  "ios",
+                  "android"
+                ]
+              }
+            },
+            "orientation_lock_state": {
+              "type": "string",
+              "enum": [
+                "unlocked",
+                "portrait",
+                "landscape"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

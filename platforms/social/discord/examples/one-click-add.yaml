@@ -1,0 +1,37 @@
+version: "1.0"
+name: Plate Studio Bot
+type: bot
+summary: Full Discord bot with slash + message commands and a 'one-click add to server' install URL.
+description: >
+  Full-shape Discord bot. Generators read this manifest and render a
+  Discord install URL using `application_id` + `scopes` + `permissions`.
+
+platforms:
+  discord:
+    application_id: "333333333333333333"
+    scopes: [bot, applications.commands, messages.read]
+    intents: [guilds, guild_messages, message_content]
+    permissions: "274877910016"
+    slash_commands: [commands/plate.json, commands/critique.json]
+    message_commands: [commands/flag-message.json]
+
+safety:
+  min_permissions: [network:outbound:discord.com, network:outbound:gateway.discord.gg, messages:read]
+  rate_limit_qps: 10
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DISCORD_BOT_TOKEN
+    description: Bot token.
+    secret: true
+
+deployment:
+  targets: [discord]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/discord-plate-bot }
+  id: com.plate-studio.discord-plate-bot

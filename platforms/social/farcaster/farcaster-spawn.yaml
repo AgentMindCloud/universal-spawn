@@ -1,0 +1,26 @@
+version: "1.0"
+name: Farcaster Template
+type: bot
+description: Template for a Farcaster-targeted universal-spawn manifest.
+
+platforms:
+  farcaster:
+    kind: bot
+    fid: 100000
+    signer_uuid: "00000000-0000-0000-0000-000000000000"
+
+safety:
+  min_permissions: [network:outbound:hub.farcaster.xyz]
+
+env_vars_required:
+  - name: NEYNAR_API_KEY
+    description: Neynar API key (or alternative Farcaster API).
+    secret: true
+
+deployment:
+  targets: [farcaster]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/farcaster-template }

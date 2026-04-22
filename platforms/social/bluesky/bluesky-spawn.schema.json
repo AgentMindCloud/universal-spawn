@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/social/bluesky/bluesky-spawn.schema.json",
+  "title": "universal-spawn with Bluesky platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "bluesky"
+          ],
+          "properties": {
+            "bluesky": {
+              "$ref": "#/definitions/bluesky"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "bluesky": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "bot",
+            "feed-generator"
+          ]
+        },
+        "handle": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]+\\.[a-z]+$"
+        },
+        "service_did": {
+          "type": "string",
+          "pattern": "^did:[a-z]+:[A-Za-z0-9._-]+$"
+        },
+        "feed_record": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]+$"
+        },
+        "nsids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-zA-Z0-9.-]+$"
+          }
+        },
+        "pds_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+version: "1.0"
+name: X Bot Template
+type: bot
+description: Template for an X-targeted universal-spawn manifest.
+
+platforms:
+  x-twitter:
+    account: yourbot
+    scopes: [tweet.read, tweet.write, users.read, offline.access]
+    tier: basic
+    uses_grok: false
+
+safety:
+  min_permissions: [network:outbound:api.twitter.com, network:outbound:api.x.com]
+
+env_vars_required:
+  - name: X_OAUTH_CLIENT_ID
+    description: X OAuth 2.0 client id.
+    secret: false
+  - name: X_OAUTH_CLIENT_SECRET
+    description: X OAuth 2.0 client secret.
+    secret: true
+
+deployment:
+  targets: [x-twitter]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/x-bot-template }

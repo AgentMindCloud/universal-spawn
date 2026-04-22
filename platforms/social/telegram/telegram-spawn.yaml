@@ -1,0 +1,28 @@
+version: "1.0"
+name: Telegram Template
+type: bot
+description: Template for a Telegram-targeted universal-spawn manifest.
+
+platforms:
+  telegram:
+    bot_username: yourname_bot
+    transport: long-poll
+    commands:
+      - { command: start, description: "Start the bot." }
+      - { command: help,  description: "Show help." }
+
+safety:
+  min_permissions: [network:outbound:api.telegram.org]
+
+env_vars_required:
+  - name: TELEGRAM_BOT_TOKEN
+    description: Bot token from @BotFather.
+    secret: true
+
+deployment:
+  targets: [telegram]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/telegram-template }

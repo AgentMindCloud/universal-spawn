@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate LIFF App
+type: web-app
+summary: Full LINE Mini App (LIFF) for browsing parchment plates.
+description: LIFF endpoint URL. Profile + email scopes. Pairs with the messaging-api bot above.
+
+platforms:
+  line:
+    channel_id: "3333333333"
+    channel_kind: liff
+    liff_endpoint_url: "https://liff.plate.example/"
+    scopes: [profile, openid, email]
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [line]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/line-plate-liff }
+  id: com.plate-studio.line-plate-liff

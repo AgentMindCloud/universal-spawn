@@ -1,0 +1,35 @@
+version: "1.0"
+name: Plate WhatsApp Bot
+type: bot
+summary: Minimal WhatsApp Cloud API bot answering plate queries.
+description: Cloud API. Webhook receiver. One template registered.
+
+platforms:
+  whatsapp:
+    phone_number_id: "123456789012345"
+    business_account_id: "987654321098765"
+    webhook_url: "https://api.plate.example/whatsapp/webhook"
+    api_kind: cloud
+    templates:
+      - { name: plate_of_day, language: en_US }
+
+safety:
+  min_permissions: [network:inbound, network:outbound:graph.facebook.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: WHATSAPP_ACCESS_TOKEN
+    description: Cloud API token.
+    secret: true
+  - name: WHATSAPP_VERIFY_TOKEN
+    description: Webhook verify token.
+    secret: true
+
+deployment:
+  targets: [whatsapp]
+
+metadata:
+  license: proprietary
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/whatsapp-plate-bot }
+  id: com.plate-studio.whatsapp-plate-bot

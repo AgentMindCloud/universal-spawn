@@ -1,0 +1,28 @@
+version: "1.0"
+name: Discord Template
+type: bot
+description: Template for a Discord-targeted universal-spawn manifest.
+
+platforms:
+  discord:
+    application_id: "111111111111111111"
+    scopes: [bot, applications.commands]
+    intents: [guilds]
+    permissions: "274877910016"
+    slash_commands: [commands/ping.json]
+
+safety:
+  min_permissions: [network:outbound:discord.com, network:outbound:gateway.discord.gg]
+
+env_vars_required:
+  - name: DISCORD_BOT_TOKEN
+    description: Discord bot token.
+    secret: true
+
+deployment:
+  targets: [discord]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/discord-template }

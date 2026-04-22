@@ -1,0 +1,32 @@
+version: "1.0"
+name: WhatsApp Template
+type: bot
+description: Template for a WhatsApp-targeted universal-spawn manifest.
+
+platforms:
+  whatsapp:
+    phone_number_id: "111111111111111"
+    business_account_id: "222222222222222"
+    webhook_url: "https://api.yourapp.example/whatsapp/webhook"
+    api_kind: cloud
+    templates:
+      - { name: hello_world, language: en_US }
+
+safety:
+  min_permissions: [network:inbound, network:outbound:graph.facebook.com]
+
+env_vars_required:
+  - name: WHATSAPP_ACCESS_TOKEN
+    description: Cloud API access token.
+    secret: true
+  - name: WHATSAPP_VERIFY_TOKEN
+    description: Webhook verify token.
+    secret: true
+
+deployment:
+  targets: [whatsapp]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/whatsapp-template }

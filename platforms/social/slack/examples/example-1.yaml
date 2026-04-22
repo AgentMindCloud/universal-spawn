@@ -1,0 +1,33 @@
+version: "1.0"
+name: Plate Slack Bot
+type: bot
+summary: Minimal Bolt app — single /plate slash command.
+description: HTTP transport. One slash command. Two scopes.
+
+platforms:
+  slack:
+    manifest_file: slack.manifest.json
+    bot_scopes: [chat:write, commands]
+    slash_commands:
+      - { command: "/plate", description: "Show the plate of the day." }
+
+safety:
+  min_permissions: [network:outbound:slack.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: SLACK_BOT_TOKEN
+    description: xoxb token.
+    secret: true
+  - name: SLACK_SIGNING_SECRET
+    description: Signing secret.
+    secret: true
+
+deployment:
+  targets: [slack]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/slack-plate-bot }
+  id: com.plate-studio.slack-plate-bot

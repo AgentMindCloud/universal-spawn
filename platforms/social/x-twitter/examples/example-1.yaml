@@ -1,0 +1,32 @@
+version: "1.0"
+name: Plate Daily X Bot
+type: bot
+summary: Minimal X bot that posts the plate-of-the-day.
+description: Pulls the daily plate from a feed and posts it. Basic API tier.
+
+platforms:
+  x-twitter:
+    account: plateofday
+    scopes: [tweet.write, users.read, offline.access]
+    tier: basic
+
+safety:
+  min_permissions: [network:outbound:api.twitter.com, network:outbound:api.x.com]
+  rate_limit_qps: 1
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: X_OAUTH_CLIENT_ID
+    description: OAuth client id.
+  - name: X_OAUTH_CLIENT_SECRET
+    description: OAuth client secret.
+    secret: true
+
+deployment:
+  targets: [x-twitter]
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/x-plate-daily }
+  id: com.plate-studio.x-plate-daily

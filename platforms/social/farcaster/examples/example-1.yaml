@@ -1,0 +1,27 @@
+version: "1.0"
+name: Plate Frame
+type: web-app
+summary: Minimal Farcaster Frame that previews the plate of the day.
+description: One Frame URL serving the plate-of-day preview.
+
+platforms:
+  farcaster:
+    kind: frame
+    frame_url: "https://frames.plate.example/today"
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [farcaster]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/farcaster-plate-frame }
+  id: com.plate-studio.farcaster-plate-frame

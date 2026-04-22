@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Studio Mini App
+type: web-app
+summary: Full Farcaster mini-app with one-click add via the manifest URL.
+description: >
+  Full mini-app shipping a `.well-known/farcaster.json`. Clients pick
+  up the manifest URL and offer a one-click "Add to Warpcast" flow.
+
+platforms:
+  farcaster:
+    kind: mini-app
+    miniapp_url: "https://miniapp.plate.example/.well-known/farcaster.json"
+
+safety:
+  min_permissions: [network:inbound, network:outbound:hub.farcaster.xyz]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [farcaster]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/farcaster-plate-miniapp }
+  id: com.plate-studio.farcaster-plate-miniapp

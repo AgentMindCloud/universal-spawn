@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Matrix Bot
+type: bot
+summary: Minimal Matrix bot answering with the plate of the day.
+description: Single bot account on matrix.org. Reads invites; replies in joined rooms.
+
+platforms:
+  matrix:
+    kind: bot
+    homeserver: "https://matrix.org"
+    identifier: "@plate_studio:matrix.org"
+
+safety:
+  min_permissions: [network:outbound:matrix.org]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: MATRIX_ACCESS_TOKEN
+    description: Bot access token.
+    secret: true
+
+deployment:
+  targets: [matrix]
+
+metadata:
+  license: AGPL-3.0-only
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/matrix-plate-bot }
+  id: com.plate-studio.matrix-plate-bot

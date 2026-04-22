@@ -1,0 +1,45 @@
+version: "1.0"
+name: Plate Studio Slack App
+type: bot
+summary: Full Slack app with a one-click 'Add to Slack' URL.
+description: >
+  Bolt app shipped with a `slack.manifest.json` and rich event
+  subscriptions. A consumer renders an "Add to Slack" button from
+  the manifest's `client_id` (stored in a sibling secret).
+
+platforms:
+  slack:
+    manifest_file: slack.manifest.json
+    bot_scopes: [chat:write, commands, channels:history, im:history, files:read]
+    user_scopes: [users:read.email]
+    slash_commands:
+      - { command: "/plate", description: "Browse plates." }
+      - { command: "/critique", description: "Critique a posted plate." }
+    event_subscriptions: [message.channels, app_mention, reaction_added]
+    socket_mode: false
+
+safety:
+  min_permissions: [network:outbound:slack.com]
+  cost_limit_usd_daily: 5
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: SLACK_BOT_TOKEN
+    description: xoxb token.
+    secret: true
+  - name: SLACK_SIGNING_SECRET
+    description: Signing secret.
+    secret: true
+  - name: SLACK_CLIENT_ID
+    description: OAuth client id used to build the install URL.
+
+deployment:
+  targets: [slack]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/slack-plate-app }
+  id: com.plate-studio.slack-plate-app

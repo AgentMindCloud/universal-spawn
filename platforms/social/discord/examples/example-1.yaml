@@ -1,0 +1,31 @@
+version: "1.0"
+name: Discord Ping Bot
+type: bot
+summary: Minimal Discord bot — one /ping slash command.
+description: Smallest useful bot; safe_for_auto_spawn so the install URL works without confirmation.
+
+platforms:
+  discord:
+    application_id: "222222222222222222"
+    scopes: [bot, applications.commands]
+    intents: [guilds]
+    permissions: "2147483648"
+    slash_commands: [commands/ping.json]
+
+safety:
+  min_permissions: [network:outbound:discord.com, network:outbound:gateway.discord.gg]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: DISCORD_BOT_TOKEN
+    description: Bot token.
+    secret: true
+
+deployment:
+  targets: [discord]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Ping Co., handle: ping-co }
+  source: { type: git, url: https://github.com/ping-co/discord-ping }
+  id: com.ping-co.discord-ping

@@ -1,0 +1,42 @@
+version: "1.0"
+name: Discord Matrix Bridge
+type: extension
+summary: Full Matrix appservice bridge connecting Discord and Matrix.
+description: >
+  Appservice bridge with full namespace declaration. A consumer reads
+  this manifest and renders a `matrix:r/discord-bridge` link that adds
+  the bridge to a homeserver in one step.
+
+platforms:
+  matrix:
+    kind: appservice
+    homeserver: "https://matrix.example.org"
+    identifier: discord-bridge
+    registration_file: registration.yaml
+    namespaces:
+      users: ["@_discord_.*:matrix.example.org"]
+      aliases: ["#_discord_.*:matrix.example.org"]
+
+safety:
+  min_permissions: [network:inbound, network:outbound:matrix.example.org, network:outbound:discord.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: AS_TOKEN
+    description: Appservice token.
+    secret: true
+  - name: HS_TOKEN
+    description: Homeserver token.
+    secret: true
+  - name: DISCORD_BOT_TOKEN
+    description: Discord bot token.
+    secret: true
+
+deployment:
+  targets: [matrix]
+
+metadata:
+  license: AGPL-3.0-only
+  author: { name: Bridge Co., handle: bridge-co }
+  source: { type: git, url: https://github.com/bridge-co/matrix-discord-bridge }
+  id: com.bridge-co.matrix-discord-bridge

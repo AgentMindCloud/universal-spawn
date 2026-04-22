@@ -1,0 +1,29 @@
+version: "1.0"
+name: LINE Template
+type: bot
+description: Template for a LINE-targeted universal-spawn manifest.
+
+platforms:
+  line:
+    channel_id: "1111111111"
+    channel_kind: messaging-api
+    webhook_url: "https://api.yourapp.example/line/webhook"
+
+safety:
+  min_permissions: [network:inbound, network:outbound:api.line.me]
+
+env_vars_required:
+  - name: LINE_CHANNEL_ACCESS_TOKEN
+    description: Channel access token.
+    secret: true
+  - name: LINE_CHANNEL_SECRET
+    description: Channel secret.
+    secret: true
+
+deployment:
+  targets: [line]
+
+metadata:
+  license: proprietary
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/line-template }

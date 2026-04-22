@@ -1,0 +1,40 @@
+version: "1.0"
+name: Plate Studio Web App
+type: bot
+summary: Full Telegram Web App with a one-click Telegram URL to add the bot.
+description: >
+  Webhook-driven Telegram bot that opens a Telegram Web App for
+  plate browsing. A consumer renders a `https://t.me/{bot_username}`
+  link that adds the bot in one click.
+
+platforms:
+  telegram:
+    bot_username: plate_explore_bot
+    transport: webhook
+    webhook_url: "https://api.plate.example/telegram/webhook"
+    commands:
+      - { command: start, description: "Open the plate gallery." }
+    web_app_url: "https://app.plate.example/telegram"
+
+safety:
+  min_permissions: [network:inbound, network:outbound:api.telegram.org]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: TELEGRAM_BOT_TOKEN
+    description: Bot token.
+    secret: true
+  - name: WEBHOOK_SECRET
+    description: Webhook signing secret.
+    secret: true
+
+deployment:
+  targets: [telegram]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/telegram-plate-webapp }
+  id: com.plate-studio.telegram-plate-webapp

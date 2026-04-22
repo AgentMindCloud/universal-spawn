@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/social/line/line-spawn.schema.json",
+  "title": "universal-spawn with LINE platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "line"
+          ],
+          "properties": {
+            "line": {
+              "$ref": "#/definitions/line"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "channel_id",
+        "channel_kind"
+      ],
+      "properties": {
+        "channel_id": {
+          "type": "string",
+          "pattern": "^[0-9]{8,20}$"
+        },
+        "channel_kind": {
+          "type": "string",
+          "enum": [
+            "messaging-api",
+            "liff"
+          ]
+        },
+        "webhook_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "rich_menu_image": {
+          "type": "string"
+        },
+        "liff_endpoint_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "profile",
+              "openid",
+              "email",
+              "chat_message.write"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

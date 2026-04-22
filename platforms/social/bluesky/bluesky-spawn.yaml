@@ -1,0 +1,25 @@
+version: "1.0"
+name: Bluesky Template
+type: bot
+description: Template for a Bluesky-targeted universal-spawn manifest.
+
+platforms:
+  bluesky:
+    kind: bot
+    handle: yourbot.bsky.social
+
+safety:
+  min_permissions: [network:outbound:bsky.social]
+
+env_vars_required:
+  - name: BLUESKY_APP_PASSWORD
+    description: App password.
+    secret: true
+
+deployment:
+  targets: [bluesky]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/bluesky-template }

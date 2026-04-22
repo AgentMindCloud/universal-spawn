@@ -1,0 +1,44 @@
+version: "1.0"
+name: Grok-Powered Reply Bot
+type: ai-agent
+summary: Full X bot that replies to mentions with Grok-generated answers.
+description: >
+  Listens to a filtered stream for mentions, generates replies through
+  Grok-4-fast (see `../../ai/grok/`), and posts. Pro tier for the
+  filtered-stream throughput.
+
+platforms:
+  x-twitter:
+    account: gridreply
+    scopes: [tweet.read, tweet.write, users.read, offline.access]
+    tier: pro
+    streams: [streams/mentions.json]
+    uses_grok: true
+
+safety:
+  min_permissions:
+    - network:outbound:api.twitter.com
+    - network:outbound:api.x.com
+    - network:outbound:api.x.ai
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 20
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: X_OAUTH_CLIENT_ID
+    description: OAuth client id.
+  - name: X_OAUTH_CLIENT_SECRET
+    description: OAuth client secret.
+    secret: true
+  - name: XAI_API_KEY
+    description: xAI API key for Grok.
+    secret: true
+
+deployment:
+  targets: [x-twitter]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Reply Co., handle: reply-co }
+  source: { type: git, url: https://github.com/reply-co/x-grok-reply-bot }
+  id: com.reply-co.x-grok-reply-bot
