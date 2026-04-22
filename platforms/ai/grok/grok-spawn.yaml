@@ -1,0 +1,62 @@
+# grok-spawn.yaml — canonical Grok-targeted universal-spawn manifest
+#
+# Lowered from (or written alongside) universal-spawn.yaml. A Grok
+# consumer reads this file verbatim; any other universal-spawn
+# consumer reads universal-spawn.yaml and ignores the grok- prefix.
+#
+# To maintain round-trip with AgentMindCloud/grok-install v2.14, set
+# `platforms.grok.grok_install_compat.version: "2.14"` so the lowering
+# tool can emit the legacy form when asked.
+
+version: "1.0"
+name: Grok Template
+type: ai-agent
+summary: Template for a Grok-targeted universal-spawn manifest.
+description: >
+  Replace placeholders before use. Demonstrates the full `platforms.grok`
+  block: model pin, surface list, function tools, system prompt, and
+  the grok-install compatibility hint.
+
+platforms:
+  grok:
+    model: grok-4
+    surface: [grok-api]
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    system_prompt_file: prompts/system.md
+    streaming: true
+    real_time_data: false
+    temperature: 0.2
+    grok_install_compat:
+      version: "2.14"
+      x_handle: yourhandle
+
+safety:
+  min_permissions:
+    - network:outbound:api.x.ai
+    - model:call:grok-4
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 10
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: XAI_API_KEY
+    description: xAI API key used for all Grok model calls.
+    secret: true
+
+deployment:
+  targets: [grok]
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Your Name
+    handle: yourhandle
+  source:
+    type: git
+    url: https://github.com/yourhandle/grok-template
+  keywords: [grok, agent, template]
+  categories: [ai]
+  id: com.yourdomain.grok-template

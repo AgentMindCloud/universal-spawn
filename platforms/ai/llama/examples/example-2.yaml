@@ -1,0 +1,50 @@
+version: "1.0"
+name: Llama Research Agent
+type: ai-agent
+summary: Full-featured Llama-4-Maverick research agent with tools and guard-blocked output.
+description: >
+  Uses Llama-4-Maverick via a self-hosted Llama Stack endpoint. Two
+  function tools (search + extract), Llama Guard runs in block mode
+  to reject unsafe outputs before they reach the user.
+
+platforms:
+  llama:
+    model: llama-4-maverick
+    endpoint_url: https://llama.internal.acme.com/v1
+    tools:
+      - name: search
+        function_ref: tools/search.json
+        strict: true
+      - name: extract
+        function_ref: tools/extract.json
+        strict: true
+    system_prompt_file: prompts/system.md
+    llama_guard:
+      policy_ref: policies/strict.yaml
+      enforcement: block
+    quantization: bf16
+    temperature: 0.3
+
+safety:
+  min_permissions:
+    - network:outbound:llama.internal.acme.com
+    - network:outbound:api.openalex.org
+    - model:call:llama-4-maverick
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 20
+  safe_for_auto_spawn: false
+  data_residency: [us]
+
+env_vars_required:
+  - name: LLAMA_STACK_TOKEN
+    description: Bearer token for the internal Llama Stack.
+    secret: true
+
+deployment:
+  targets: [llama]
+
+metadata:
+  license: proprietary
+  author: { name: Acme Research, handle: acme-research, org: Acme }
+  source: { type: git, url: https://github.com/acme-research/llama-research-agent }
+  id: com.acme-research.llama-research-agent

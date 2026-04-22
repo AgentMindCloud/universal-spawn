@@ -1,0 +1,41 @@
+version: "1.0"
+name: Mistral Research Agent
+type: ai-agent
+summary: Full Mistral Agent with web-search, document-library, and code-interpreter connectors.
+description: >
+  Research agent built on Mistral Agents. Uses web_search for fresh
+  information, document_library grounded on a private corpus, and
+  code_interpreter for inline analysis. Mistral-large-latest.
+
+platforms:
+  mistral:
+    model: mistral-large-latest
+    agent:
+      name: research-agent
+      instructions_file: prompts/instructions.md
+      connectors: [web_search, document_library, code_interpreter]
+    json_mode: false
+    safe_prompt: true
+    temperature: 0.3
+    system_prompt_file: prompts/system.md
+
+safety:
+  min_permissions: [network:outbound:api.mistral.ai]
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+  data_residency: [eu]
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: La Plateforme API key with Agents access.
+    secret: true
+
+deployment:
+  targets: [mistral]
+
+metadata:
+  license: proprietary
+  author: { name: Research Lab, handle: research-lab, org: Lab }
+  source: { type: git, url: https://github.com/research-lab/mistral-research }
+  id: com.research-lab.mistral-research

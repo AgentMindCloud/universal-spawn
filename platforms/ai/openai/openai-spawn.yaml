@@ -1,0 +1,36 @@
+# openai-spawn.yaml — canonical OpenAI-targeted manifest
+version: "1.0"
+name: OpenAI Template
+type: ai-agent
+description: Template for an OpenAI-targeted universal-spawn manifest.
+
+platforms:
+  openai:
+    model: gpt-5
+    system_prompt_file: prompts/system.md
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    response_format: json_schema
+    response_schema_ref: schemas/response.json
+    reasoning_effort: medium
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.openai.com]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 5
+
+env_vars_required:
+  - name: OPENAI_API_KEY
+    description: OpenAI API key.
+    secret: true
+
+deployment:
+  targets: [openai]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/openai-template }

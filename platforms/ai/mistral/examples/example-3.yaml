@@ -1,0 +1,35 @@
+version: "1.0"
+name: Codestral Pair
+type: ai-skill
+summary: Codestral-based pair-programmer focused on Rust refactors.
+description: >
+  Creative: uses Codestral-latest for a single narrow pair-prog task —
+  suggesting Rust refactors for idiomatic borrow-checker usage. No
+  tools, pure system prompt.
+
+platforms:
+  mistral:
+    model: codestral-latest
+    system_prompt_file: prompts/rust-refactor.md
+    json_mode: false
+    safe_prompt: true
+    temperature: 0.1
+
+safety:
+  min_permissions: [network:outbound:api.mistral.ai]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: La Plateforme API key.
+    secret: true
+
+deployment:
+  targets: [mistral]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Rust Tools, handle: rust-tools }
+  source: { type: git, url: https://github.com/rust-tools/codestral-pair }
+  categories: [ai, code, devtools]
+  id: com.rust-tools.codestral-pair

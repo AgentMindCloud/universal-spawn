@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/./mistral/mistral-spawn.schema.json",
+  "title": "universal-spawn with Mistral platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "mistral"
+          ],
+          "properties": {
+            "mistral": {
+              "$ref": "#/definitions/mistral"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "mistral": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": [
+            "mistral-large-latest",
+            "mistral-medium-latest",
+            "mistral-small-latest",
+            "ministral-8b-latest",
+            "ministral-3b-latest",
+            "codestral-latest",
+            "pixtral-large-latest"
+          ]
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "function_ref"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_-]{0,63}$"
+              },
+              "function_ref": {
+                "type": "string",
+                "description": "Relative path to the tool definition JSON."
+              },
+              "strict": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        },
+        "agent": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "instructions_file": {
+              "type": "string"
+            },
+            "connectors": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "web_search",
+                  "document_library",
+                  "code_interpreter",
+                  "image_generation"
+                ]
+              }
+            }
+          }
+        },
+        "json_mode": {
+          "type": "boolean",
+          "default": false
+        },
+        "safe_prompt": {
+          "type": "boolean",
+          "default": true
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1.5
+        },
+        "system_prompt_file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

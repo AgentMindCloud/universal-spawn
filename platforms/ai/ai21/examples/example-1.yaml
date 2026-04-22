@@ -1,0 +1,32 @@
+version: "1.0"
+name: Jamba Long-doc Summarizer
+type: ai-skill
+summary: Minimal Jamba-1.5-mini summarizer tuned for 64k-token documents.
+description: >
+  One-shot summary of a long document. Uses Jamba's long context to
+  avoid chunking. No tools, no Maestro.
+
+platforms:
+  ai21:
+    model: jamba-1.5-mini
+    context_tokens: 65536
+    response_format: text
+    temperature: 0.1
+
+safety:
+  min_permissions: [network:outbound:api.ai21.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: AI21_API_KEY
+    description: AI21 Studio API key.
+    secret: true
+
+deployment:
+  targets: [ai21]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Doc Co., handle: doc-co }
+  source: { type: git, url: https://github.com/doc-co/jamba-summarizer }
+  id: com.doc-co.jamba-summarizer

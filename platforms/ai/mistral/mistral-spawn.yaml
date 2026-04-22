@@ -1,0 +1,33 @@
+version: "1.0"
+name: Mistral Template
+type: ai-agent
+description: Template for a Mistral-targeted universal-spawn manifest.
+
+platforms:
+  mistral:
+    model: mistral-large-latest
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    json_mode: false
+    safe_prompt: true
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.mistral.ai]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 5
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: La Plateforme API key.
+    secret: true
+
+deployment:
+  targets: [mistral]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/mistral-template }

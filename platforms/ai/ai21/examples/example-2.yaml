@@ -1,0 +1,45 @@
+version: "1.0"
+name: AI21 Research Maestro
+type: ai-agent
+summary: Full Jamba-1.5-large agent with Maestro plan-then-execute orchestration.
+description: >
+  Uses Maestro to plan a three-phase research task (gather → verify →
+  summarize), then executes each step with Jamba-1.5-large. 256k
+  context window. JSON output.
+
+platforms:
+  ai21:
+    model: jamba-1.5-large
+    tools:
+      - name: search_papers
+        function_ref: tools/search_papers.json
+        strict: true
+      - name: fetch_url
+        function_ref: tools/fetch_url.json
+        strict: true
+    maestro:
+      plan_file: maestro/research-plan.yaml
+      max_steps: 12
+    context_tokens: 262144
+    response_format: json_object
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.ai21.com]
+  rate_limit_qps: 4
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: AI21_API_KEY
+    description: AI21 Studio API key with Maestro access.
+    secret: true
+
+deployment:
+  targets: [ai21]
+
+metadata:
+  license: proprietary
+  author: { name: Research Lab, handle: research-lab, org: Lab }
+  source: { type: git, url: https://github.com/research-lab/ai21-research-maestro }
+  id: com.research-lab.ai21-research-maestro

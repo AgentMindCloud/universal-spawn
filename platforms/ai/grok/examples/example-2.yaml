@@ -1,0 +1,88 @@
+# Grok example 2 — full-featured research agent with real-time data
+# Uses Grok-4's live X feed + OpenAlex + structured output. Shows the
+# shape of a production-grade Grok agent manifest.
+version: "1.0"
+name: Signal Scout
+type: ai-agent
+summary: Grok-4 research agent blending live social signal with open-access papers.
+description: >
+  Signal Scout takes a topic, pulls live X discussion via Grok's
+  real-time data feed, cross-references the academic record on
+  OpenAlex, and returns a structured brief with citations. Uses
+  Grok-4-heavy for the deepest reasoning pass; falls back to Grok-4
+  when the heavy model isn't available on the caller's tier.
+
+platforms:
+  grok:
+    model: grok-4-heavy
+    surface: [grok-api, grok-x-integration]
+    system_prompt_file: prompts/system.md
+    tools:
+      - name: openalex_search
+        function_ref: tools/openalex_search.json
+        strict: true
+      - name: extract_claims
+        function_ref: tools/extract_claims.json
+        strict: true
+    streaming: true
+    real_time_data: true
+    temperature: 0.3
+    max_tokens: 4096
+    grok_install_compat:
+      version: "2.14"
+      x_handle: signal_scout
+
+safety:
+  min_permissions:
+    - network:outbound:api.x.ai
+    - network:outbound:api.openalex.org
+    - model:call:grok-4-heavy
+    - model:call:grok-4
+    - identity:read
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 40
+  safe_for_auto_spawn: false
+  data_residency: [us, eu]
+
+env_vars_required:
+  - name: XAI_API_KEY
+    description: xAI API key with Grok-4-heavy entitlement.
+    secret: true
+  - name: OPENALEX_EMAIL
+    description: Polite email for OpenAlex (see their rate-limit policy).
+    required: false
+    example: ops@signalscout.example
+
+deployment:
+  targets: [grok]
+  build:
+    command: "pnpm build"
+    engine: node
+
+visuals:
+  icon: assets/icon.svg
+  hero_plate: assets/hero.svg
+  palette: parchment
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Signal Scout
+    handle: signal-scout
+    org: AgentMindCloud
+    url: https://github.com/signal-scout
+  maintainers:
+    - name: River Chen
+      handle: riverc
+  source:
+    type: git
+    url: https://github.com/signal-scout/signal-scout
+    branch: main
+    commit: a1b2c3d4e5f6
+  keywords: [grok, research, citations, social-signal, openalex]
+  categories: [ai, research, writing]
+  id: com.signalscout.agent
+
+x-ext:
+  org.agentmindcloud.grok-install:
+    version: "2.14"

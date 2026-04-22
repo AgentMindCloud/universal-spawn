@@ -1,0 +1,48 @@
+version: "1.0"
+name: Cohere Research Agent
+type: ai-agent
+summary: Full Command-A + Compass research agent with web-search and database connectors.
+description: >
+  Research agent that pulls from a Compass index of internal papers,
+  augments with web-search, and queries a database connector for
+  structured context. Grounded generations required.
+
+platforms:
+  cohere:
+    model: command-a-03-2025
+    system_prompt_file: prompts/system.md
+    tools:
+      - name: analyze
+        function_ref: tools/analyze.json
+        strict: true
+    compass:
+      index_id: projects/acme/indexes/papers
+      top_k: 10
+    connectors: [web-search, database, document]
+    grounded_generations: true
+    safety_mode: CONTEXTUAL
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.cohere.com]
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+  data_residency: [us]
+
+env_vars_required:
+  - name: COHERE_API_KEY
+    description: Cohere API key.
+    secret: true
+  - name: COMPASS_API_KEY
+    description: Compass access key.
+    secret: true
+
+deployment:
+  targets: [cohere]
+
+metadata:
+  license: proprietary
+  author: { name: Acme Research, handle: acme-research, org: Acme }
+  source: { type: git, url: https://github.com/acme-research/cohere-research }
+  id: com.acme-research.cohere-research

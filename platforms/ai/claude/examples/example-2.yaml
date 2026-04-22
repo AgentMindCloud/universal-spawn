@@ -1,0 +1,67 @@
+# Claude example 2 — full-featured subagent code reviewer with MCP cross-link
+# Opus 4.7, extended thinking, MCP server for repo access, prompt cache on.
+version: "1.0"
+name: Code Reviewer
+type: ai-agent
+summary: Claude subagent that reviews a diff and reports findings.
+description: >
+  Takes a diff or PR URL, analyzes correctness, security, and style,
+  returns a structured review report. Uses Claude Opus 4.7 with
+  extended thinking. Includes an MCP server block so the Claude
+  host can fetch file context without leaving the sandbox.
+
+platforms:
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+    surface: [claude-api, claude-code, claude-app]
+    tools:
+      - name: review_diff
+        function_ref: tools/review.json
+      - name: get_file
+        function_ref: tools/get_file.json
+    mcp_server:
+      transport: stdio
+      command: "bin/mcp-repo-server"
+      args: ["--workdir", "."]
+    thinking:
+      type: enabled
+      budget_tokens: 16384
+    prompt_cache: true
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:api.github.com
+    - fs:read
+    - model:call:claude-opus-4-7
+  rate_limit_qps: 2
+  cost_limit_usd_daily: 15
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key with Opus 4.7 access.
+    secret: true
+  - name: GITHUB_TOKEN
+    description: Optional GitHub token for fetching PR diffs.
+    required: false
+    secret: true
+
+deployment:
+  targets: [claude]
+
+visuals:
+  icon: assets/icon.svg
+  palette: parchment
+
+metadata:
+  license: MIT
+  author: { name: Reviewer Team, handle: reviewer-team }
+  source:
+    type: git
+    url: https://github.com/reviewer-team/claude-reviewer
+    branch: main
+  keywords: [claude, subagent, code-review, mcp, pr]
+  categories: [ai, code, devtools]
+  id: com.reviewer-team.claude-reviewer

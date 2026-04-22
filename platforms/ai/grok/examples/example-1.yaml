@@ -1,0 +1,50 @@
+# Grok example 1 — minimal tool-calling ping agent
+# Smallest manifest that validates and actually does something.
+# One function tool, one permission scope, safe_for_auto_spawn.
+version: "1.0"
+name: Ping Grok
+type: ai-agent
+summary: Minimal Grok tool-calling agent that pings a status URL.
+description: >
+  A Grok agent that exposes one function tool. The user asks "is the
+  service up?"; the agent calls `ping` with a URL and returns the
+  result. Used as the canonical minimum-viable Grok manifest.
+
+platforms:
+  grok:
+    model: grok-4-fast
+    surface: [grok-api]
+    tools:
+      - name: ping
+        function_ref: tools/ping.json
+        strict: true
+    streaming: true
+
+safety:
+  min_permissions:
+    - network:outbound:api.x.ai
+    - network:outbound:status.example.com
+    - model:call:grok-4-fast
+  rate_limit_qps: 2
+  cost_limit_usd_daily: 1
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: XAI_API_KEY
+    description: xAI API key.
+    secret: true
+
+deployment:
+  targets: [grok]
+
+metadata:
+  license: Apache-2.0
+  author:
+    name: Ping Co.
+    handle: ping-co
+  source:
+    type: git
+    url: https://github.com/ping-co/grok-ping
+  keywords: [grok, ping, minimal]
+  categories: [ai]
+  id: com.ping-co.grok-ping

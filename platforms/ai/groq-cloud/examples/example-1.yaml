@@ -1,0 +1,30 @@
+version: "1.0"
+name: Groq Summarizer
+type: ai-skill
+summary: Minimal Llama-3.1-8b-instant summarizer on GroqCloud.
+description: Single-shot summarizer using Groq's lowest-latency model. No tools.
+
+platforms:
+  groq-cloud:
+    model: llama-3.1-8b-instant
+    response_format: text
+    streaming: true
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.groq.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: GROQ_API_KEY
+    description: GroqCloud API key.
+    secret: true
+
+deployment:
+  targets: [groq-cloud]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Summary Co., handle: summary-co }
+  source: { type: git, url: https://github.com/summary-co/groq-summarizer }
+  id: com.summary-co.groq-summarizer

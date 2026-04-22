@@ -1,0 +1,33 @@
+version: "1.0"
+name: AI21 Template
+type: ai-agent
+description: Template for an AI21-targeted universal-spawn manifest.
+
+platforms:
+  ai21:
+    model: jamba-1.5-large
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    context_tokens: 65536
+    response_format: text
+    temperature: 0.3
+
+safety:
+  min_permissions: [network:outbound:api.ai21.com]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 5
+
+env_vars_required:
+  - name: AI21_API_KEY
+    description: AI21 Studio API key.
+    secret: true
+
+deployment:
+  targets: [ai21]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/ai21-template }

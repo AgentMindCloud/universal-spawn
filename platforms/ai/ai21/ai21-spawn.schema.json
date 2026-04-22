@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/./ai21/ai21-spawn.schema.json",
+  "title": "universal-spawn with AI21 platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "ai21"
+          ],
+          "properties": {
+            "ai21": {
+              "$ref": "#/definitions/ai21"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "ai21": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": [
+            "jamba-1.5-large",
+            "jamba-1.5-mini",
+            "jamba-instruct"
+          ]
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "function_ref"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_-]{0,63}$"
+              },
+              "function_ref": {
+                "type": "string",
+                "description": "Relative path to the tool definition JSON."
+              },
+              "strict": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        },
+        "maestro": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "plan_file": {
+              "type": "string",
+              "description": "Relative path to the Maestro plan YAML."
+            },
+            "max_steps": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "context_tokens": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 262144
+        },
+        "response_format": {
+          "type": "string",
+          "enum": [
+            "text",
+            "json_object"
+          ]
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "system_prompt_file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

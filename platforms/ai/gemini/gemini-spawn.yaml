@@ -1,0 +1,39 @@
+# gemini-spawn.yaml — canonical Gemini-targeted manifest
+version: "1.0"
+name: Gemini Template
+type: ai-agent
+description: Template for a Gemini-targeted universal-spawn manifest.
+
+platforms:
+  gemini:
+    model: gemini-2-5-pro
+    system_instruction_file: prompts/system.md
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+    grounding:
+      google_search: true
+    safety_settings:
+      harassment: block_medium_and_above
+      dangerous_content: block_medium_and_above
+    code_execution: false
+    thinking:
+      budget_tokens: 4096
+
+safety:
+  min_permissions: [network:outbound:generativelanguage.googleapis.com]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 5
+
+env_vars_required:
+  - name: GOOGLE_API_KEY
+    description: Google API key used for Gemini calls.
+    secret: true
+
+deployment:
+  targets: [gemini]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/gemini-template }

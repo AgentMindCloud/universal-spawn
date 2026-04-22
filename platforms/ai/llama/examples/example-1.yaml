@@ -1,0 +1,34 @@
+version: "1.0"
+name: Llama Classifier
+type: ai-skill
+summary: Minimal Llama-3.3 classifier with Llama Guard advisory mode.
+description: >
+  Single prompt, no tools, Llama Guard runs in advisory mode so
+  responses include a safety score but are not blocked.
+
+platforms:
+  llama:
+    model: llama-3.3-70b-instruct
+    endpoint_url: https://llama-stack.example.com/v1
+    llama_guard:
+      policy_ref: policies/advisory.yaml
+      enforcement: advisory
+    temperature: 0
+
+safety:
+  min_permissions: [network:outbound:llama-stack.example.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: LLAMA_STACK_TOKEN
+    description: Bearer token for the endpoint.
+    secret: true
+
+deployment:
+  targets: [llama]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Classifier Co., handle: classifier-co }
+  source: { type: git, url: https://github.com/classifier-co/llama-classifier }
+  id: com.classifier-co.llama-classifier

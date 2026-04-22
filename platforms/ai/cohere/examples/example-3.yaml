@@ -1,0 +1,34 @@
+version: "1.0"
+name: Rerank Sidecar
+type: ai-skill
+summary: Creative Cohere skill that reranks a user search via grounded generations.
+description: >
+  Takes a set of candidate search results and reranks them using
+  Command-R7B, then asks for a single-sentence editorial summary.
+  Low-cost, no tools.
+
+platforms:
+  cohere:
+    model: command-r7b-12-2024
+    grounded_generations: true
+    safety_mode: CONTEXTUAL
+    temperature: 0.1
+
+safety:
+  min_permissions: [network:outbound:api.cohere.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: COHERE_API_KEY
+    description: Cohere API key.
+    secret: true
+
+deployment:
+  targets: [cohere]
+
+metadata:
+  license: MIT
+  author: { name: Search Lab, handle: search-lab }
+  source: { type: git, url: https://github.com/search-lab/rerank-sidecar }
+  categories: [ai]
+  id: com.search-lab.rerank-sidecar

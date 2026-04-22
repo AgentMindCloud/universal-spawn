@@ -1,0 +1,50 @@
+# Gemini example 3 — creative: public Gem that teaches parchment palette theory
+version: "1.0"
+name: Parchment Palette Gem
+type: ai-skill
+summary: Public Gem that teaches the Residual Frequencies color theory.
+description: >
+  A public Gem inside the Gemini app that teaches the Residual
+  Frequencies parchment palette — when to use it, archetype mapping,
+  letter-spacing conventions. Pure prompt, no tools, no network,
+  grounded on Google Search for external references.
+
+platforms:
+  gemini:
+    model: gemini-2-5-flash
+    system_instruction_file: prompts/system.md
+    gem:
+      name: Parchment Palette Tutor
+      instruction_file: prompts/gem-instructions.md
+      visibility: public
+    grounding:
+      google_search: true
+    safety_settings:
+      harassment: block_medium_and_above
+
+safety:
+  min_permissions: [network:outbound:generativelanguage.googleapis.com]
+  rate_limit_qps: 1
+  cost_limit_usd_daily: 1
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: GOOGLE_API_KEY
+    description: Google API key.
+    secret: true
+
+deployment:
+  targets: [gemini]
+
+visuals:
+  palette: parchment
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source:
+    type: git
+    url: https://github.com/plate-studio/parchment-gem
+  keywords: [gemini, gem, design-system, parchment, tutor]
+  categories: [ai, graphics, education]
+  id: com.plate-studio.parchment-gem

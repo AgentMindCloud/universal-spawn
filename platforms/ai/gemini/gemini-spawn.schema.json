@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/gemini/gemini-spawn.schema.json",
+  "title": "universal-spawn with Gemini (Google) platform extension",
+  "allOf": [
+    { "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json" },
+    {
+      "type": "object",
+      "required": ["platforms"],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": ["gemini"],
+          "properties": { "gemini": { "$ref": "#/definitions/gemini" } }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "gemini": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model"],
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": [
+            "gemini-2-5-pro",
+            "gemini-2-5-flash",
+            "gemini-2-5-flash-lite"
+          ]
+        },
+        "system_instruction_file": { "type": "string" },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "function_ref"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$" },
+              "function_ref": { "type": "string" }
+            }
+          }
+        },
+        "extension": {
+          "type": "object",
+          "required": ["openapi_ref"],
+          "additionalProperties": false,
+          "properties": {
+            "openapi_ref": { "type": "string" },
+            "auth": { "type": "string", "enum": ["none", "api_key", "oauth", "gcp_service_account"] }
+          }
+        },
+        "gem": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string" },
+            "instruction_file": { "type": "string" },
+            "visibility": { "type": "string", "enum": ["private", "workspace", "public"] }
+          }
+        },
+        "grounding": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "google_search": { "type": "boolean", "default": false },
+            "vertex_search_corpus": { "type": "string" }
+          }
+        },
+        "safety_settings": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "harassment":        { "$ref": "#/definitions/threshold" },
+            "hate_speech":       { "$ref": "#/definitions/threshold" },
+            "sexually_explicit": { "$ref": "#/definitions/threshold" },
+            "dangerous_content": { "$ref": "#/definitions/threshold" }
+          }
+        },
+        "code_execution": { "type": "boolean", "default": false },
+        "thinking": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "budget_tokens": { "type": "integer", "minimum": 1024 }
+          }
+        }
+      }
+    },
+    "threshold": {
+      "type": "string",
+      "enum": [
+        "block_none",
+        "block_low_and_above",
+        "block_medium_and_above",
+        "block_only_high"
+      ]
+    }
+  }
+}

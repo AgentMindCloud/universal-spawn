@@ -1,0 +1,49 @@
+# Gemini example 2 — full Vertex AI Extension on a private corpus
+version: "1.0"
+name: Internal Knowledge
+type: ai-agent
+summary: Vertex AI Extension grounded on a private Vertex Search corpus.
+description: >
+  Vertex AI Extension that lets Gemini search the company's internal
+  knowledge base. Backed by an OpenAPI document. Grounded on a named
+  Vertex Search corpus inside one GCP project. Not published to the
+  public directory.
+
+platforms:
+  gemini:
+    model: gemini-2-5-pro
+    extension:
+      openapi_ref: openapi.yaml
+      auth: gcp_service_account
+    grounding:
+      vertex_search_corpus: "projects/acme/locations/us-central1/collections/default/engines/internal"
+    safety_settings:
+      dangerous_content: block_medium_and_above
+    thinking:
+      budget_tokens: 8192
+
+safety:
+  min_permissions: [network:outbound:aiplatform.googleapis.com]
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 20
+  safe_for_auto_spawn: false
+  data_residency: [us]
+
+env_vars_required:
+  - name: GCP_PROJECT_ID
+    description: Google Cloud project id.
+  - name: GCP_SA_JSON
+    description: Service account JSON credentials.
+    secret: true
+
+deployment:
+  targets: [gemini]
+
+metadata:
+  license: proprietary
+  author: { name: Acme Corp, handle: acme-corp, org: Acme }
+  source:
+    type: git
+    url: https://github.com/acme-corp/internal-knowledge
+  categories: [ai, productivity, research]
+  id: com.acme-corp.internal-knowledge

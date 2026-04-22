@@ -1,0 +1,57 @@
+# Grok example 3 — creative: a generative-art narrator
+# Grok narrates a rotating art feed in Residual Frequencies voice.
+# Unusual: no function tools, pure prompt + streaming, no real-time data.
+version: "1.0"
+name: Plate Narrator
+type: ai-skill
+summary: Narrates a Residual Frequencies plate feed in lab-notebook voice.
+description: >
+  A Grok skill that ingests a URL for a generative-art feed (one SVG
+  plate per minute) and narrates each new plate in the style of a
+  scientific-journal caption. No tool calls; just streaming text.
+  Used as the canonical creative example for the Grok extension.
+
+platforms:
+  grok:
+    model: grok-4-fast
+    surface: [grok-api]
+    system_prompt_file: prompts/residual-frequencies-voice.md
+    streaming: true
+    real_time_data: false
+    temperature: 0.9
+    max_tokens: 512
+
+safety:
+  min_permissions:
+    - network:outbound:api.x.ai
+    - network:outbound:plates.example.gallery
+    - model:call:grok-4-fast
+  rate_limit_qps: 1
+  cost_limit_usd_daily: 2
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: XAI_API_KEY
+    description: xAI API key.
+    secret: true
+  - name: PLATE_FEED_URL
+    description: Public URL of the plate RSS/Atom feed to narrate.
+    example: "https://plates.example.gallery/feed.xml"
+
+deployment:
+  targets: [grok]
+
+visuals:
+  palette: parchment
+
+metadata:
+  license: CC-BY-4.0
+  author:
+    name: Plate Studio
+    handle: plate-studio
+  source:
+    type: git
+    url: https://github.com/plate-studio/plate-narrator
+  keywords: [grok, creative, narrator, parchment, residual-frequencies]
+  categories: [ai, graphics]
+  id: com.plate-studio.narrator

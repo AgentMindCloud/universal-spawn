@@ -1,0 +1,33 @@
+version: "1.0"
+name: Cohere Template
+type: ai-agent
+description: Template for a Cohere-targeted universal-spawn manifest.
+
+platforms:
+  cohere:
+    model: command-a-03-2025
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    grounded_generations: true
+    safety_mode: CONTEXTUAL
+    temperature: 0.3
+
+safety:
+  min_permissions: [network:outbound:api.cohere.com]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 5
+
+env_vars_required:
+  - name: COHERE_API_KEY
+    description: Cohere API key.
+    secret: true
+
+deployment:
+  targets: [cohere]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/cohere-template }

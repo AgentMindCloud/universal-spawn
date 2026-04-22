@@ -1,0 +1,38 @@
+version: "1.0"
+name: Llama Template
+type: ai-agent
+description: Template for a Llama-Stack-targeted universal-spawn manifest.
+
+platforms:
+  llama:
+    model: llama-3.3-70b-instruct
+    endpoint_url: https://llama-stack.example.com/v1
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    llama_guard:
+      policy_ref: policies/default.yaml
+      enforcement: block
+    quantization: bf16
+    temperature: 0.2
+
+safety:
+  min_permissions:
+    - network:outbound:llama-stack.example.com
+    - model:call:llama-3.3-70b-instruct
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 5
+
+env_vars_required:
+  - name: LLAMA_STACK_TOKEN
+    description: Bearer token for the Llama Stack endpoint.
+    secret: true
+
+deployment:
+  targets: [llama]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/llama-template }

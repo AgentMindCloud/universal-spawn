@@ -1,0 +1,34 @@
+version: "1.0"
+name: Whisper-Groq Transcriber
+type: ai-skill
+summary: Whisper-Large-v3 on GroqCloud for live-caption pipelines.
+description: >
+  Uses Whisper-large-v3 for audio transcription with streaming tokens.
+  Pairs well with a downstream summarizer; this manifest is only the
+  transcription step.
+
+platforms:
+  groq-cloud:
+    model: whisper-large-v3
+    streaming: true
+
+safety:
+  min_permissions:
+    - network:outbound:api.groq.com
+    - audio:capture
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: GROQ_API_KEY
+    description: GroqCloud API key.
+    secret: true
+
+deployment:
+  targets: [groq-cloud]
+
+metadata:
+  license: MIT
+  author: { name: Caption Team, handle: caption-team }
+  source: { type: git, url: https://github.com/caption-team/whisper-groq }
+  categories: [ai, audio]
+  id: com.caption-team.whisper-groq

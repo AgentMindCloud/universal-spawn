@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/grok/grok-spawn.schema.json",
+  "title": "universal-spawn with Grok (xAI) platform extension",
+  "description": "Strict draft-07 schema for a universal-spawn v1.0 manifest that targets Grok. Composes with the master schema via allOf and adds a required, strictly-typed `platforms.grok` block.",
+
+  "allOf": [
+    { "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json" },
+    {
+      "type": "object",
+      "required": ["platforms"],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": ["grok"],
+          "properties": {
+            "grok": { "$ref": "#/definitions/grok" }
+          }
+        }
+      }
+    }
+  ],
+
+  "definitions": {
+    "grok": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "surface"],
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "Recommended Grok model id. Consumers MAY override based on key entitlements.",
+          "enum": [
+            "grok-4",
+            "grok-4-heavy",
+            "grok-4-fast",
+            "grok-3",
+            "grok-3-mini"
+          ]
+        },
+        "surface": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["grok-api", "grok-x-integration", "grok-compute"]
+          }
+        },
+        "tools": {
+          "type": "array",
+          "description": "Function tools registered ahead of the first user turn.",
+          "items": {
+            "type": "object",
+            "required": ["name", "function_ref"],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_-]{0,63}$"
+              },
+              "function_ref": {
+                "type": "string",
+                "description": "Relative path to a JSON file that follows the xAI tool-use schema (name, description, parameters)."
+              },
+              "strict": { "type": "boolean", "default": false }
+            }
+          }
+        },
+        "system_prompt_file": {
+          "type": "string",
+          "description": "Relative path to a file whose contents form the system prompt."
+        },
+        "streaming": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether the creation expects streamed responses."
+        },
+        "real_time_data": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true, the creation relies on Grok's live X data signals; consumers MAY refuse if the key lacks the entitlement."
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_tokens": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "grok_install_compat": {
+          "type": "object",
+          "description": "Optional hint for the grok-install lowering tool. If set, the lowered grok-install.yaml embeds these values verbatim.",
+          "additionalProperties": false,
+          "properties": {
+            "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+            "x_handle": { "type": "string", "pattern": "^[A-Za-z0-9_]{1,15}$" }
+          }
+        }
+      }
+    }
+  }
+}

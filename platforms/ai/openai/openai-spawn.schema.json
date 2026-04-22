@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/openai/openai-spawn.schema.json",
+  "title": "universal-spawn with OpenAI platform extension",
+  "allOf": [
+    { "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json" },
+    {
+      "type": "object",
+      "required": ["platforms"],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": ["openai"],
+          "properties": { "openai": { "$ref": "#/definitions/openai" } }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "openai": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "model": { "type": "string" },
+        "system_prompt_file": { "type": "string" },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "function_ref"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$" },
+              "function_ref": { "type": "string" },
+              "strict": { "type": "boolean", "default": false }
+            }
+          }
+        },
+        "assistant": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "instructions_file": { "type": "string" },
+            "tools": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["code_interpreter", "file_search", "function"] }
+            },
+            "vector_store_id": { "type": "string" }
+          }
+        },
+        "action": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["openapi_ref", "privacy_policy_url"],
+          "properties": {
+            "openapi_ref": { "type": "string" },
+            "auth": { "type": "string", "enum": ["none", "api_key", "oauth"] },
+            "privacy_policy_url": { "type": "string", "format": "uri" }
+          }
+        },
+        "agent": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "instructions_file": { "type": "string" },
+            "handoffs": { "type": "array", "items": { "type": "string" } },
+            "guardrails": { "type": "array", "items": { "type": "string" } },
+            "tracing": { "type": "boolean", "default": true }
+          }
+        },
+        "realtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "modalities": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["audio", "text", "video"] }
+            },
+            "voice": { "type": "string" },
+            "session_file": { "type": "string" }
+          }
+        },
+        "response_format": {
+          "type": "string",
+          "enum": ["text", "json_object", "json_schema"]
+        },
+        "response_schema_ref": { "type": "string" },
+        "temperature": { "type": "number", "minimum": 0, "maximum": 2 },
+        "reasoning_effort": {
+          "type": "string",
+          "enum": ["minimal", "low", "medium", "high"]
+        }
+      }
+    }
+  }
+}

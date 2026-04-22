@@ -1,0 +1,34 @@
+# Claude example 1 — minimal skill, no network
+version: "1.0"
+name: Claude Citations
+type: ai-skill
+summary: Attach numbered citation footnotes to a draft response.
+description: >
+  Claude skill that inspects an assistant draft and attaches
+  numbered citation footnotes referencing the conversation's quoted
+  sources. Runs entirely inside Claude's sandbox.
+
+platforms:
+  claude:
+    skill_type: skill
+    skill_file: skill.yaml
+    model: claude-sonnet-4-6
+    surface: [claude-app, claude-api, claude-code]
+    prompt_cache: true
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [claude]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Citations Co., handle: citations-co }
+  source: { type: git, url: https://github.com/citations-co/claude-citations }
+  keywords: [claude, skill, citations]
+  categories: [ai, writing]
+  id: com.citations-co.claude-citations

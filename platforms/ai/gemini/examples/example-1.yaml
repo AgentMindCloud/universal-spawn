@@ -1,0 +1,41 @@
+# Gemini example 1 — minimal weather function-call
+version: "1.0"
+name: Weather Lookup
+type: ai-agent
+summary: Function-call weather lookup on Gemini 2.5 Flash.
+description: >
+  Calls an external weather API when the user asks about conditions.
+  Minimal function calling, no grounding, default safety settings.
+
+platforms:
+  gemini:
+    model: gemini-2-5-flash
+    tools:
+      - name: lookup_weather
+        function_ref: tools/lookup.json
+
+safety:
+  min_permissions:
+    - network:outbound:generativelanguage.googleapis.com
+    - network:outbound:api.open-meteo.com
+  rate_limit_qps: 2
+  cost_limit_usd_daily: 2
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: GOOGLE_API_KEY
+    description: Google API key.
+    secret: true
+  - name: WEATHER_API_KEY
+    description: Weather API key.
+    secret: true
+
+deployment:
+  targets: [gemini]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Weather Co., handle: weather-co }
+  source: { type: git, url: https://github.com/weather-co/gemini-weather }
+  categories: [ai, productivity]
+  id: com.weather-co.gemini-weather

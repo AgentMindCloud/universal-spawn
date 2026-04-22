@@ -1,0 +1,55 @@
+# Claude example 3 — creative: Claude-in-Chrome computer-use skill
+# Books a desk in a legacy web portal nobody has an API for.
+version: "1.0"
+name: Desk Booker
+type: ai-agent
+summary: Claude-in-Chrome agent that books a desk in a legacy web portal.
+description: >
+  A computer-use skill that opens a specific legacy desk-booking
+  portal in Claude-in-Chrome, authenticates with the user's existing
+  session, and books the preferred desk for the requested date.
+  Bounded URL allowlist and strict action budget.
+
+platforms:
+  claude:
+    skill_type: computer-use
+    model: claude-opus-4-7
+    surface: [claude-chrome, claude-app]
+    computer_use:
+      viewport: { width: 1280, height: 800 }
+      allowed_urls:
+        - "https://desks.legacy-corp.example/"
+        - "https://desks.legacy-corp.example/book"
+      max_actions_per_turn: 20
+      chrome_integration: true
+    thinking:
+      type: enabled
+      budget_tokens: 4096
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:desks.legacy-corp.example
+    - model:call:claude-opus-4-7
+  rate_limit_qps: 1
+  cost_limit_usd_daily: 3
+  safe_for_auto_spawn: false
+  data_residency: [us]
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key with computer-use enabled.
+    secret: true
+
+deployment:
+  targets: [claude]
+
+metadata:
+  license: proprietary
+  author: { name: Legacy Corp IT, handle: legacy-corp-it, org: "Legacy Corp" }
+  source:
+    type: git
+    url: https://github.com/legacy-corp/desk-booker
+  keywords: [claude, computer-use, chrome, legacy, booking]
+  categories: [ai, productivity]
+  id: com.legacy-corp.desk-booker

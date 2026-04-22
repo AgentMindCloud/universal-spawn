@@ -1,0 +1,35 @@
+version: "1.0"
+name: Jamba Plate Captioner
+type: ai-skill
+summary: Creative Jamba skill that captions Residual Frequencies plates.
+description: >
+  Takes a plate id and the archetype letter, returns a single caption
+  in lab-notebook voice. Small model, short context.
+
+platforms:
+  ai21:
+    model: jamba-instruct
+    context_tokens: 4096
+    response_format: text
+    temperature: 0.9
+
+safety:
+  min_permissions: [network:outbound:api.ai21.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: AI21_API_KEY
+    description: AI21 Studio API key.
+    secret: true
+
+deployment:
+  targets: [ai21]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/jamba-captioner }
+  categories: [ai, graphics, writing]
+  id: com.plate-studio.jamba-captioner

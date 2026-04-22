@@ -1,0 +1,60 @@
+# OpenAI example 2 — Custom GPT Action for invoice lookup (public, OAuth)
+version: "1.0"
+name: Invoice Lookup
+type: ai-agent
+summary: GPT Store Action that looks up invoices by id.
+description: >
+  A public GPT Store Action that lets a GPT fetch invoice details from
+  the company billing API by invoice id. Backed by an OpenAPI 3.1
+  document and OAuth authentication. Privacy policy linked so the
+  GPT Store accepts the submission.
+
+platforms:
+  openai:
+    model: gpt-5
+    action:
+      openapi_ref: openapi.yaml
+      auth: oauth
+      privacy_policy_url: "https://acme.com/privacy"
+    tools:
+      - name: lookup_invoice
+        function_ref: tools/lookup_invoice.json
+        strict: true
+    response_format: json_object
+    reasoning_effort: medium
+
+safety:
+  min_permissions:
+    - network:outbound:api.openai.com
+    - network:outbound:api.acme.com
+  rate_limit_qps: 10
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+  data_residency: [us]
+
+env_vars_required:
+  - name: OPENAI_API_KEY
+    description: OpenAI API key.
+    secret: true
+  - name: ACME_OAUTH_CLIENT_ID
+    description: OAuth client id for the Acme billing API.
+    secret: true
+  - name: ACME_OAUTH_CLIENT_SECRET
+    description: OAuth client secret.
+    secret: true
+
+deployment:
+  targets: [openai]
+
+metadata:
+  license: proprietary
+  author:
+    name: Acme Billing
+    handle: acme-billing
+    org: Acme
+  source:
+    type: git
+    url: https://github.com/acme-billing/invoice-lookup-action
+  keywords: [openai, gpt-store, action, invoice, oauth]
+  categories: [productivity]
+  id: com.acme-billing.invoice-lookup-action

@@ -1,0 +1,38 @@
+version: "1.0"
+name: Mistral SQL Helper
+type: ai-agent
+summary: Minimal Mistral function tool that proposes SQL for a data warehouse.
+description: >
+  One function tool. Takes a natural-language question and the schema
+  id, returns a proposed SQL query with notes. JSON mode on.
+
+platforms:
+  mistral:
+    model: mistral-medium-latest
+    tools:
+      - name: propose_sql
+        function_ref: tools/propose_sql.json
+        strict: true
+    json_mode: true
+    safe_prompt: true
+    temperature: 0
+
+safety:
+  min_permissions: [network:outbound:api.mistral.ai]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 2
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: La Plateforme API key.
+    secret: true
+
+deployment:
+  targets: [mistral]
+
+metadata:
+  license: Apache-2.0
+  author: { name: SQL Co., handle: sql-co }
+  source: { type: git, url: https://github.com/sql-co/mistral-sql-helper }
+  id: com.sql-co.mistral-sql-helper

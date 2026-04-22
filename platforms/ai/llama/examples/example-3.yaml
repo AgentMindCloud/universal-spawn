@@ -1,0 +1,38 @@
+version: "1.0"
+name: Parchment Voice
+type: ai-skill
+summary: Creative Llama skill that narrates in Residual Frequencies voice.
+description: >
+  Takes an input paragraph and rewrites it in lab-notebook voice
+  matching the Residual Frequencies design system. Unusual: uses
+  an int4 quantization for edge deployment speed.
+
+platforms:
+  llama:
+    model: llama-3.3-70b-instruct
+    quantization: int4
+    temperature: 0.9
+    llama_guard:
+      policy_ref: policies/creative.yaml
+      enforcement: advisory
+
+safety:
+  min_permissions: [network:outbound:llama.edge.example]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: LLAMA_STACK_TOKEN
+    description: Bearer token for the edge server.
+    secret: true
+
+deployment:
+  targets: [llama]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/parchment-voice }
+  categories: [ai, writing, graphics]
+  id: com.plate-studio.parchment-voice

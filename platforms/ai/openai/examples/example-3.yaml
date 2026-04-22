@@ -1,0 +1,48 @@
+# OpenAI example 3 — creative: Realtime voice agent for museum audio guide
+version: "1.0"
+name: Plate Gallery Guide
+type: ai-agent
+summary: Realtime voice guide for a parchment-plate gallery exhibit.
+description: >
+  A Realtime-API voice agent that narrates the Residual Frequencies
+  plate exhibit. Audio+text modalities, one voice preset. Uses a
+  short system prompt to hold the exhibit's lab-notebook tone. No
+  external network beyond OpenAI itself.
+
+platforms:
+  openai:
+    model: gpt-realtime
+    realtime:
+      modalities: [audio, text]
+      voice: "alloy"
+      session_file: prompts/session.md
+
+safety:
+  min_permissions:
+    - network:outbound:api.openai.com
+    - audio:playback
+  cost_limit_usd_daily: 15
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: OPENAI_API_KEY
+    description: OpenAI API key with Realtime access.
+    secret: true
+
+deployment:
+  targets: [openai]
+
+visuals:
+  icon: assets/icon.svg
+  hero_plate: assets/hero.svg
+  palette: parchment
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Gallery, handle: plate-gallery }
+  source:
+    type: git
+    url: https://github.com/plate-gallery/voice-guide
+  keywords: [openai, realtime, voice, museum, parchment]
+  categories: [ai, graphics, education]
+  id: com.plate-gallery.voice-guide

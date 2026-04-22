@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai//llama/llama-spawn.schema.json",
+  "title": "universal-spawn with Llama (Meta) platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "llama"
+          ],
+          "properties": {
+            "llama": {
+              "$ref": "#/definitions/llama"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "llama": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": [
+            "llama-3.3-70b-instruct",
+            "llama-3.3-405b-instruct",
+            "llama-4-scout",
+            "llama-4-maverick",
+            "llama-guard-4"
+          ]
+        },
+        "endpoint_url": {
+          "type": "string",
+          "description": "Llama Stack endpoint URL. Omit to use the consumer default."
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "function_ref"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_-]{0,63}$"
+              },
+              "function_ref": {
+                "type": "string",
+                "description": "Relative path to the tool definition JSON."
+              },
+              "strict": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        },
+        "system_prompt_file": {
+          "type": "string"
+        },
+        "llama_guard": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "policy_ref"
+          ],
+          "properties": {
+            "policy_ref": {
+              "type": "string",
+              "description": "Relative path to the Llama Guard policy file."
+            },
+            "enforcement": {
+              "type": "string",
+              "enum": [
+                "advisory",
+                "block"
+              ]
+            }
+          }
+        },
+        "quantization": {
+          "type": "string",
+          "enum": [
+            "int4",
+            "int8",
+            "fp16",
+            "bf16"
+          ]
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        }
+      }
+    }
+  }
+}

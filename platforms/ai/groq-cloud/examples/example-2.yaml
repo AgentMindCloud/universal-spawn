@@ -1,0 +1,46 @@
+version: "1.0"
+name: Groq Tool Router
+type: ai-agent
+summary: Full-featured Llama-3.3-70b-versatile agent with parallel tools and JSON output.
+description: >
+  Routes incoming requests to one of three tools based on intent.
+  Uses parallel tool calls, JSON mode, and a long context window.
+
+platforms:
+  groq-cloud:
+    model: llama-3.3-70b-versatile
+    tools:
+      - name: lookup_order
+        function_ref: tools/lookup_order.json
+        strict: true
+      - name: file_return
+        function_ref: tools/file_return.json
+        strict: true
+      - name: escalate
+        function_ref: tools/escalate.json
+        strict: true
+    response_format: json_object
+    parallel_tool_calls: true
+    streaming: true
+    temperature: 0
+    max_tokens: 2048
+
+safety:
+  min_permissions: [network:outbound:api.groq.com]
+  rate_limit_qps: 10
+  cost_limit_usd_daily: 15
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: GROQ_API_KEY
+    description: GroqCloud API key.
+    secret: true
+
+deployment:
+  targets: [groq-cloud]
+
+metadata:
+  license: proprietary
+  author: { name: Retail Co., handle: retail-co, org: Retail }
+  source: { type: git, url: https://github.com/retail-co/groq-router }
+  id: com.retail-co.groq-router

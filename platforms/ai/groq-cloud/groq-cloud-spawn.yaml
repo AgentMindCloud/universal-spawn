@@ -1,0 +1,32 @@
+version: "1.0"
+name: GroqCloud Template
+type: ai-agent
+description: Template for a GroqCloud-targeted universal-spawn manifest.
+
+platforms:
+  groq-cloud:
+    model: llama-3.3-70b-versatile
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    response_format: text
+    parallel_tool_calls: true
+    streaming: true
+
+safety:
+  min_permissions: [network:outbound:api.groq.com]
+  rate_limit_qps: 5
+
+env_vars_required:
+  - name: GROQ_API_KEY
+    description: GroqCloud API key.
+    secret: true
+
+deployment:
+  targets: [groq-cloud]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/groq-template }

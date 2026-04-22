@@ -1,0 +1,38 @@
+version: "1.0"
+name: Cohere Support Triage
+type: ai-agent
+summary: Minimal Command-R ticket classifier with grounded generations.
+description: >
+  Classifies a ticket into three priority buckets with citations to the
+  knowledge base. One function tool.
+
+platforms:
+  cohere:
+    model: command-r-08-2024
+    tools:
+      - name: classify
+        function_ref: tools/classify.json
+        strict: true
+    grounded_generations: true
+    safety_mode: STRICT
+    temperature: 0
+
+safety:
+  min_permissions: [network:outbound:api.cohere.com]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 2
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: COHERE_API_KEY
+    description: Cohere API key.
+    secret: true
+
+deployment:
+  targets: [cohere]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Support Co., handle: support-co }
+  source: { type: git, url: https://github.com/support-co/cohere-triage }
+  id: com.support-co.cohere-triage
