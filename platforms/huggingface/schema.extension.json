@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/platforms/huggingface/v1.0.0/schema.extension.json",
+  "title": "universal-spawn Hugging Face platform extension",
+  "description": "Strict JSON Schema for the `platforms.huggingface` object.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["repo_kind", "visibility"],
+  "properties": {
+    "repo_kind": {
+      "type": "string",
+      "enum": ["model", "dataset", "space"]
+    },
+    "visibility": {
+      "type": "string",
+      "enum": ["public", "private"]
+    },
+    "card_file": {
+      "type": "string",
+      "description": "Relative path to the card README (defaults to README.md)."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9:.-]{0,63}$" }
+    },
+    "space_sdk": {
+      "type": "string",
+      "enum": ["docker", "gradio", "streamlit", "static"]
+    },
+    "hardware": {
+      "type": "string",
+      "enum": [
+        "cpu-basic",
+        "cpu-upgrade",
+        "t4-small",
+        "t4-medium",
+        "a10g-small",
+        "a10g-large",
+        "a100-large",
+        "zero-gpu"
+      ]
+    },
+    "inference": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pipeline_tag": {
+          "type": "string",
+          "examples": ["text-generation", "text-classification", "automatic-speech-recognition"]
+        },
+        "library_name": {
+          "type": "string",
+          "enum": ["transformers", "diffusers", "sentence-transformers", "timm", "other"]
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "accelerator": { "type": "string", "enum": ["cpu", "gpu"] },
+              "instance_type": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "base_model": {
+      "type": "string",
+      "description": "HF repo id of the base model, if this is a finetune."
+    }
+  }
+}

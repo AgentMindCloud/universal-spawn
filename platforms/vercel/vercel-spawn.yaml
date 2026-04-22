@@ -1,0 +1,45 @@
+spawn_version: "1.0.0"
+id: com.example.vercel-template
+name: Vercel Template
+kind: web-app
+description: >
+  Canonical template for a Vercel-targeted universal-spawn manifest.
+  A Next.js app with one HTTP entrypoint, default region, and a
+  required database URL.
+license: MIT
+author:
+  name: Your Name
+  handle: yourhandle
+source:
+  type: git
+  url: https://github.com/yourhandle/vercel-template
+categories: [web]
+runtime:
+  language: typescript
+  engines:
+    node: ">=20"
+  os: [linux]
+  arch: [x86_64, arm64]
+entrypoints:
+  - id: http
+    kind: http
+    label: Public site
+    ref: /
+    idempotent: true
+env_vars_required:
+  - name: DATABASE_URL
+    description: Connection string for the primary database.
+    secret: true
+min_permissions:
+  - network:inbound
+  - network:outbound
+platforms:
+  vercel:
+    framework: nextjs
+    install_command: "pnpm install"
+    build_command: "pnpm build"
+    output: ".next"
+    node_version: "20"
+    regions: [iad1]
+    env_promotion: [production, preview]
+spawn_targets: [vercel]

@@ -1,0 +1,41 @@
+spawn_version: "1.0.0"
+id: com.example.unity-template
+name: Unity Template
+kind: game-mod
+description: >
+  Canonical template for a Unity-targeted universal-spawn manifest.
+  Single scene entrypoint, URP render pipeline, standalone target.
+license: MIT
+author:
+  name: Your Name
+  handle: yourhandle
+source:
+  type: git
+  url: https://github.com/yourhandle/unity-template
+categories: [gaming, graphics]
+runtime:
+  language: c-sharp
+  engines:
+    unity: ">=2023.2"
+  os: [windows, macos, linux]
+  arch: [x86_64, arm64]
+  gpu_required: true
+  memory_mb_min: 1024
+entrypoints:
+  - id: scene
+    kind: scene
+    label: Entry scene
+    ref: Assets/Scenes/Main.unity
+min_permissions:
+  - fs:read
+  - gpu:compute
+platforms:
+  unity:
+    target_version: "2023.2"
+    render_pipeline: urp
+    scripting_backend: il2cpp
+    entry_scene: Assets/Scenes/Main.unity
+    packages:
+      - com.unity.render-pipelines.universal
+    target_platforms: [standalone-windows, standalone-mac, standalone-linux]
+spawn_targets: [unity]

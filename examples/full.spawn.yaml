@@ -1,0 +1,122 @@
+spawn_version: "1.0.0"
+id: org.agentmindcloud.fielded
+name: Fielded
+kind: ai-agent
+summary: Research assistant that tracks fielded observations across signals.
+description: >
+  Fielded is a lab-grade research assistant. It ingests structured and
+  unstructured observations, cross-references them against declared
+  hypotheses, and produces citeable summaries. This manifest exercises
+  every field of the universal-spawn v1.0.0 schema and is used as the
+  canonical full-coverage example.
+homepage: https://fielded.lab
+icon: assets/icon.svg
+hero_plate: assets/hero.svg
+license: Apache-2.0
+author:
+  name: Jani Solo
+  handle: JanSol0s
+  org: AgentMindCloud
+  url: https://github.com/JanSol0s
+maintainers:
+  - name: River Chen
+    handle: riverc
+    email: river@agentmindcloud.org
+source:
+  type: git
+  url: https://github.com/AgentMindCloud/fielded
+  branch: main
+  commit: 1a2b3c4d5e6f7a8b9c0d
+  path: .
+keywords: [research, observations, summarization, citations, agent]
+categories: [ai, research, writing]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  engines:
+    uv: ">=0.4"
+  os: [linux, macos]
+  arch: [x86_64, arm64]
+  memory_mb_min: 1024
+  disk_mb_min: 250
+  gpu_required: false
+  network_required: true
+dependencies:
+  - id: org.agentmindcloud.grok-install
+    version: ">=2.14"
+  - id: com.anthropic.claude-sdk
+    version: "^0.64"
+    optional: false
+entrypoints:
+  - id: http
+    kind: http
+    label: Public API
+    ref: /api/v1
+    inputs:
+      - name: query
+        type: string
+        description: The user question to research.
+        required: true
+    outputs:
+      - name: result
+        type: object
+    idempotent: true
+  - id: cli
+    kind: cli
+    label: Command-line interface
+    ref: bin/fielded
+    inputs:
+      - name: file
+        type: file
+        required: true
+  - id: tool
+    kind: tool-call
+    label: Callable tool for LLMs
+    ref: tools/research.json
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: API key used for all Claude model calls.
+    required: true
+    secret: true
+  - name: FIELDED_CACHE_DIR
+    description: Directory where the embedding cache is stored.
+    required: false
+    example: "/var/cache/fielded"
+min_permissions:
+  - network:outbound:api.anthropic.com
+  - network:outbound:api.openalex.org
+  - fs:read
+  - fs:write:/tmp/fielded
+  - model:call:claude-opus-4-7
+rate_limit_qps: 5
+cost_limit_usd_daily: 50
+safe_for_auto_spawn: false
+data_residency: [us, eu]
+platforms:
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+    surface: [claude-api]
+  openai:
+    tools:
+      - name: research
+        function_ref: tools/research.json
+  vercel:
+    framework: nextjs
+    build_command: "pnpm build"
+    output: .next
+spawn_targets: [claude, openai, vercel]
+compat:
+  grok_install:
+    version: "2.14"
+    mapping_file: compat/grok-install.map.yaml
+  openapi: openapi.yaml
+  dockerfile: Dockerfile
+signatures:
+  - alg: ed25519
+    key_id: "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+    value: "3w5sgQhL1bRiVt9dEX2iQ2qSmPZfLzZ4QJ7Qk7f7oZyH8hKZH2tWqE0Y0f8pS1jBx3r+Rx1x=="
+x-ext:
+  org.agentmindcloud.telemetry:
+    anonymous: true
+    opt_in: true

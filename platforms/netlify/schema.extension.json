@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/platforms/netlify/v1.0.0/schema.extension.json",
+  "title": "universal-spawn Netlify platform extension",
+  "description": "Strict JSON Schema for the `platforms.netlify` object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "base": { "type": "string", "description": "Base directory for the build." },
+    "build_command": { "type": "string" },
+    "install_command": { "type": "string" },
+    "publish": { "type": "string", "description": "Directory containing the built site." },
+    "functions": { "type": "string", "description": "Path to the functions directory." },
+    "edge_functions": { "type": "string", "description": "Path to the edge functions directory." },
+    "node_version": { "type": "string" },
+    "plugins": {
+      "type": "array",
+      "description": "Netlify build plugins to enable.",
+      "items": {
+        "type": "object",
+        "required": ["package"],
+        "additionalProperties": false,
+        "properties": {
+          "package": { "type": "string" },
+          "inputs": { "type": "object" }
+        }
+      }
+    },
+    "env_contexts": {
+      "type": "array",
+      "description": "Which env contexts required vars must exist in.",
+      "items": { "type": "string", "enum": ["production", "deploy-preview", "branch-deploy", "dev"] }
+    },
+    "redirects_file": { "type": "string", "description": "Path to a _redirects or netlify.redirects file." },
+    "headers_file": { "type": "string", "description": "Path to a _headers file." }
+  }
+}

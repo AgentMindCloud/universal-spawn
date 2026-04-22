@@ -1,0 +1,45 @@
+spawn_version: "1.0.0"
+id: com.example.discord-template
+name: Discord Template
+kind: bot
+description: >
+  Canonical template for a Discord-targeted universal-spawn manifest.
+  One slash command, minimal scopes and intents, zero global
+  permissions beyond the OAuth2 set.
+license: Apache-2.0
+author:
+  name: Your Name
+  handle: yourhandle
+source:
+  type: git
+  url: https://github.com/yourhandle/discord-template
+categories: [social]
+runtime:
+  language: typescript
+  engines:
+    node: ">=20"
+  os: [linux]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: slash
+    kind: slash-command
+    label: /ping
+    ref: commands/ping.json
+env_vars_required:
+  - name: DISCORD_BOT_TOKEN
+    description: Discord bot token used for Gateway and REST calls.
+    secret: true
+  - name: DISCORD_APP_ID
+    description: Public Application id.
+    secret: false
+min_permissions:
+  - network:outbound:discord.com
+  - network:outbound:gateway.discord.gg
+platforms:
+  discord:
+    scopes: [bot, applications.commands]
+    intents: [guilds]
+    slash_commands:
+      - file: commands/ping.json
+spawn_targets: [discord]

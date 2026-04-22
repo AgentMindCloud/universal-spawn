@@ -1,0 +1,15 @@
+spawn_version: "1.0.0"
+id: com.example.hello
+name: Hello
+kind: cli-tool
+description: >
+  A small reference command-line tool that prints a greeting and exits
+  zero. Used as the canonical minimal example for the universal-spawn
+  specification — every field here is required by the schema.
+license: Apache-2.0
+author:
+  name: Jane Doe
+  handle: janedoe
+source:
+  type: git
+  url: https://github.com/janedoe/hello

@@ -1,0 +1,44 @@
+spawn_version: "1.0.0"
+id: com.example.hf-parchment-classifier
+name: Parchment Classifier
+kind: ai-model
+summary: Finetuned classifier for parchment-style plate images.
+description: >
+  A finetune of a ViT image classifier that labels a plate image as
+  belonging to one of the Residual Frequencies archetypes A–F.
+  Publishes as a public Hugging Face model repo with an inference API
+  endpoint.
+license: Apache-2.0
+author:
+  name: Classifier Team
+  handle: classifier-team
+source:
+  type: git
+  url: https://github.com/classifier-team/parchment-classifier
+keywords: [huggingface, classifier, parchment, vit]
+categories: [ai, graphics, research]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  os: [linux]
+  arch: [x86_64]
+  gpu_required: true
+  memory_mb_min: 8192
+env_vars_required:
+  - name: HF_TOKEN
+    description: Hugging Face access token.
+    secret: true
+min_permissions:
+  - network:outbound:huggingface.co
+safe_for_auto_spawn: true
+platforms:
+  huggingface:
+    repo_kind: model
+    visibility: public
+    card_file: README.md
+    tags: ["image-classification", "vit", "parchment"]
+    base_model: google/vit-base-patch16-224
+    inference:
+      pipeline_tag: image-classification
+      library_name: transformers
+spawn_targets: [huggingface]

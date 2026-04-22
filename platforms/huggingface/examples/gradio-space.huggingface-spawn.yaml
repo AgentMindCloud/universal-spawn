@@ -1,0 +1,49 @@
+spawn_version: "1.0.0"
+id: com.example.hf-plate-demo
+name: Plate Demo
+kind: web-app
+summary: Gradio Space that previews Residual Frequencies plates.
+description: >
+  A Gradio Space that takes a plate archetype (A–F) and a caption, and
+  renders a preview using the Parchment palette. Runs on zero-GPU
+  hardware with a public card.
+license: Apache-2.0
+author:
+  name: Plate Studio
+  handle: plate-studio
+source:
+  type: git
+  url: https://github.com/plate-studio/hf-plate-demo
+keywords: [gradio, space, parchment, residual-frequencies]
+categories: [graphics, ai]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  os: [linux]
+  arch: [x86_64]
+  gpu_required: false
+  memory_mb_min: 2048
+  network_required: true
+entrypoints:
+  - id: http
+    kind: http
+    label: Gradio UI
+    ref: /
+    idempotent: true
+env_vars_required:
+  - name: HF_TOKEN
+    description: Hugging Face access token used to publish the Space.
+    secret: true
+min_permissions:
+  - network:inbound
+  - network:outbound:huggingface.co
+safe_for_auto_spawn: true
+platforms:
+  huggingface:
+    repo_kind: space
+    visibility: public
+    card_file: README.md
+    tags: ["gradio", "parchment", "demo"]
+    space_sdk: gradio
+    hardware: zero-gpu
+spawn_targets: [huggingface]

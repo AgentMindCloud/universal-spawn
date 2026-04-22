@@ -1,0 +1,37 @@
+spawn_version: "1.0.0"
+id: com.example.netlify-template
+name: Netlify Template
+kind: web-app
+description: >
+  Canonical template for a Netlify-targeted universal-spawn manifest.
+  A static site with one HTTP entrypoint and default publish directory.
+license: MIT
+author:
+  name: Your Name
+  handle: yourhandle
+source:
+  type: git
+  url: https://github.com/yourhandle/netlify-template
+categories: [web]
+runtime:
+  language: typescript
+  engines:
+    node: ">=20"
+  os: [linux]
+  arch: [x86_64]
+entrypoints:
+  - id: http
+    kind: http
+    label: Public site
+    ref: /
+    idempotent: true
+env_vars_required: []
+min_permissions:
+  - network:inbound
+platforms:
+  netlify:
+    build_command: "pnpm build"
+    publish: "dist"
+    node_version: "20"
+    env_contexts: [production]
+spawn_targets: [netlify]

@@ -1,0 +1,40 @@
+spawn_version: "1.0.0"
+id: com.example.docs-site
+name: Docs Site
+kind: site
+summary: A static docs site built with Astro.
+description: >
+  A public static documentation site built with Astro and deployed to
+  Netlify. No functions, no edge functions, one publish directory.
+license: Apache-2.0
+author:
+  name: Docs Team
+  handle: docs-team
+source:
+  type: git
+  url: https://github.com/docs-team/docs-site
+keywords: [astro, docs, netlify]
+categories: [web, writing]
+runtime:
+  language: typescript
+  engines:
+    node: ">=20"
+  os: [linux]
+  arch: [x86_64]
+entrypoints:
+  - id: http
+    kind: http
+    label: Docs root
+    ref: /
+    idempotent: true
+env_vars_required: []
+min_permissions:
+  - network:inbound
+platforms:
+  netlify:
+    build_command: "pnpm build"
+    publish: "dist"
+    node_version: "20"
+    env_contexts: [production]
+    headers_file: "public/_headers"
+spawn_targets: [netlify]

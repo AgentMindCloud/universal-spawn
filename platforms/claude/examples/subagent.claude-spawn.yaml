@@ -1,0 +1,69 @@
+spawn_version: "1.0.0"
+id: com.example.claude-subagent-reviewer
+name: Code Reviewer
+kind: ai-agent
+summary: A Claude subagent that reviews a diff and reports findings.
+description: >
+  A Claude subagent that takes a diff or PR URL, analyzes the change
+  for correctness, security, and style issues, and returns a structured
+  review report. Uses Claude Opus 4.7 and enables extended thinking for
+  non-trivial diffs.
+license: MIT
+author:
+  name: Reviewer Team
+  handle: reviewer-team
+source:
+  type: git
+  url: https://github.com/reviewer-team/claude-reviewer
+keywords: [claude, subagent, code-review, pull-request]
+categories: [ai, code, devtools]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  os: [linux, macos]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: review
+    kind: tool-call
+    label: review_diff
+    ref: tools/review.json
+    inputs:
+      - name: diff
+        type: string
+        required: true
+    outputs:
+      - name: report
+        type: object
+  - id: cli
+    kind: cli
+    ref: bin/reviewer
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key used for subagent calls.
+    secret: true
+  - name: GITHUB_TOKEN
+    description: Optional GitHub token for fetching PR diffs.
+    required: false
+    secret: true
+min_permissions:
+  - network:outbound:api.anthropic.com
+  - network:outbound:api.github.com
+  - fs:read
+  - model:call:claude-opus-4-7
+rate_limit_qps: 2
+cost_limit_usd_daily: 15
+safe_for_auto_spawn: false
+platforms:
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+    surface: [claude-api, claude-code]
+    tools:
+      - name: review_diff
+        function_ref: tools/review.json
+    thinking:
+      type: enabled
+      budget_tokens: 16384
+    prompt_cache: true
+spawn_targets: [claude]

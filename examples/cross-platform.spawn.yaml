@@ -1,0 +1,101 @@
+spawn_version: "1.0.0"
+id: com.example.omni-bot
+name: Omni Bot
+kind: bot
+summary: One bot, six spawn targets — Claude, Gemini, OpenAI, Discord, Vercel, Hugging Face.
+description: >
+  A demonstration manifest that spawns the same conversational bot on
+  six different platforms without any per-platform forks. Each target
+  reads only the fields it understands; the rest are ignored.
+license: Apache-2.0
+author:
+  name: Jani Solo
+  handle: JanSol0s
+  org: AgentMindCloud
+source:
+  type: git
+  url: https://github.com/AgentMindCloud/omni-bot
+keywords: [bot, cross-platform, demo]
+categories: [ai, social]
+runtime:
+  language: typescript
+  engines:
+    node: ">=20"
+  os: [linux]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: http
+    kind: http
+    label: Chat webhook
+    ref: /chat
+    inputs:
+      - name: message
+        type: string
+        required: true
+    outputs:
+      - name: reply
+        type: string
+    idempotent: false
+  - id: tool
+    kind: tool-call
+    label: Callable tool for LLMs
+    ref: tools/chat.json
+  - id: slash
+    kind: slash-command
+    label: Discord slash command
+    ref: discord/commands/chat.json
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key; used when targeting Claude.
+    required: false
+    secret: true
+  - name: OPENAI_API_KEY
+    description: OpenAI key; used when targeting OpenAI.
+    required: false
+    secret: true
+  - name: GOOGLE_API_KEY
+    description: Google key; used when targeting Gemini.
+    required: false
+    secret: true
+  - name: DISCORD_BOT_TOKEN
+    description: Discord bot token; used when targeting Discord.
+    required: false
+    secret: true
+  - name: HF_TOKEN
+    description: Hugging Face token; used when hosting on HF Spaces.
+    required: false
+    secret: true
+min_permissions:
+  - network:inbound
+  - network:outbound:api.anthropic.com
+  - network:outbound:api.openai.com
+  - network:outbound:generativelanguage.googleapis.com
+  - network:outbound:discord.com
+rate_limit_qps: 5
+cost_limit_usd_daily: 20
+safe_for_auto_spawn: false
+platforms:
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+  gemini:
+    model: gemini-2-5-pro
+  openai:
+    tools:
+      - name: chat
+        function_ref: tools/chat.json
+  discord:
+    intents: [guild_messages, message_content]
+    scopes: [bot, applications.commands]
+    slash_commands:
+      - file: discord/commands/chat.json
+  vercel:
+    framework: next
+    build_command: "pnpm build"
+  huggingface:
+    repo_kind: space
+    visibility: public
+    space_sdk: docker
+    hardware: cpu-upgrade
+spawn_targets: [claude, openai, gemini, discord, vercel, huggingface]

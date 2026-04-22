@@ -1,0 +1,68 @@
+spawn_version: "1.0.0"
+id: com.example.research-agent
+name: Research Agent
+kind: ai-agent
+summary: A tool-calling agent that researches and cites sources.
+description: >
+  A small tool-calling agent that takes a natural-language research
+  question, queries open-access databases, and returns a cited
+  summary. Demonstrates the `tool-call` entrypoint kind and
+  Claude / OpenAI / Gemini cross-targeting.
+license: Apache-2.0
+author:
+  name: Example Research Co.
+  handle: example-research
+source:
+  type: git
+  url: https://github.com/example-research/research-agent
+keywords: [agent, research, citations, tool-use]
+categories: [ai, research]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  os: [linux, macos]
+  arch: [x86_64, arm64]
+  memory_mb_min: 512
+  network_required: true
+entrypoints:
+  - id: ask
+    kind: tool-call
+    label: ask
+    ref: tools/ask.json
+    inputs:
+      - name: question
+        type: string
+        required: true
+    outputs:
+      - name: summary
+        type: string
+      - name: citations
+        type: array
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key for Claude model calls.
+    secret: true
+  - name: OPENAI_API_KEY
+    description: OpenAI API key (only needed when targeting OpenAI).
+    required: false
+    secret: true
+min_permissions:
+  - network:outbound:api.anthropic.com
+  - network:outbound:api.openai.com
+  - network:outbound:api.openalex.org
+  - model:call:claude-opus-4-7
+rate_limit_qps: 3
+cost_limit_usd_daily: 10
+safe_for_auto_spawn: true
+platforms:
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+    surface: [claude-api, claude-code]
+  openai:
+    tools:
+      - name: ask
+        function_ref: tools/ask.json
+  gemini:
+    system_instruction_file: prompts/system.md
+spawn_targets: [claude, openai, gemini]

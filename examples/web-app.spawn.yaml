@@ -1,0 +1,51 @@
+spawn_version: "1.0.0"
+id: com.example.notes-app
+name: Notes
+kind: web-app
+summary: A minimal Next.js notes app, deployable on Vercel or Netlify.
+description: >
+  A public-facing notes app used as the canonical web-app example. One
+  HTTP entrypoint at `/`, and two host extensions so the same manifest
+  can be spawned on Vercel or Netlify without edits.
+license: MIT
+author:
+  name: Example Web Co.
+  handle: example-web
+source:
+  type: git
+  url: https://github.com/example-web/notes
+keywords: [notes, nextjs, markdown, web]
+categories: [web, productivity]
+runtime:
+  language: typescript
+  engines:
+    node: ">=20"
+    pnpm: ">=9"
+  os: [linux]
+  arch: [x86_64, arm64]
+entrypoints:
+  - id: http
+    kind: http
+    label: Public site
+    ref: /
+    idempotent: true
+env_vars_required:
+  - name: DATABASE_URL
+    description: Connection string for the notes database.
+    secret: true
+  - name: NEXT_PUBLIC_SITE_URL
+    description: Public URL the app serves from.
+    required: false
+min_permissions:
+  - network:inbound
+  - network:outbound
+platforms:
+  vercel:
+    framework: nextjs
+    build_command: "pnpm build"
+    output: .next
+    regions: [iad1]
+  netlify:
+    build_command: "pnpm build"
+    publish: ".next"
+spawn_targets: [vercel, netlify]

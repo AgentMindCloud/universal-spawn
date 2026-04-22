@@ -1,0 +1,57 @@
+spawn_version: "1.0.0"
+id: com.example.internal-knowledge
+name: Internal Knowledge
+kind: ai-agent
+summary: Vertex AI Extension grounded on a private Vertex Search corpus.
+description: >
+  A Vertex AI Extension that provides internal-knowledge search to
+  Gemini users inside one Google Cloud project. Backed by an OpenAPI
+  document and grounded on a named Vertex Search corpus. Not published
+  to the public registry.
+license: proprietary
+author:
+  name: Acme Corp
+  handle: acme-corp
+  org: Acme
+source:
+  type: git
+  url: https://github.com/acme-corp/internal-knowledge
+keywords: [gemini, extension, grounding, internal-search]
+categories: [ai, productivity, research]
+runtime:
+  language: typescript
+  os: [linux]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: search
+    kind: http
+    label: search
+    ref: /v1/search
+    idempotent: true
+env_vars_required:
+  - name: GCP_PROJECT_ID
+    description: Google Cloud project id hosting the corpus.
+    secret: false
+  - name: GCP_SA_JSON
+    description: Service account JSON credentials.
+    secret: true
+min_permissions:
+  - network:outbound:aiplatform.googleapis.com
+rate_limit_qps: 5
+cost_limit_usd_daily: 20
+safe_for_auto_spawn: false
+data_residency: [us]
+compat:
+  openapi: openapi.yaml
+platforms:
+  gemini:
+    model: gemini-2-5-pro
+    extension:
+      openapi_ref: openapi.yaml
+      auth: gcp_service_account
+    grounding:
+      vertex_search_corpus: "projects/acme/locations/us-central1/collections/default_collection/engines/internal-knowledge"
+    safety_settings:
+      dangerous_content: block_medium_and_above
+spawn_targets: [gemini]

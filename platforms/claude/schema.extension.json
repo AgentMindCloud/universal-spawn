@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/platforms/claude/v1.0.0/schema.extension.json",
+  "title": "universal-spawn Claude platform extension",
+  "description": "Strict JSON Schema for the `platforms.claude` object in a universal-spawn manifest v1.0.0.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "skill_type": {
+      "type": "string",
+      "description": "How this creation presents itself to Claude.",
+      "enum": ["skill", "subagent", "tool", "mcp", "slash-command"]
+    },
+    "skill_file": {
+      "type": "string",
+      "description": "Relative path to the Skill definition file (YAML) when skill_type is 'skill'."
+    },
+    "model": {
+      "type": "string",
+      "description": "Recommended Claude model id for this creation.",
+      "enum": [
+        "claude-opus-4-7",
+        "claude-sonnet-4-6",
+        "claude-haiku-4-5-20251001"
+      ]
+    },
+    "surface": {
+      "type": "array",
+      "description": "Which Claude surfaces are allowed to spawn this creation. At least one required.",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["claude-api", "claude-code", "claude-app", "claude-mcp"]
+      }
+    },
+    "tools": {
+      "type": "array",
+      "description": "Tool definitions to expose via the Messages API.",
+      "items": {
+        "type": "object",
+        "required": ["name", "function_ref"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-zA-Z][a-zA-Z0-9_-]{0,63}$"
+          },
+          "function_ref": {
+            "type": "string",
+            "description": "Relative path to a JSON file that provides {name, description, input_schema}."
+          }
+        }
+      }
+    },
+    "mcp_server": {
+      "type": "object",
+      "description": "How to launch this creation as an MCP server.",
+      "additionalProperties": false,
+      "required": ["transport"],
+      "properties": {
+        "transport": {
+          "type": "string",
+          "enum": ["stdio", "http", "websocket"]
+        },
+        "ref": { "type": "string", "description": "Relative path or URL for the chosen transport." }
+      }
+    },
+    "slash_command": {
+      "type": "object",
+      "description": "Claude Code slash-command metadata.",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]{0,31}$" },
+        "file": { "type": "string" },
+        "description": { "type": "string", "maxLength": 200 }
+      }
+    },
+    "system_prompt_file": {
+      "type": "string",
+      "description": "Relative path to a file whose contents are sent as the system prompt."
+    },
+    "prompt_cache": {
+      "type": "boolean",
+      "description": "If true, the consumer SHOULD enable prompt caching for recurring context.",
+      "default": false
+    },
+    "thinking": {
+      "type": "object",
+      "description": "Extended-thinking budget recommendation.",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string", "enum": ["enabled", "disabled"] },
+        "budget_tokens": { "type": "integer", "minimum": 1024 }
+      }
+    }
+  }
+}

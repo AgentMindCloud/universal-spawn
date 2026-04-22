@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/platforms/vercel/v1.0.0/schema.extension.json",
+  "title": "universal-spawn Vercel platform extension",
+  "description": "Strict JSON Schema for the `platforms.vercel` object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "framework": {
+      "type": "string",
+      "enum": [
+        "nextjs", "next", "remix", "nuxt", "astro", "svelte-kit",
+        "vite", "create-react-app", "solid", "docusaurus", "hugo",
+        "eleventy", "other"
+      ]
+    },
+    "install_command": { "type": "string" },
+    "build_command": { "type": "string" },
+    "dev_command": { "type": "string" },
+    "output": { "type": "string", "description": "Relative output directory produced by the build." },
+    "root_directory": { "type": "string" },
+    "node_version": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+){0,2}$" },
+    "regions": {
+      "type": "array",
+      "description": "Vercel region codes (e.g. iad1, cdg1, sfo1).",
+      "items": { "type": "string", "pattern": "^[a-z]{3}[0-9]$" }
+    },
+    "functions": {
+      "type": "array",
+      "description": "Per-route function configuration.",
+      "items": {
+        "type": "object",
+        "required": ["match"],
+        "additionalProperties": false,
+        "properties": {
+          "match": { "type": "string", "description": "Glob that matches function files (e.g. api/*.ts)." },
+          "runtime": { "type": "string", "enum": ["nodejs", "edge", "python", "go"] },
+          "memory_mb": { "type": "integer", "minimum": 128, "maximum": 3009 },
+          "max_duration_seconds": { "type": "integer", "minimum": 1, "maximum": 900 }
+        }
+      }
+    },
+    "env_promotion": {
+      "type": "array",
+      "description": "Which env scopes required vars must exist in.",
+      "items": { "type": "string", "enum": ["development", "preview", "production"] }
+    }
+  }
+}

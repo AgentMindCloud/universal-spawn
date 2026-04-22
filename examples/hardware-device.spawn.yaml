@@ -1,0 +1,48 @@
+spawn_version: "1.0.0"
+id: com.example.microlab-sensor
+name: Microlab Sensor
+kind: firmware
+summary: Firmware for a parchment-calibrated humidity / temperature sensor.
+description: >
+  Firmware for a small USB-attached environmental sensor. Exposes an
+  MQTT-over-TCP webhook entrypoint for readings. Demonstrates the
+  `hardware-device`/`firmware` side of the specification and explicit
+  USB permission scoping.
+license: BSD-3-Clause
+author:
+  name: Microlab Instruments
+  handle: microlab
+source:
+  type: git
+  url: https://github.com/microlab/microlab-sensor
+keywords: [firmware, hardware, sensor, humidity, mqtt]
+categories: [hardware, research, science]
+runtime:
+  language: rust
+  language_version: ">=1.78"
+  os: [any]
+  arch: [aarch64]
+  memory_mb_min: 1
+  disk_mb_min: 1
+  gpu_required: false
+  network_required: true
+entrypoints:
+  - id: readings
+    kind: webhook
+    label: Telemetry webhook
+    ref: /mqtt/readings
+    idempotent: true
+env_vars_required:
+  - name: MQTT_BROKER_URL
+    description: Address of the MQTT broker to publish readings to.
+    secret: false
+  - name: DEVICE_AUTH_TOKEN
+    description: Per-device auth token.
+    secret: true
+min_permissions:
+  - usb:claim:vid=0x2341
+  - network:outbound
+rate_limit_qps: 1
+safe_for_auto_spawn: false
+data_residency: [us, eu]
+spawn_targets: []

@@ -1,0 +1,45 @@
+spawn_version: "1.0.0"
+id: com.example.discord-ping-bot
+name: Ping Bot
+kind: bot
+summary: Minimal Discord bot that replies to /ping.
+description: >
+  The smallest useful Discord bot: a single /ping slash command that
+  replies with latency. One scope, one intent. Used as a reference for
+  the Discord extension's minimum viable manifest.
+license: Apache-2.0
+author:
+  name: Ping Co.
+  handle: ping-co
+source:
+  type: git
+  url: https://github.com/ping-co/discord-ping-bot
+keywords: [discord, bot, ping, example]
+categories: [social]
+runtime:
+  language: typescript
+  engines:
+    node: ">=20"
+  os: [linux]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: ping
+    kind: slash-command
+    label: /ping
+    ref: commands/ping.json
+env_vars_required:
+  - name: DISCORD_BOT_TOKEN
+    description: Discord bot token.
+    secret: true
+min_permissions:
+  - network:outbound:discord.com
+  - network:outbound:gateway.discord.gg
+safe_for_auto_spawn: true
+platforms:
+  discord:
+    scopes: [bot, applications.commands]
+    intents: [guilds]
+    slash_commands:
+      - file: commands/ping.json
+spawn_targets: [discord]

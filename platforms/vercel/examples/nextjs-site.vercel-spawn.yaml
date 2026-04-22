@@ -1,0 +1,42 @@
+spawn_version: "1.0.0"
+id: com.example.blog-next
+name: Example Blog
+kind: site
+summary: A public Next.js blog deployable to Vercel with one region.
+description: >
+  A small content-driven Next.js site that uses the default Vercel
+  build preset. No API routes; one HTTP entrypoint serving the root.
+license: MIT
+author:
+  name: Example
+  handle: example
+source:
+  type: git
+  url: https://github.com/example/blog-next
+keywords: [nextjs, blog, vercel]
+categories: [web, writing]
+runtime:
+  language: typescript
+  engines:
+    node: ">=20"
+  os: [linux]
+  arch: [x86_64, arm64]
+entrypoints:
+  - id: http
+    kind: http
+    label: Blog root
+    ref: /
+    idempotent: true
+env_vars_required: []
+min_permissions:
+  - network:inbound
+platforms:
+  vercel:
+    framework: nextjs
+    install_command: "pnpm install"
+    build_command: "pnpm build"
+    output: ".next"
+    node_version: "20"
+    regions: [iad1]
+    env_promotion: [production]
+spawn_targets: [vercel]

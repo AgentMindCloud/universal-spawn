@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/platforms/figma/v1.0.0/schema.extension.json",
+  "title": "universal-spawn Figma platform extension",
+  "description": "Strict JSON Schema for the `platforms.figma` object.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_file", "editor_type", "network_access"],
+  "properties": {
+    "manifest_file": {
+      "type": "string",
+      "description": "Relative path to the Figma plugin manifest.json."
+    },
+    "editor_type": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["figma", "figjam", "dev", "slides"]
+      }
+    },
+    "network_access": {
+      "type": "string",
+      "enum": ["none", "declared", "allowed-hosts"]
+    },
+    "allowed_hosts": {
+      "type": "array",
+      "description": "Hostnames the plugin is allowed to reach. Required when network_access is 'allowed-hosts'.",
+      "items": { "type": "string", "format": "hostname" }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["textreview", "inspect", "vscode", "codegen"]
+      }
+    },
+    "widget": {
+      "type": "boolean",
+      "description": "True if this creation is a Figma Widget (not a Plugin).",
+      "default": false
+    },
+    "menu_file": {
+      "type": "string",
+      "description": "Relative path to a JSON file describing the plugin menu."
+    }
+  }
+}

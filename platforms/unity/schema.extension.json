@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/platforms/unity/v1.0.0/schema.extension.json",
+  "title": "universal-spawn Unity platform extension",
+  "description": "Strict JSON Schema for the `platforms.unity` object.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["target_version"],
+  "properties": {
+    "target_version": {
+      "type": "string",
+      "description": "Minimum Unity editor version required.",
+      "pattern": "^[0-9]{4}\\.[0-9]+(\\.[0-9]+)?(f[0-9]+)?$"
+    },
+    "render_pipeline": {
+      "type": "string",
+      "enum": ["built-in", "urp", "hdrp"]
+    },
+    "scripting_backend": {
+      "type": "string",
+      "enum": ["mono", "il2cpp"]
+    },
+    "entry_scene": {
+      "type": "string",
+      "description": "Scene file to open on spawn."
+    },
+    "packages": {
+      "type": "array",
+      "description": "Required Unity Package Manager packages. Each is a package id (reverse-DNS), optionally with a version range appended after '@'.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9.-]+(@.+)?$"
+      }
+    },
+    "defines": {
+      "type": "array",
+      "description": "Scripting defines to enable (e.g. ENABLE_PARCHMENT).",
+      "items": { "type": "string", "pattern": "^[A-Z_][A-Z0-9_]*$" }
+    },
+    "target_platforms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "standalone-windows",
+          "standalone-mac",
+          "standalone-linux",
+          "ios",
+          "android",
+          "webgl",
+          "switch",
+          "ps5",
+          "xbox-series"
+        ]
+      }
+    },
+    "xr": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "required": { "type": "boolean", "default": false },
+        "loaders": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["openxr", "oculus", "arkit", "arcore"] }
+        }
+      }
+    }
+  }
+}

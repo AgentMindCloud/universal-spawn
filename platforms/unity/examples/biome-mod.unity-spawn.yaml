@@ -1,0 +1,44 @@
+spawn_version: "1.0.0"
+id: com.example.unity-biome
+name: Biome Pack
+kind: game-mod
+summary: A URP biome pack with one demo scene.
+description: >
+  A game mod that adds a parchment-themed biome to a URP project. Ships
+  with one demo scene and a small script pack. Demonstrates the basic
+  Unity extension fields.
+license: MIT
+author:
+  name: Biome Team
+  handle: biome-team
+source:
+  type: git
+  url: https://github.com/biome-team/unity-biome
+keywords: [unity, biome, urp, mod]
+categories: [gaming, graphics]
+runtime:
+  language: c-sharp
+  engines:
+    unity: ">=2023.2"
+  os: [windows, macos, linux]
+  arch: [x86_64, arm64]
+  gpu_required: true
+  memory_mb_min: 1024
+entrypoints:
+  - id: scene
+    kind: scene
+    label: Demo scene
+    ref: Assets/Scenes/BiomeDemo.unity
+min_permissions:
+  - fs:read
+  - gpu:compute
+platforms:
+  unity:
+    target_version: "2023.2"
+    render_pipeline: urp
+    scripting_backend: il2cpp
+    entry_scene: Assets/Scenes/BiomeDemo.unity
+    packages:
+      - com.unity.render-pipelines.universal
+    target_platforms: [standalone-windows, standalone-mac, standalone-linux]
+spawn_targets: [unity]

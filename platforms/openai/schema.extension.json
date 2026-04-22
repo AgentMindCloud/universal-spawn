@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/platforms/openai/v1.0.0/schema.extension.json",
+  "title": "universal-spawn OpenAI platform extension",
+  "description": "Strict JSON Schema for the `platforms.openai` object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "model": {
+      "type": "string",
+      "description": "Recommended OpenAI model id. Consumers may override."
+    },
+    "system_prompt_file": {
+      "type": "string",
+      "description": "Relative path to a file whose contents form the system prompt."
+    },
+    "tools": {
+      "type": "array",
+      "description": "Function tools exposed via the Responses / Chat Completions API.",
+      "items": {
+        "type": "object",
+        "required": ["name", "function_ref"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$" },
+          "function_ref": { "type": "string" },
+          "strict": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "assistant": {
+      "type": "object",
+      "description": "Assistants-API registration.",
+      "additionalProperties": false,
+      "properties": {
+        "instructions_file": { "type": "string" },
+        "tools": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["code_interpreter", "file_search", "function"] }
+        }
+      }
+    },
+    "action": {
+      "type": "object",
+      "description": "GPT Store Action registration.",
+      "additionalProperties": false,
+      "required": ["openapi_ref"],
+      "properties": {
+        "openapi_ref": { "type": "string" },
+        "auth": {
+          "type": "string",
+          "enum": ["none", "api_key", "oauth"]
+        },
+        "privacy_policy_url": { "type": "string", "format": "uri" }
+      }
+    },
+    "response_format": {
+      "type": "string",
+      "enum": ["text", "json_object", "json_schema"],
+      "default": "text"
+    },
+    "response_schema_ref": {
+      "type": "string",
+      "description": "Relative path to the JSON Schema when response_format is json_schema."
+    },
+    "temperature": { "type": "number", "minimum": 0, "maximum": 2 },
+    "reasoning_effort": {
+      "type": "string",
+      "enum": ["minimal", "low", "medium", "high"]
+    }
+  }
+}

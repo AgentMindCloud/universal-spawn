@@ -1,0 +1,415 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/spec/v1.0.0/manifest.schema.json",
+  "title": "Universal Spawn Manifest",
+  "description": "Canonical JSON Schema for a universal-spawn manifest v1.0.0. A single declarative file that makes any creation discoverable, validatable, and one-click spawnable across AI, hosting, creative, dev, game, social, and hardware platforms.",
+  "type": "object",
+  "required": [
+    "spawn_version",
+    "id",
+    "name",
+    "kind",
+    "description",
+    "license",
+    "author",
+    "source"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "spawn_version": {
+      "type": "string",
+      "description": "Version of the universal-spawn spec this manifest targets. Use semantic versioning. Consumers MUST reject manifests with an unknown major version.",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "examples": ["1.0.0"]
+    },
+    "id": {
+      "type": "string",
+      "description": "Globally unique reverse-DNS identifier for the creation. Lowercase, dot-separated, no spaces. Used as the stable key across registries.",
+      "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$",
+      "minLength": 3,
+      "maxLength": 253,
+      "examples": ["org.agentmindcloud.grok-install", "com.jansolo.fielded"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable display name. Shown in UIs. Must not contain emoji; enforce via lint since JSON Schema regex support for Unicode property escapes is uneven across validators.",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "kind": {
+      "type": "string",
+      "description": "The primary category of this creation. Determines which platforms can spawn it and what fields are expected.",
+      "enum": [
+        "ai-agent",
+        "ai-skill",
+        "ai-model",
+        "web-app",
+        "api-service",
+        "cli-tool",
+        "library",
+        "dataset",
+        "notebook",
+        "creative-tool",
+        "design-template",
+        "game-mod",
+        "game-world",
+        "hardware-device",
+        "firmware",
+        "bot",
+        "extension",
+        "plugin",
+        "site",
+        "container",
+        "workflow"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "One-paragraph description. Observational, not marketing. No emoji. First sentence MUST stand alone as a summary (used in search snippets).",
+      "minLength": 20,
+      "maxLength": 500
+    },
+    "summary": {
+      "type": "string",
+      "description": "Optional shorter one-line summary (<=140 chars) for cards and social embeds.",
+      "maxLength": 140
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical project homepage URL."
+    },
+    "icon": {
+      "type": "string",
+      "description": "Relative path or URL to a 512x512 icon. SVG preferred. Follows the Residual Frequencies visual conventions when applicable.",
+      "examples": ["assets/icon.svg"]
+    },
+    "hero_plate": {
+      "type": "string",
+      "description": "Relative path or URL to a hero plate illustration (see design/residual-frequencies.md for archetypes). Used on rich cards and README top.",
+      "examples": ["assets/hero.svg"]
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX license identifier, or 'proprietary'. Manifests under the universal-spawn standard SHOULD use OSI-approved licenses.",
+      "examples": ["Apache-2.0", "MIT", "BSD-3-Clause", "GPL-3.0-only", "proprietary"]
+    },
+    "author": {
+      "$ref": "#/$defs/party",
+      "description": "Primary author / maintainer of the creation."
+    },
+    "maintainers": {
+      "type": "array",
+      "description": "Additional maintainers. Ordered by seniority.",
+      "items": { "$ref": "#/$defs/party" }
+    },
+    "source": {
+      "type": "object",
+      "description": "Where the canonical source of this creation lives. The repository MUST contain this manifest at its root.",
+      "required": ["type", "url"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["git", "hg", "svn", "archive"]
+        },
+        "url": { "type": "string", "format": "uri" },
+        "branch": { "type": "string" },
+        "commit": {
+          "type": "string",
+          "description": "Optional exact commit hash pinning the manifest snapshot.",
+          "pattern": "^[a-f0-9]{7,64}$"
+        },
+        "path": {
+          "type": "string",
+          "description": "Subdirectory inside the repository, if the creation is a monorepo child.",
+          "default": "."
+        }
+      }
+    },
+    "keywords": {
+      "type": "array",
+      "description": "Lowercase keywords for discovery. Max 16. Each <= 32 chars.",
+      "maxItems": 16,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9-]*$",
+        "maxLength": 32
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "High-level categories. Max 4. Values SHOULD come from the canonical taxonomy (see spec/v1.0.0/spec.md Appendix A).",
+      "maxItems": 4,
+      "items": {
+        "type": "string",
+        "enum": [
+          "ai",
+          "audio",
+          "code",
+          "data",
+          "devtools",
+          "education",
+          "gaming",
+          "graphics",
+          "hardware",
+          "health",
+          "music",
+          "productivity",
+          "research",
+          "robotics",
+          "science",
+          "security",
+          "social",
+          "video",
+          "web",
+          "writing"
+        ]
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "description": "Runtime requirements. What does this creation need to actually run?",
+      "additionalProperties": false,
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "Primary implementation language.",
+          "examples": ["python", "typescript", "rust", "go", "c-sharp", "swift"]
+        },
+        "language_version": { "type": "string" },
+        "engines": {
+          "type": "object",
+          "description": "Specific engine/runtime version ranges (semver).",
+          "additionalProperties": { "type": "string" }
+        },
+        "os": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["linux", "macos", "windows", "ios", "android", "web", "any"]
+          }
+        },
+        "arch": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["x86_64", "aarch64", "arm64", "wasm32", "any"]
+          }
+        },
+        "memory_mb_min": { "type": "integer", "minimum": 0 },
+        "disk_mb_min": { "type": "integer", "minimum": 0 },
+        "gpu_required": { "type": "boolean", "default": false },
+        "network_required": { "type": "boolean", "default": false }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Other spawn manifests this creation depends on.",
+      "items": {
+        "type": "object",
+        "required": ["id", "version"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$"
+          },
+          "version": { "type": "string" },
+          "optional": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "entrypoints": {
+      "type": "array",
+      "description": "Declarative entrypoints. Each entrypoint is an action a spawning platform can invoke. No executable code is ever inlined — only declarative references.",
+      "items": { "$ref": "#/$defs/entrypoint" }
+    },
+    "env_vars_required": {
+      "type": "array",
+      "description": "Environment variables the creation requires. NEVER hardcode secret values here — only declare that they are required and describe their purpose.",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "description": { "type": "string", "minLength": 5 },
+          "example": { "type": "string" },
+          "required": { "type": "boolean", "default": true },
+          "secret": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "min_permissions": {
+      "type": "array",
+      "description": "The smallest set of capabilities this creation needs to function. Spawn platforms MUST NOT grant capabilities outside this set. See spec Appendix B for canonical permission strings. A permission is `namespace:action` or `namespace:action:scope`; namespace and action use kebab-case lowercase letters and digits; scope accepts hostnames, paths, and key=value pairs.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9]*:[a-z][a-z0-9_-]*(:[A-Za-z0-9_./=:-]+)?$",
+        "examples": [
+          "network:outbound",
+          "network:outbound:api.anthropic.com",
+          "fs:read",
+          "fs:write:/tmp/fielded",
+          "usb:claim:vid=0x2341",
+          "model:call:claude-opus-4-7"
+        ]
+      }
+    },
+    "rate_limit_qps": {
+      "type": "number",
+      "description": "Self-declared maximum outbound request rate the creation will produce, in queries per second.",
+      "minimum": 0
+    },
+    "cost_limit_usd_daily": {
+      "type": "number",
+      "description": "Self-declared upper bound on daily USD cost this creation can incur when spawned with default config. Spawn platforms SHOULD enforce this as a hard ceiling.",
+      "minimum": 0
+    },
+    "safe_for_auto_spawn": {
+      "type": "boolean",
+      "description": "True IFF the author asserts this manifest is safe to spawn without human confirmation under min_permissions and the declared cost/rate limits. Platforms MAY still require confirmation.",
+      "default": false
+    },
+    "data_residency": {
+      "type": "array",
+      "description": "Regions where data generated by this creation may legally reside.",
+      "items": {
+        "type": "string",
+        "enum": ["us", "eu", "uk", "ca", "au", "jp", "sg", "br", "in", "any"]
+      }
+    },
+    "platforms": {
+      "type": "object",
+      "description": "Platform-specific extensions. Each key is a platform id (see platforms/). Each value is the platform's extension object, validated against that platform's schema.extension.json.",
+      "additionalProperties": { "type": "object" }
+    },
+    "spawn_targets": {
+      "type": "array",
+      "description": "Ordered list of platforms this creation prefers to be spawned on. First entry is the canonical target.",
+      "items": {
+        "type": "string",
+        "examples": ["claude", "gemini", "openai", "vercel", "netlify", "unity", "figma", "discord", "huggingface"]
+      }
+    },
+    "compat": {
+      "type": "object",
+      "description": "Compatibility declarations with other standards.",
+      "additionalProperties": false,
+      "properties": {
+        "grok_install": {
+          "type": "object",
+          "description": "Compatibility with AgentMindCloud/grok-install. Set version to the minimum grok-install version that can consume this manifest.",
+          "properties": {
+            "version": { "type": "string", "examples": ["2.14"] },
+            "mapping_file": {
+              "type": "string",
+              "description": "Optional relative path to a mapping file that translates this manifest into a grok-install manifest."
+            }
+          }
+        },
+        "openapi": { "type": "string", "description": "Relative path to an OpenAPI document, if applicable." },
+        "dockerfile": { "type": "string", "description": "Relative path to a Dockerfile, if applicable." }
+      }
+    },
+    "signatures": {
+      "type": "array",
+      "description": "Detached signatures over the canonical serialization of this manifest. See spec Appendix C for the canonicalization procedure.",
+      "items": {
+        "type": "object",
+        "required": ["alg", "key_id", "value"],
+        "additionalProperties": false,
+        "properties": {
+          "alg": { "type": "string", "enum": ["ed25519", "ecdsa-p256", "rsa-sha256"] },
+          "key_id": { "type": "string" },
+          "value": { "type": "string", "description": "Base64-encoded signature." }
+        }
+      }
+    },
+    "x-ext": {
+      "type": "object",
+      "description": "Free-form escape hatch for experimental fields. Keys MUST begin with a reverse-DNS vendor prefix. Consumers MAY ignore all x-ext content.",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "party": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "handle": {
+          "type": "string",
+          "description": "Canonical social handle, e.g. GitHub username. No '@' prefix.",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,38}$"
+        },
+        "url": { "type": "string", "format": "uri" },
+        "email": { "type": "string", "format": "email" },
+        "org": { "type": "string" }
+      }
+    },
+    "entrypoint": {
+      "type": "object",
+      "required": ["id", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "description": "Stable id for this entrypoint, unique within the manifest."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "http",
+            "cli",
+            "websocket",
+            "stdio",
+            "script",
+            "container",
+            "webhook",
+            "scene",
+            "slash-command",
+            "tool-call",
+            "ui-panel"
+          ]
+        },
+        "label": { "type": "string", "description": "Human-readable label." },
+        "ref": {
+          "type": "string",
+          "description": "Declarative reference — e.g. a relative file path, HTTP route, container image tag. Never executable code."
+        },
+        "inputs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/parameter" }
+        },
+        "outputs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/parameter" }
+        },
+        "idempotent": { "type": "boolean", "default": false }
+      }
+    },
+    "parameter": {
+      "type": "object",
+      "required": ["name", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "type": {
+          "type": "string",
+          "enum": ["string", "integer", "number", "boolean", "array", "object", "file", "binary"]
+        },
+        "description": { "type": "string" },
+        "required": { "type": "boolean", "default": false },
+        "default": {},
+        "enum": { "type": "array" }
+      }
+    }
+  }
+}

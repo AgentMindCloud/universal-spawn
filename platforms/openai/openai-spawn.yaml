@@ -1,0 +1,48 @@
+spawn_version: "1.0.0"
+id: com.example.openai-template
+name: OpenAI Template
+kind: ai-agent
+description: >
+  Canonical template for an OpenAI-targeted universal-spawn manifest.
+  Shows strict function tools, system prompt, structured JSON output,
+  and reasoning-effort metadata.
+license: Apache-2.0
+author:
+  name: Your Name
+  handle: yourhandle
+source:
+  type: git
+  url: https://github.com/yourhandle/openai-template
+categories: [ai]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  os: [linux, macos]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: tool
+    kind: tool-call
+    label: do_work
+    ref: tools/do_work.json
+env_vars_required:
+  - name: OPENAI_API_KEY
+    description: OpenAI API key used for model calls.
+    secret: true
+min_permissions:
+  - network:outbound:api.openai.com
+rate_limit_qps: 3
+cost_limit_usd_daily: 5
+platforms:
+  openai:
+    model: gpt-5
+    system_prompt_file: prompts/system.md
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    response_format: json_schema
+    response_schema_ref: schemas/response.json
+    reasoning_effort: medium
+    temperature: 0.2
+spawn_targets: [openai]

@@ -1,0 +1,34 @@
+spawn_version: "1.0.0"
+id: com.example.figma-template
+name: Figma Template
+kind: creative-tool
+description: >
+  Canonical template for a Figma-targeted universal-spawn manifest.
+  Single UI panel, zero network access. Ships alongside a standard
+  Figma plugin manifest.
+license: Apache-2.0
+author:
+  name: Your Name
+  handle: yourhandle
+source:
+  type: git
+  url: https://github.com/yourhandle/figma-template
+categories: [graphics, productivity]
+runtime:
+  language: typescript
+  os: [any]
+  arch: [any]
+entrypoints:
+  - id: panel
+    kind: ui-panel
+    label: Template panel
+    ref: ui/index.html
+min_permissions:
+  - fs:read
+safe_for_auto_spawn: true
+platforms:
+  figma:
+    manifest_file: figma.manifest.json
+    editor_type: [figma]
+    network_access: none
+spawn_targets: [figma]

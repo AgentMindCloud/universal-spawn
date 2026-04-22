@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/platforms/discord/v1.0.0/schema.extension.json",
+  "title": "universal-spawn Discord platform extension",
+  "description": "Strict JSON Schema for the `platforms.discord` object.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scopes"],
+  "properties": {
+    "scopes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "bot",
+          "applications.commands",
+          "applications.commands.update",
+          "applications.entitlements",
+          "applications.store.update",
+          "identify",
+          "email",
+          "guilds",
+          "guilds.members.read",
+          "messages.read",
+          "webhook.incoming"
+        ]
+      }
+    },
+    "intents": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "guilds",
+          "guild_members",
+          "guild_moderation",
+          "guild_emojis_and_stickers",
+          "guild_integrations",
+          "guild_webhooks",
+          "guild_invites",
+          "guild_voice_states",
+          "guild_presences",
+          "guild_messages",
+          "guild_message_reactions",
+          "guild_message_typing",
+          "direct_messages",
+          "direct_message_reactions",
+          "direct_message_typing",
+          "message_content",
+          "guild_scheduled_events",
+          "auto_moderation_configuration",
+          "auto_moderation_execution"
+        ]
+      }
+    },
+    "slash_commands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file"],
+        "additionalProperties": false,
+        "properties": {
+          "file": { "type": "string", "description": "Relative path to a JSON file describing the slash command." },
+          "guild_ids": {
+            "type": "array",
+            "description": "Optional guild ids to register this command in. Omit to register globally.",
+            "items": { "type": "string", "pattern": "^[0-9]{17,20}$" }
+          }
+        }
+      }
+    },
+    "message_commands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file"],
+        "additionalProperties": false,
+        "properties": {
+          "file": { "type": "string" }
+        }
+      }
+    },
+    "activity": {
+      "type": "object",
+      "description": "Embedded-app activity configuration.",
+      "additionalProperties": false,
+      "properties": {
+        "supported_platforms": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["web", "ios", "android"] }
+        },
+        "orientation_lock_state": {
+          "type": "string",
+          "enum": ["unlocked", "portrait", "landscape"]
+        }
+      }
+    }
+  }
+}

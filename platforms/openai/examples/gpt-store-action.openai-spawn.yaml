@@ -1,0 +1,53 @@
+spawn_version: "1.0.0"
+id: com.example.invoice-lookup-action
+name: Invoice Lookup
+kind: ai-agent
+summary: GPT Store Action that looks up invoices by id.
+description: >
+  A public GPT Store Action that lets a GPT fetch invoice details from
+  the company's billing API by invoice id. Backed by an OpenAPI
+  document and OAuth-authenticated.
+license: proprietary
+author:
+  name: Acme Billing
+  handle: acme-billing
+  org: Acme
+source:
+  type: git
+  url: https://github.com/acme-billing/invoice-lookup-action
+  path: .
+keywords: [openai, gpt, action, invoices]
+categories: [productivity]
+runtime:
+  language: typescript
+  os: [linux]
+  arch: [x86_64]
+  network_required: true
+entrypoints:
+  - id: lookup
+    kind: http
+    label: lookup_invoice
+    ref: /v1/invoices
+    idempotent: true
+env_vars_required:
+  - name: ACME_OAUTH_CLIENT_ID
+    description: OAuth client id for the Action.
+    secret: true
+  - name: ACME_OAUTH_CLIENT_SECRET
+    description: OAuth client secret.
+    secret: true
+min_permissions:
+  - network:outbound:api.acme.com
+rate_limit_qps: 10
+cost_limit_usd_daily: 5
+safe_for_auto_spawn: false
+data_residency: [us]
+compat:
+  openapi: openapi.yaml
+platforms:
+  openai:
+    action:
+      openapi_ref: openapi.yaml
+      auth: oauth
+      privacy_policy_url: https://acme.com/privacy
+spawn_targets: [openai]

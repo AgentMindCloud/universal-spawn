@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 720" role="img"
+     aria-labelledby="hero-title hero-desc" preserveAspectRatio="xMidYMid meet">
+  <title id="hero-title">universal-spawn — Module Constellation</title>
+  <desc id="hero-desc">Laboratory-plate illustration of a central spawn manifest
+  node surrounded by nine platform modules connected by fine lines. Parchment
+  palette, Residual Frequencies archetype F.</desc>
+
+  <defs>
+    <!-- Parchment paper texture via subtle noise -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.10
+                             0 0 0 0 0.08
+                             0 0 0 0 0.04
+                             0 0 0 0.06 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Reusable module frame: a small rectangular laboratory cell -->
+    <symbol id="module" viewBox="0 0 180 88" overflow="visible">
+      <rect x="0.5" y="0.5" width="179" height="87" fill="#ede3cf"
+            stroke="#1a1a1a" stroke-width="1"/>
+      <line x1="0" y1="18" x2="180" y2="18" stroke="#1a1a1a" stroke-width="0.75"/>
+      <line x1="40" y1="0" x2="40" y2="18" stroke="#1a1a1a" stroke-width="0.75"/>
+    </symbol>
+
+    <!-- Tick rule -->
+    <symbol id="tick" overflow="visible">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#1a1a1a" stroke-width="0.75"/>
+    </symbol>
+  </defs>
+
+  <!-- Parchment field -->
+  <rect width="1600" height="720" fill="#ede3cf"/>
+  <rect width="1600" height="720" fill="#ede3cf" filter="url(#grain)" opacity="0.55"/>
+
+  <!-- Plate frame -->
+  <rect x="40" y="40" width="1520" height="640" fill="none"
+        stroke="#1a1a1a" stroke-width="1"/>
+  <rect x="48" y="48" width="1504" height="624" fill="none"
+        stroke="#1a1a1a" stroke-width="0.5"/>
+
+  <!-- Top metadata bar -->
+  <g font-family="'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace"
+     font-size="11" fill="#1a1a1a" letter-spacing="3">
+    <text x="68" y="78">PLATE F — MODULE CONSTELLATION</text>
+    <text x="1532" y="78" text-anchor="end">UNIVERSAL-SPAWN / V1.0.0</text>
+    <text x="68" y="666">RESIDUAL FREQUENCIES · PARCHMENT · 2026</text>
+    <text x="1532" y="666" text-anchor="end">OBS. 01 · FIELD DIAGRAM · J. SOLO</text>
+  </g>
+
+  <!-- Horizontal rule under title -->
+  <line x1="68" y1="92" x2="1532" y2="92" stroke="#1a1a1a" stroke-width="0.5"/>
+  <line x1="68" y1="644" x2="1532" y2="644" stroke="#1a1a1a" stroke-width="0.5"/>
+
+  <!-- Ruled tick marks along bottom axis -->
+  <g>
+    <line x1="68" y1="620" x2="1532" y2="620" stroke="#1a1a1a" stroke-width="0.5"/>
+    <g>
+      <!-- 30 ticks across the axis -->
+      <g transform="translate(68,620)"><use href="#tick"/></g>
+      <g transform="translate(116.8,620)"><use href="#tick"/></g>
+      <g transform="translate(165.6,620)"><use href="#tick"/></g>
+      <g transform="translate(214.4,620)"><use href="#tick"/></g>
+      <g transform="translate(263.2,620)"><use href="#tick"/></g>
+      <g transform="translate(312.0,620)"><use href="#tick"/></g>
+      <g transform="translate(360.8,620)"><use href="#tick"/></g>
+      <g transform="translate(409.6,620)"><use href="#tick"/></g>
+      <g transform="translate(458.4,620)"><use href="#tick"/></g>
+      <g transform="translate(507.2,620)"><use href="#tick"/></g>
+      <g transform="translate(556.0,620)"><use href="#tick"/></g>
+      <g transform="translate(604.8,620)"><use href="#tick"/></g>
+      <g transform="translate(653.6,620)"><use href="#tick"/></g>
+      <g transform="translate(702.4,620)"><use href="#tick"/></g>
+      <g transform="translate(751.2,620)"><use href="#tick"/></g>
+      <g transform="translate(800.0,620)"><use href="#tick"/></g>
+      <g transform="translate(848.8,620)"><use href="#tick"/></g>
+      <g transform="translate(897.6,620)"><use href="#tick"/></g>
+      <g transform="translate(946.4,620)"><use href="#tick"/></g>
+      <g transform="translate(995.2,620)"><use href="#tick"/></g>
+      <g transform="translate(1044.0,620)"><use href="#tick"/></g>
+      <g transform="translate(1092.8,620)"><use href="#tick"/></g>
+      <g transform="translate(1141.6,620)"><use href="#tick"/></g>
+      <g transform="translate(1190.4,620)"><use href="#tick"/></g>
+      <g transform="translate(1239.2,620)"><use href="#tick"/></g>
+      <g transform="translate(1288.0,620)"><use href="#tick"/></g>
+      <g transform="translate(1336.8,620)"><use href="#tick"/></g>
+      <g transform="translate(1385.6,620)"><use href="#tick"/></g>
+      <g transform="translate(1434.4,620)"><use href="#tick"/></g>
+      <g transform="translate(1483.2,620)"><use href="#tick"/></g>
+      <g transform="translate(1532,620)"><use href="#tick"/></g>
+    </g>
+  </g>
+
+  <!-- Title: Instrument Serif Italic feel -->
+  <g font-family="'Instrument Serif', 'Cormorant Garamond', 'EB Garamond', Georgia, serif"
+     font-style="italic" fill="#1a1a1a">
+    <text x="800" y="170" text-anchor="middle" font-size="78">universal-spawn</text>
+  </g>
+  <g font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#1a1a1a"
+     font-size="12" letter-spacing="4">
+    <text x="800" y="200" text-anchor="middle">ONE MANIFEST · EVERY PLATFORM</text>
+  </g>
+
+  <!-- CENTRAL NODE: spawn.yaml -->
+  <g transform="translate(720,360)">
+    <!-- outer observation ring -->
+    <circle cx="80" cy="0" r="140" fill="none" stroke="#1a1a1a" stroke-width="0.5"
+            stroke-dasharray="2 3"/>
+    <circle cx="80" cy="0" r="104" fill="none" stroke="#1a1a1a" stroke-width="0.5"/>
+    <!-- core -->
+    <rect x="0" y="-44" width="160" height="88" fill="#ede3cf"
+          stroke="#1a1a1a" stroke-width="1.2"/>
+    <line x1="0" y1="-22" x2="160" y2="-22" stroke="#1a1a1a" stroke-width="0.75"/>
+    <g font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#1a1a1a">
+      <text x="12" y="-7" font-size="11" letter-spacing="2">SPAWN.YAML</text>
+      <text x="148" y="-7" font-size="11" letter-spacing="2" text-anchor="end">CORE</text>
+    </g>
+    <g font-family="'Instrument Serif', serif" font-style="italic"
+       fill="#a13d24" font-size="26">
+      <text x="80" y="26" text-anchor="middle">manifest</text>
+    </g>
+    <!-- nucleus dot -->
+    <circle cx="80" cy="0" r="3" fill="#a13d24"/>
+  </g>
+
+  <!-- Connector paths to nine platform modules.
+       Central node center in plate coords: (800, 360) -->
+  <g stroke="#1a1a1a" stroke-width="0.75" fill="none">
+    <line x1="800" y1="360" x2="220" y2="270"/>
+    <line x1="800" y1="360" x2="220" y2="360"/>
+    <line x1="800" y1="360" x2="220" y2="450"/>
+    <line x1="800" y1="360" x2="800" y2="260"/>
+    <line x1="800" y1="360" x2="800" y2="500"/>
+    <line x1="800" y1="360" x2="1380" y2="270"/>
+    <line x1="800" y1="360" x2="1380" y2="360"/>
+    <line x1="800" y1="360" x2="1380" y2="450"/>
+    <line x1="800" y1="360" x2="520" y2="530"/>
+  </g>
+
+  <!-- Small observation dots at connector endpoints -->
+  <g fill="#a13d24">
+    <circle cx="220" cy="270" r="2"/>
+    <circle cx="220" cy="360" r="2"/>
+    <circle cx="220" cy="450" r="2"/>
+    <circle cx="800" cy="260" r="2"/>
+    <circle cx="800" cy="500" r="2"/>
+    <circle cx="1380" cy="270" r="2"/>
+    <circle cx="1380" cy="360" r="2"/>
+    <circle cx="1380" cy="450" r="2"/>
+    <circle cx="520" cy="530" r="2"/>
+  </g>
+
+  <!-- Platform module cells (labels in mono caps) -->
+  <g font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#1a1a1a"
+     font-size="11" letter-spacing="3">
+    <!-- CLAUDE -->
+    <g transform="translate(130,226)">
+      <use href="#module"/>
+      <text x="12" y="13">001</text>
+      <text x="170" y="13" text-anchor="end">AI</text>
+      <text x="90" y="52" text-anchor="middle" font-family="'Instrument Serif', serif"
+            font-style="italic" font-size="24" letter-spacing="0">Claude</text>
+    </g>
+    <!-- GEMINI -->
+    <g transform="translate(130,316)">
+      <use href="#module"/>
+      <text x="12" y="13">002</text>
+      <text x="170" y="13" text-anchor="end">AI</text>
+      <text x="90" y="52" text-anchor="middle" font-family="'Instrument Serif', serif"
+            font-style="italic" font-size="24" letter-spacing="0">Gemini</text>
+    </g>
+    <!-- OPENAI -->
+    <g transform="translate(130,406)">
+      <use href="#module"/>
+      <text x="12" y="13">003</text>
+      <text x="170" y="13" text-anchor="end">AI</text>
+      <text x="90" y="52" text-anchor="middle" font-family="'Instrument Serif', serif"
+            font-style="italic" font-size="24" letter-spacing="0">OpenAI</text>
+    </g>
+    <!-- VERCEL -->
+    <g transform="translate(710,216)">
+      <use href="#module"/>
+      <text x="12" y="13">004</text>
+      <text x="170" y="13" text-anchor="end">HOST</text>
+      <text x="90" y="52" text-anchor="middle" font-family="'Instrument Serif', serif"
+            font-style="italic" font-size="24" letter-spacing="0">Vercel</text>
+    </g>
+    <!-- NETLIFY -->
+    <g transform="translate(710,456)">
+      <use href="#module"/>
+      <text x="12" y="13">005</text>
+      <text x="170" y="13" text-anchor="end">HOST</text>
+      <text x="90" y="52" text-anchor="middle" font-family="'Instrument Serif', serif"
+            font-style="italic" font-size="24" letter-spacing="0">Netlify</text>
+    </g>
+    <!-- UNITY -->
+    <g transform="translate(1290,226)">
+      <use href="#module"/>
+      <text x="12" y="13">006</text>
+      <text x="170" y="13" text-anchor="end">GAME</text>
+      <text x="90" y="52" text-anchor="middle" font-family="'Instrument Serif', serif"
+            font-style="italic" font-size="24" letter-spacing="0">Unity</text>
+    </g>
+    <!-- FIGMA -->
+    <g transform="translate(1290,316)">
+      <use href="#module"/>
+      <text x="12" y="13">007</text>
+      <text x="170" y="13" text-anchor="end">DESIGN</text>
+      <text x="90" y="52" text-anchor="middle" font-family="'Instrument Serif', serif"
+            font-style="italic" font-size="24" letter-spacing="0">Figma</text>
+    </g>
+    <!-- HUGGING FACE -->
+    <g transform="translate(1290,406)">
+      <use href="#module"/>
+      <text x="12" y="13">008</text>
+      <text x="170" y="13" text-anchor="end">MODEL</text>
+      <text x="90" y="52" text-anchor="middle" font-family="'Instrument Serif', serif"
+            font-style="italic" font-size="22" letter-spacing="0">Hugging Face</text>
+    </g>
+    <!-- DISCORD -->
+    <g transform="translate(430,486)">
+      <use href="#module"/>
+      <text x="12" y="13">009</text>
+      <text x="170" y="13" text-anchor="end">SOCIAL</text>
+      <text x="90" y="52" text-anchor="middle" font-family="'Instrument Serif', serif"
+            font-style="italic" font-size="24" letter-spacing="0">Discord</text>
+    </g>
+  </g>
+
+  <!-- Small legend block bottom-left -->
+  <g transform="translate(68,560)"
+     font-family="'IBM Plex Mono', ui-monospace, monospace"
+     fill="#1a1a1a" font-size="10" letter-spacing="2">
+    <line x1="0" y1="0" x2="160" y2="0" stroke="#1a1a1a" stroke-width="0.5"/>
+    <text x="0" y="16">OBSERVATION NOTES</text>
+    <text x="0" y="32" fill="#1a1a1a">— one declarative file</text>
+    <text x="0" y="46" fill="#1a1a1a">— nine targets shown</text>
+    <text x="0" y="60" fill="#1a1a1a">— permission envelope enforced</text>
+    <text x="0" y="74" fill="#a13d24">— apache 2.0 · open forever</text>
+  </g>
+
+  <!-- Scale bar bottom-right -->
+  <g transform="translate(1372,584)"
+     font-family="'IBM Plex Mono', ui-monospace, monospace"
+     fill="#1a1a1a" font-size="10" letter-spacing="2">
+    <line x1="0" y1="0" x2="160" y2="0" stroke="#1a1a1a" stroke-width="1"/>
+    <line x1="0" y1="-4" x2="0" y2="4" stroke="#1a1a1a" stroke-width="0.75"/>
+    <line x1="80" y1="-3" x2="80" y2="3" stroke="#1a1a1a" stroke-width="0.75"/>
+    <line x1="160" y1="-4" x2="160" y2="4" stroke="#1a1a1a" stroke-width="0.75"/>
+    <text x="80" y="18" text-anchor="middle">1 UNIT = 1 PLATFORM</text>
+  </g>
+</svg>

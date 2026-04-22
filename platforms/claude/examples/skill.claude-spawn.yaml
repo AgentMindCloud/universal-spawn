@@ -1,0 +1,39 @@
+spawn_version: "1.0.0"
+id: com.example.claude-skill-citations
+name: Citations
+kind: ai-skill
+summary: A Claude skill that adds citation footnotes to long-form output.
+description: >
+  A Claude Skill that inspects the assistant's draft response and, for
+  each factual claim, attaches a numbered citation referencing the
+  conversation's quoted sources. Runs entirely inside the Claude
+  sandbox — no network access required.
+license: Apache-2.0
+author:
+  name: Citations Co.
+  handle: citations-co
+source:
+  type: git
+  url: https://github.com/citations-co/claude-skill-citations
+keywords: [claude, skill, citations, long-form]
+categories: [ai, writing]
+runtime:
+  language: typescript
+  os: [any]
+  arch: [any]
+  network_required: false
+entrypoints:
+  - id: skill
+    kind: tool-call
+    label: add-citations
+    ref: tools/add-citations.json
+min_permissions: []
+safe_for_auto_spawn: true
+platforms:
+  claude:
+    skill_type: skill
+    skill_file: skill.yaml
+    model: claude-sonnet-4-6
+    surface: [claude-app, claude-api, claude-code]
+    prompt_cache: true
+spawn_targets: [claude]

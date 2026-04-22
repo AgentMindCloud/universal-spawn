@@ -1,0 +1,59 @@
+spawn_version: "1.0.0"
+id: com.example.openai-ticket-triage
+name: Ticket Triage
+kind: ai-agent
+summary: OpenAI function tool that classifies incoming support tickets.
+description: >
+  A single-function OpenAI agent that classifies a support ticket into
+  a fixed taxonomy and returns a structured JSON object. Uses strict
+  tool mode and a JSON Schema response format.
+license: Apache-2.0
+author:
+  name: Support Co.
+  handle: support-co
+source:
+  type: git
+  url: https://github.com/support-co/openai-triage
+keywords: [openai, support, classification]
+categories: [ai, productivity]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  network_required: true
+  os: [linux]
+  arch: [x86_64]
+entrypoints:
+  - id: triage
+    kind: tool-call
+    label: classify_ticket
+    ref: tools/classify.json
+    inputs:
+      - name: ticket
+        type: string
+        required: true
+    outputs:
+      - name: category
+        type: string
+      - name: priority
+        type: string
+env_vars_required:
+  - name: OPENAI_API_KEY
+    description: OpenAI API key for model calls.
+    secret: true
+min_permissions:
+  - network:outbound:api.openai.com
+rate_limit_qps: 5
+cost_limit_usd_daily: 10
+safe_for_auto_spawn: true
+platforms:
+  openai:
+    model: gpt-5
+    tools:
+      - name: classify_ticket
+        function_ref: tools/classify.json
+        strict: true
+    response_format: json_schema
+    response_schema_ref: schemas/classification.json
+    reasoning_effort: low
+    temperature: 0
+spawn_targets: [openai]

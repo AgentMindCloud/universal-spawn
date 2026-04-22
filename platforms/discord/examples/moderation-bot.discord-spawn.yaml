@@ -1,0 +1,58 @@
+spawn_version: "1.0.0"
+id: com.example.discord-moderator
+name: Discord Moderator
+kind: bot
+summary: A moderation bot with AutoMod integration and message-command.
+description: >
+  A Discord moderation bot that listens to guild messages for banned
+  patterns, integrates with Discord's AutoMod system, and exposes one
+  slash command and one message command. Declares the corresponding
+  message-content intent explicitly.
+license: Apache-2.0
+author:
+  name: Mod Co.
+  handle: mod-co
+source:
+  type: git
+  url: https://github.com/mod-co/discord-moderator
+keywords: [discord, moderation, automod, bot]
+categories: [social, security]
+runtime:
+  language: typescript
+  engines:
+    node: ">=20"
+  os: [linux]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: report
+    kind: slash-command
+    label: /report
+    ref: commands/report.json
+  - id: flag
+    kind: slash-command
+    label: Flag Message (context menu)
+    ref: commands/flag-message.json
+env_vars_required:
+  - name: DISCORD_BOT_TOKEN
+    description: Bot token.
+    secret: true
+min_permissions:
+  - network:outbound:discord.com
+  - network:outbound:gateway.discord.gg
+  - messages:read
+rate_limit_qps: 20
+safe_for_auto_spawn: false
+platforms:
+  discord:
+    scopes: [bot, applications.commands, messages.read]
+    intents:
+      - guilds
+      - guild_messages
+      - message_content
+      - auto_moderation_execution
+    slash_commands:
+      - file: commands/report.json
+    message_commands:
+      - file: commands/flag-message.json
+spawn_targets: [discord]

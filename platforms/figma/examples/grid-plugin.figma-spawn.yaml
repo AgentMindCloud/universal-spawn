@@ -1,0 +1,42 @@
+spawn_version: "1.0.0"
+id: com.example.figma-parchment-grid
+name: Parchment Grid
+kind: creative-tool
+summary: Applies a Residual Frequencies grid to a selected frame.
+description: >
+  A Figma plugin that applies a laboratory-plate grid with tick rules
+  to any selected frame, matching the Residual Frequencies Parchment
+  palette. Zero network access — all calculation happens locally.
+license: Apache-2.0
+author:
+  name: Parchment Studio
+  handle: parchment-studio
+source:
+  type: git
+  url: https://github.com/parchment-studio/figma-grid
+keywords: [figma, plugin, grid, parchment, residual-frequencies]
+categories: [graphics, productivity]
+runtime:
+  language: typescript
+  os: [any]
+  arch: [any]
+entrypoints:
+  - id: panel
+    kind: ui-panel
+    label: Parchment Grid
+    ref: ui/index.html
+  - id: main
+    kind: script
+    label: Plugin entry
+    ref: src/code.ts
+min_permissions:
+  - fs:read
+safe_for_auto_spawn: true
+platforms:
+  figma:
+    manifest_file: figma.manifest.json
+    editor_type: [figma, figjam]
+    network_access: none
+    capabilities: []
+    menu_file: figma.menu.json
+spawn_targets: [figma]

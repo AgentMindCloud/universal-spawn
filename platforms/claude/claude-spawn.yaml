@@ -1,0 +1,51 @@
+spawn_version: "1.0.0"
+id: com.example.claude-template
+name: Claude Template
+kind: ai-skill
+description: >
+  Canonical template for a Claude-targeted universal-spawn manifest.
+  Replace every `com.example.*` identifier and each placeholder field
+  before use. Every field this template sets is either required or
+  broadly recommended.
+license: Apache-2.0
+author:
+  name: Your Name
+  handle: yourhandle
+source:
+  type: git
+  url: https://github.com/yourhandle/claude-template
+categories: [ai]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  os: [linux, macos]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: tool
+    kind: tool-call
+    label: Callable tool
+    ref: tools/tool.json
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key for all Claude model calls.
+    secret: true
+min_permissions:
+  - network:outbound:api.anthropic.com
+  - model:call:claude-opus-4-7
+rate_limit_qps: 3
+cost_limit_usd_daily: 5
+safe_for_auto_spawn: false
+platforms:
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+    surface: [claude-api, claude-code]
+    tools:
+      - name: do_work
+        function_ref: tools/tool.json
+    prompt_cache: true
+    thinking:
+      type: enabled
+      budget_tokens: 8192
+spawn_targets: [claude]

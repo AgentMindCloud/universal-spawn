@@ -1,0 +1,38 @@
+spawn_version: "1.0.0"
+id: com.example.huggingface-template
+name: Hugging Face Template
+kind: ai-model
+description: >
+  Canonical template for a Hugging Face-targeted universal-spawn
+  manifest. Public model repository with a single transformers-backed
+  inference endpoint.
+license: Apache-2.0
+author:
+  name: Your Name
+  handle: yourhandle
+source:
+  type: git
+  url: https://github.com/yourhandle/huggingface-template
+categories: [ai]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  os: [linux]
+  arch: [x86_64, aarch64]
+  gpu_required: true
+env_vars_required:
+  - name: HF_TOKEN
+    description: Hugging Face access token.
+    secret: true
+min_permissions:
+  - network:outbound:huggingface.co
+platforms:
+  huggingface:
+    repo_kind: model
+    visibility: public
+    card_file: README.md
+    tags: ["text-generation", "parchment"]
+    inference:
+      pipeline_tag: text-generation
+      library_name: transformers
+spawn_targets: [huggingface]

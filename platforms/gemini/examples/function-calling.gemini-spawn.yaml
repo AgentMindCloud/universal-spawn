@@ -1,0 +1,56 @@
+spawn_version: "1.0.0"
+id: com.example.weather-lookup
+name: Weather Lookup
+kind: ai-agent
+summary: Function-calling weather lookup for Gemini 2.5 Pro.
+description: >
+  A single-function Gemini agent that calls an external weather API
+  when the user asks about conditions. Demonstrates minimal function
+  calling with no grounding and default safety settings.
+license: Apache-2.0
+author:
+  name: Weather Co.
+  handle: weather-co
+source:
+  type: git
+  url: https://github.com/weather-co/gemini-weather
+keywords: [gemini, weather, function-calling]
+categories: [ai, productivity]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  os: [linux, macos]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: lookup
+    kind: tool-call
+    label: lookup_weather
+    ref: tools/lookup.json
+    inputs:
+      - name: city
+        type: string
+        required: true
+    outputs:
+      - name: conditions
+        type: object
+env_vars_required:
+  - name: GOOGLE_API_KEY
+    description: Google API key for Gemini calls.
+    secret: true
+  - name: WEATHER_API_KEY
+    description: Third-party weather API key.
+    secret: true
+min_permissions:
+  - network:outbound:generativelanguage.googleapis.com
+  - network:outbound:api.open-meteo.com
+rate_limit_qps: 2
+cost_limit_usd_daily: 2
+safe_for_auto_spawn: true
+platforms:
+  gemini:
+    model: gemini-2-5-flash
+    tools:
+      - name: lookup_weather
+        function_ref: tools/lookup.json
+spawn_targets: [gemini]

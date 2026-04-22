@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://universal-spawn.org/platforms/gemini/v1.0.0/schema.extension.json",
+  "title": "universal-spawn Gemini platform extension",
+  "description": "Strict JSON Schema for the `platforms.gemini` object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "model": {
+      "type": "string",
+      "description": "Recommended Gemini model.",
+      "enum": [
+        "gemini-2-5-pro",
+        "gemini-2-5-flash",
+        "gemini-2-5-flash-lite"
+      ]
+    },
+    "system_instruction_file": {
+      "type": "string",
+      "description": "Relative path to a file whose contents are sent as the Gemini system instruction."
+    },
+    "tools": {
+      "type": "array",
+      "description": "Function declarations exposed via Gemini function calling.",
+      "items": {
+        "type": "object",
+        "required": ["name", "function_ref"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$" },
+          "function_ref": { "type": "string" }
+        }
+      }
+    },
+    "extension": {
+      "type": "object",
+      "description": "Declares this manifest as a Vertex AI Extension (OpenAPI-backed).",
+      "additionalProperties": false,
+      "required": ["openapi_ref"],
+      "properties": {
+        "openapi_ref": { "type": "string", "description": "Relative path to the OpenAPI document." },
+        "auth": {
+          "type": "string",
+          "enum": ["none", "api_key", "oauth", "gcp_service_account"]
+        }
+      }
+    },
+    "grounding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "google_search": { "type": "boolean", "default": false },
+        "vertex_search_corpus": { "type": "string" }
+      }
+    },
+    "safety_settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "harassment":            { "$ref": "#/$defs/threshold" },
+        "hate_speech":           { "$ref": "#/$defs/threshold" },
+        "sexually_explicit":     { "$ref": "#/$defs/threshold" },
+        "dangerous_content":     { "$ref": "#/$defs/threshold" }
+      }
+    },
+    "code_execution": {
+      "type": "boolean",
+      "description": "Enables Gemini's code execution tool. Respects min_permissions of the manifest.",
+      "default": false
+    }
+  },
+  "$defs": {
+    "threshold": {
+      "type": "string",
+      "enum": ["block_none", "block_low_and_above", "block_medium_and_above", "block_only_high"]
+    }
+  }
+}

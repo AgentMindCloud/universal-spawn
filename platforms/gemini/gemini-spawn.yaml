@@ -1,0 +1,49 @@
+spawn_version: "1.0.0"
+id: com.example.gemini-template
+name: Gemini Template
+kind: ai-agent
+description: >
+  Canonical template for a Gemini-targeted universal-spawn manifest.
+  Replace every placeholder identifier before use. Shows function-call
+  tooling, grounding, safety settings, and code execution.
+license: Apache-2.0
+author:
+  name: Your Name
+  handle: yourhandle
+source:
+  type: git
+  url: https://github.com/yourhandle/gemini-template
+categories: [ai]
+runtime:
+  language: python
+  language_version: ">=3.11"
+  os: [linux, macos]
+  arch: [x86_64, arm64]
+  network_required: true
+entrypoints:
+  - id: tool
+    kind: tool-call
+    label: do_work
+    ref: tools/do_work.json
+env_vars_required:
+  - name: GOOGLE_API_KEY
+    description: Google API key used for Gemini calls.
+    secret: true
+min_permissions:
+  - network:outbound:generativelanguage.googleapis.com
+rate_limit_qps: 3
+cost_limit_usd_daily: 5
+platforms:
+  gemini:
+    model: gemini-2-5-pro
+    system_instruction_file: prompts/system.md
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+    grounding:
+      google_search: true
+    safety_settings:
+      harassment: block_medium_and_above
+      dangerous_content: block_medium_and_above
+    code_execution: false
+spawn_targets: [gemini]
