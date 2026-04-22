@@ -1,0 +1,30 @@
+version: "1.0"
+name: Render Static Docs
+type: site
+summary: Minimal Render static site.
+description: Static site service. No databases. Auto-deploy on push.
+
+platforms:
+  render:
+    region: oregon
+    services:
+      - name: docs
+        kind: static
+        runtime: static
+        build_command: "pnpm build"
+        auto_deploy: true
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [render]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Docs Team, handle: docs-team }
+  source: { type: git, url: https://github.com/docs-team/render-docs }
+  id: com.docs-team.render-docs

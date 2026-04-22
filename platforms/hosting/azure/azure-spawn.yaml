@@ -1,0 +1,37 @@
+version: "1.0"
+name: Azure Template
+type: web-app
+description: Template for an Azure-targeted universal-spawn manifest.
+
+platforms:
+  azure:
+    runtime: container_apps
+    location: westus2
+    resource_group: rg-your-app
+    container_apps:
+      environment: cae-your-app
+      image: yourregistry.azurecr.io/your-app:latest
+      cpu: "0.5"
+      memory: 1.0Gi
+      min_replicas: 1
+      max_replicas: 10
+      ingress:
+        external: true
+        target_port: 8080
+        transport: auto
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Connection string (Key Vault).
+    secret: true
+
+deployment:
+  targets: [azure]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/azure-template }

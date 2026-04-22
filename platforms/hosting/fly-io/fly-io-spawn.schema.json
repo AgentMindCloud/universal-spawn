@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/fly-io/fly-io-spawn.schema.json",
+  "title": "universal-spawn with Fly.io platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "fly-io"
+          ],
+          "properties": {
+            "fly-io": {
+              "$ref": "#/definitions/fly-io"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "fly-io": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app",
+        "primary_region"
+      ],
+      "properties": {
+        "app": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "primary_region": {
+          "type": "string",
+          "pattern": "^[a-z]{3}$"
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]{3}$"
+          }
+        },
+        "vm": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "size": {
+              "type": "string",
+              "enum": [
+                "shared-cpu-1x",
+                "shared-cpu-2x",
+                "shared-cpu-4x",
+                "shared-cpu-8x",
+                "performance-1x",
+                "performance-2x",
+                "performance-4x",
+                "performance-8x",
+                "a100-40gb",
+                "a100-80gb",
+                "l40s"
+              ]
+            },
+            "memory_mb": {
+              "type": "integer",
+              "minimum": 256,
+              "maximum": 524288
+            }
+          }
+        },
+        "http_service": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "internal_port": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "force_https": {
+              "type": "boolean",
+              "default": true
+            },
+            "auto_stop_machines": {
+              "type": "boolean",
+              "default": true
+            },
+            "auto_start_machines": {
+              "type": "boolean",
+              "default": true
+            },
+            "min_machines_running": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 200
+            }
+          }
+        },
+        "mounts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source",
+              "destination"
+            ],
+            "properties": {
+              "source": {
+                "type": "string"
+              },
+              "destination": {
+                "type": "string"
+              },
+              "size_gb": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4096
+              }
+            }
+          }
+        },
+        "processes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "healthcheck": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "interval_seconds": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "timeout_seconds": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

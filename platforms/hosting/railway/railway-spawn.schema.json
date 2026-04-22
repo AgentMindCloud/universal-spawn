@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/railway/railway-spawn.schema.json",
+  "title": "universal-spawn with Railway platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "railway"
+          ],
+          "properties": {
+            "railway": {
+              "$ref": "#/definitions/railway"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "railway": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "build": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "provider": {
+              "type": "string",
+              "enum": [
+                "nixpacks",
+                "docker",
+                "buildpacks"
+              ]
+            },
+            "dockerfile_path": {
+              "type": "string"
+            },
+            "watch_patterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "start_command": {
+          "type": "string"
+        },
+        "healthcheck": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "timeout_seconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 600
+            }
+          }
+        },
+        "plugins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "postgresql",
+                  "mysql",
+                  "redis",
+                  "mongodb"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "volume_size_gb": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 500
+              }
+            }
+          }
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "region": {
+          "type": "string",
+          "enum": [
+            "us-west1",
+            "us-east4",
+            "europe-west4",
+            "asia-southeast1"
+          ]
+        },
+        "template": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "slug": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,63}$"
+            },
+            "description": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "web",
+                "api",
+                "bot",
+                "database",
+                "job",
+                "other"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

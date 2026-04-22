@@ -1,0 +1,30 @@
+version: "1.0"
+name: AWS Template
+type: api-service
+description: Template for an AWS-targeted universal-spawn manifest.
+
+platforms:
+  aws:
+    runtime: lambda
+    region: us-east-1
+    iac: sam
+    lambda:
+      runtime_id: nodejs22.x
+      functions:
+        - { name: Hello, handler: dist/handler.handler, memory_mb: 512, timeout_seconds: 10, route: "GET /hello" }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: API_SECRET
+    description: API secret.
+    secret: true
+
+deployment:
+  targets: [aws]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/aws-template }

@@ -1,0 +1,67 @@
+version: "1.0"
+name: Render Full Stack
+type: web-app
+summary: Full-stack Render Blueprint with web + worker + cron + Postgres + Redis.
+description: >
+  Full Blueprint: web (Node), worker (Python), cron (daily),
+  Postgres primary, Redis cache. Two env var groups separate
+  app secrets from observability secrets.
+
+platforms:
+  render:
+    region: virginia
+    services:
+      - name: web
+        kind: web
+        runtime: node
+        plan: standard
+        build_command: "pnpm install && pnpm build"
+        start_command: "pnpm start"
+        health_check_path: /healthz
+        env_var_group: app
+      - name: worker
+        kind: worker
+        runtime: python
+        plan: standard
+        build_command: "pip install -r requirements.txt"
+        start_command: "python worker.py"
+        env_var_group: app
+      - name: nightly
+        kind: cron
+        runtime: node
+        plan: starter
+        schedule: "0 3 * * *"
+        build_command: "pnpm install"
+        start_command: "pnpm run nightly"
+        env_var_group: obs
+    databases:
+      - { name: db, kind: postgresql, plan: pro, postgres_major_version: 16 }
+      - { name: cache, kind: redis, plan: starter }
+    env_var_groups:
+      - { name: app }
+      - { name: obs }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 40
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Injected by the Postgres service.
+    secret: true
+  - name: REDIS_URL
+    description: Injected by the Redis service.
+    secret: true
+  - name: SESSION_SECRET
+    description: Session cookie signing secret.
+    secret: true
+
+deployment:
+  targets: [render]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/render-full-stack }
+  id: com.stack-co.render-full-stack

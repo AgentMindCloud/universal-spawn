@@ -1,0 +1,48 @@
+version: "1.0"
+name: Railway Full Stack
+type: web-app
+summary: Full-stack Remix app with Postgres + Redis, template-registered.
+description: >
+  Full stack Remix app with a Postgres primary db, Redis cache, and
+  a worker replica. Registered as a Railway template for one-click
+  reuse.
+
+platforms:
+  railway:
+    build: { provider: nixpacks, watch_patterns: ["app/**", "prisma/**"] }
+    start_command: "pnpm start"
+    healthcheck: { path: /healthz, timeout_seconds: 15 }
+    plugins:
+      - { kind: postgresql, name: db, volume_size_gb: 20 }
+      - { kind: redis, name: cache }
+    replicas: 2
+    region: europe-west4
+    template:
+      slug: remix-full-stack
+      description: Remix full-stack starter with Postgres + Redis.
+      category: web
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 15
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Injected by the postgresql plugin.
+    secret: true
+  - name: REDIS_URL
+    description: Injected by the redis plugin.
+    secret: true
+  - name: SESSION_SECRET
+    description: Session cookie signing secret.
+    secret: true
+
+deployment:
+  targets: [railway]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co }
+  source: { type: git, url: https://github.com/stack-co/railway-full-stack }
+  id: com.stack-co.railway-full-stack

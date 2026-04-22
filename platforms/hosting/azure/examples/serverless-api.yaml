@@ -1,0 +1,34 @@
+version: "1.0"
+name: Azure Functions Queue Worker
+type: api-service
+summary: Queue-triggered Azure Function on the Premium plan.
+description: Node 22 Azure Function consuming a Service Bus queue.
+
+platforms:
+  azure:
+    runtime: functions
+    location: northeurope
+    resource_group: rg-events
+    functions:
+      plan: Premium
+      runtime_id: node-22
+      trigger:
+        kind: servicebus
+        queue_name: orders
+
+safety:
+  min_permissions: [network:outbound]
+
+env_vars_required:
+  - name: SERVICEBUS_CONNECTION_STRING
+    description: Service Bus connection string (Key Vault reference).
+    secret: true
+
+deployment:
+  targets: [azure]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Events Co., handle: events-co }
+  source: { type: git, url: https://github.com/events-co/azure-queue-worker }
+  id: com.events-co.azure-queue-worker

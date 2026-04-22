@@ -1,0 +1,31 @@
+version: "1.0"
+name: GCP App Engine Static
+type: site
+summary: Minimal static site on App Engine Standard using the static handler.
+description: Single default App Engine service serving static assets.
+
+platforms:
+  gcp:
+    runtime: app_engine
+    project_id: your-project
+    region: us-central
+    app_engine:
+      service: default
+      runtime_id: nodejs22
+      instance_class: F1
+      scaling: automatic
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [gcp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Static Co., handle: static-co }
+  source: { type: git, url: https://github.com/static-co/gcp-app-engine-static }
+  id: com.static-co.gcp-app-engine-static

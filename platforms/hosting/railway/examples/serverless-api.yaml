@@ -1,0 +1,36 @@
+version: "1.0"
+name: Railway API
+type: api-service
+summary: Node API with Redis-backed rate limiting on Railway.
+description: Fastify API. Redis plugin provisioned. Healthcheck + 2 replicas.
+
+platforms:
+  railway:
+    build: { provider: nixpacks }
+    start_command: "node dist/server.js"
+    healthcheck: { path: /healthz, timeout_seconds: 10 }
+    plugins:
+      - { kind: redis, name: cache }
+    replicas: 2
+    region: us-east4
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  rate_limit_qps: 100
+
+env_vars_required:
+  - name: API_SECRET
+    description: API signing secret.
+    secret: true
+  - name: REDIS_URL
+    description: Injected by the redis plugin.
+    secret: true
+
+deployment:
+  targets: [railway]
+
+metadata:
+  license: MIT
+  author: { name: API Co., handle: api-co }
+  source: { type: git, url: https://github.com/api-co/railway-api }
+  id: com.api-co.railway-api

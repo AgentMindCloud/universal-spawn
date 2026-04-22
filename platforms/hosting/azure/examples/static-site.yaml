@@ -1,0 +1,31 @@
+version: "1.0"
+name: Azure Static Web App
+type: site
+summary: Minimal Azure Static Web Apps site with no API.
+description: Astro static site on SWA Free plan.
+
+platforms:
+  azure:
+    runtime: static_web_apps
+    location: westeurope
+    resource_group: rg-docs
+    static_web_apps:
+      app_location: /
+      output_location: dist
+      app_build_command: "pnpm build"
+      sku: Free
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [azure]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Docs Team, handle: docs-team }
+  source: { type: git, url: https://github.com/docs-team/azure-swa-docs }
+  id: com.docs-team.azure-swa-docs

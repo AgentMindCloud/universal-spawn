@@ -1,0 +1,46 @@
+version: "1.0"
+name: Heroku Full Stack
+type: web-app
+summary: Full-stack Heroku app with container stack, Postgres, Redis, Papertrail.
+description: >
+  Container stack app (image built locally), Postgres primary, Redis
+  cache, Papertrail logs. EU region for data residency.
+
+platforms:
+  heroku:
+    stack: container
+    formation:
+      web:    { quantity: 2, size: standard-2x }
+      worker: { quantity: 1, size: standard-1x }
+    addons:
+      - { plan: "heroku-postgresql:standard-0", as: DATABASE }
+      - { plan: "heroku-redis:premium-0", as: REDIS }
+      - { plan: "papertrail:choklad" }
+    scripts:
+      postdeploy: "./bin/release"
+      pr_predestroy: "./bin/pr-destroy"
+    region: eu
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 40
+  safe_for_auto_spawn: false
+  data_residency: [eu]
+
+env_vars_required:
+  - name: SESSION_SECRET
+    description: Session cookie signing secret.
+    secret: true
+  - name: NEWRELIC_LICENSE_KEY
+    description: New Relic license key.
+    required: false
+    secret: true
+
+deployment:
+  targets: [heroku]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co, org: Stack }
+  source: { type: git, url: https://github.com/stack-co/heroku-full-stack }
+  id: com.stack-co.heroku-full-stack

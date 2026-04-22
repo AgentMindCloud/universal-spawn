@@ -1,0 +1,36 @@
+version: "1.0"
+name: Heroku API with Worker
+type: api-service
+summary: Node API with worker dyno and Postgres.
+description: Web + worker dynos + heroku-postgresql. Migrations on postdeploy.
+
+platforms:
+  heroku:
+    stack: heroku-24
+    buildpacks:
+      - { url: heroku/nodejs }
+    formation:
+      web:    { quantity: 1, size: standard-1x }
+      worker: { quantity: 1, size: standard-1x }
+    addons:
+      - { plan: "heroku-postgresql:essential-0", as: DATABASE }
+    scripts: { postdeploy: "npm run migrate" }
+    region: us
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  rate_limit_qps: 50
+
+env_vars_required:
+  - name: SESSION_SECRET
+    description: Session secret.
+    secret: true
+
+deployment:
+  targets: [heroku]
+
+metadata:
+  license: Apache-2.0
+  author: { name: API Co., handle: api-co }
+  source: { type: git, url: https://github.com/api-co/heroku-api-worker }
+  id: com.api-co.heroku-api-worker

@@ -1,0 +1,28 @@
+version: "1.0"
+name: Railway Static Site
+type: site
+summary: Minimal static site served from Railway via nginx image.
+description: Single Docker service serving static assets through nginx.
+
+platforms:
+  railway:
+    build: { provider: docker, dockerfile_path: Dockerfile }
+    start_command: "nginx -g 'daemon off;'"
+    healthcheck: { path: /, timeout_seconds: 5 }
+    replicas: 1
+    region: us-west1
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [railway]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Static Co., handle: static-co }
+  source: { type: git, url: https://github.com/static-co/railway-static }
+  id: com.static-co.railway-static

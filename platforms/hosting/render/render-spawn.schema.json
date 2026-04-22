@@ -1,0 +1,176 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/render/render-spawn.schema.json",
+  "title": "universal-spawn with Render platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "render"
+          ],
+          "properties": {
+            "render": {
+              "$ref": "#/definitions/render"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "render": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "services"
+      ],
+      "properties": {
+        "services": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "kind"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "web",
+                  "worker",
+                  "cron",
+                  "static",
+                  "private_service"
+                ]
+              },
+              "runtime": {
+                "type": "string",
+                "enum": [
+                  "node",
+                  "python",
+                  "ruby",
+                  "go",
+                  "elixir",
+                  "rust",
+                  "docker",
+                  "static"
+                ]
+              },
+              "plan": {
+                "type": "string",
+                "enum": [
+                  "free",
+                  "starter",
+                  "standard",
+                  "pro",
+                  "pro-plus",
+                  "pro-max"
+                ]
+              },
+              "build_command": {
+                "type": "string"
+              },
+              "start_command": {
+                "type": "string"
+              },
+              "schedule": {
+                "type": "string",
+                "description": "Cron expression (only when kind=cron)."
+              },
+              "health_check_path": {
+                "type": "string"
+              },
+              "auto_deploy": {
+                "type": "boolean",
+                "default": true
+              },
+              "env_var_group": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "databases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "kind"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "postgresql",
+                  "redis"
+                ]
+              },
+              "plan": {
+                "type": "string",
+                "enum": [
+                  "free",
+                  "starter",
+                  "standard",
+                  "pro"
+                ]
+              },
+              "postgres_major_version": {
+                "type": "integer",
+                "minimum": 13,
+                "maximum": 17
+              }
+            }
+          }
+        },
+        "env_var_groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              }
+            }
+          }
+        },
+        "region": {
+          "type": "string",
+          "enum": [
+            "oregon",
+            "frankfurt",
+            "ohio",
+            "singapore",
+            "virginia"
+          ]
+        }
+      }
+    }
+  }
+}

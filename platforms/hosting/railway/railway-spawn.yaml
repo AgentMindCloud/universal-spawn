@@ -1,0 +1,30 @@
+version: "1.0"
+name: Railway Template
+type: web-app
+description: Template for a Railway-targeted universal-spawn manifest.
+
+platforms:
+  railway:
+    build: { provider: nixpacks }
+    start_command: "pnpm start"
+    healthcheck: { path: /healthz, timeout_seconds: 10 }
+    plugins:
+      - { kind: postgresql, name: db }
+    replicas: 1
+    region: us-west1
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Injected by the postgresql plugin.
+    secret: true
+
+deployment:
+  targets: [railway]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/railway-template }

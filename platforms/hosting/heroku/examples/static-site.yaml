@@ -1,0 +1,29 @@
+version: "1.0"
+name: Heroku Static Assets
+type: site
+summary: Minimal Heroku static-assets app via the static buildpack.
+description: Static site served by heroku-community/static buildpack.
+
+platforms:
+  heroku:
+    stack: heroku-24
+    buildpacks:
+      - { url: "https://github.com/heroku/heroku-buildpack-static" }
+    formation:
+      web: { quantity: 1, size: eco }
+    region: us
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [heroku]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Static Co., handle: static-co }
+  source: { type: git, url: https://github.com/static-co/heroku-static }
+  id: com.static-co.heroku-static

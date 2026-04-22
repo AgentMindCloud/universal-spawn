@@ -1,0 +1,33 @@
+version: "1.0"
+name: Heroku Template
+type: web-app
+description: Template for a Heroku-targeted universal-spawn manifest.
+
+platforms:
+  heroku:
+    stack: heroku-24
+    buildpacks:
+      - { url: heroku/nodejs }
+    formation:
+      web: { quantity: 1, size: basic }
+      worker: { quantity: 0, size: basic }
+    addons:
+      - { plan: "heroku-postgresql:essential-0", as: DATABASE }
+    scripts: { postdeploy: "npm run migrate" }
+    region: us
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: SESSION_SECRET
+    description: Session cookie signing secret.
+    secret: true
+
+deployment:
+  targets: [heroku]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/heroku-template }

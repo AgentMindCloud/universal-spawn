@@ -1,0 +1,38 @@
+version: "1.0"
+name: GCP Cloud Functions Webhook
+type: api-service
+summary: Pub/Sub-triggered Cloud Function.
+description: Python 3.12 Cloud Function subscribed to a Pub/Sub topic.
+
+platforms:
+  gcp:
+    runtime: cloud_functions
+    project_id: your-project
+    region: us-central1
+    cloud_functions:
+      function_name: on-order-placed
+      runtime_id: python312
+      entry_point: on_order_placed
+      memory_mb: 512
+      timeout_seconds: 60
+      trigger:
+        kind: pubsub
+        topic: projects/your-project/topics/orders-placed
+
+safety:
+  min_permissions: [network:outbound]
+  rate_limit_qps: 50
+
+env_vars_required:
+  - name: DDB_WEBHOOK_SECRET
+    description: Signing secret stored in Secret Manager.
+    secret: true
+
+deployment:
+  targets: [gcp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Events Co., handle: events-co }
+  source: { type: git, url: https://github.com/events-co/gcp-pubsub-function }
+  id: com.events-co.gcp-pubsub-function

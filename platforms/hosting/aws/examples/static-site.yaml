@@ -1,0 +1,32 @@
+version: "1.0"
+name: AWS Amplify Static Site
+type: site
+summary: Minimal static site hosted on AWS Amplify Hosting.
+description: Astro static site; no SSR; CloudFront distribution.
+
+platforms:
+  aws:
+    runtime: amplify
+    region: us-east-1
+    iac: manual
+    amplify:
+      app:
+        name: docs-site
+        framework: astro
+        build_spec: amplify.yml
+        ssr: false
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [aws]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Docs Team, handle: docs-team }
+  source: { type: git, url: https://github.com/docs-team/aws-amplify-docs }
+  id: com.docs-team.aws-amplify-docs

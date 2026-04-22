@@ -1,0 +1,235 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/gcp/gcp-spawn.schema.json",
+  "title": "universal-spawn with Google Cloud (GCP) platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "gcp"
+          ],
+          "properties": {
+            "gcp": {
+              "$ref": "#/definitions/gcp"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "gcp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime",
+        "region"
+      ],
+      "properties": {
+        "runtime": {
+          "type": "string",
+          "enum": [
+            "cloud_run",
+            "cloud_functions",
+            "app_engine"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{4,29}$"
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^[a-z]+-[a-z]+[0-9]*$"
+        },
+        "service_account": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*@[a-z0-9.-]+\\.iam\\.gserviceaccount\\.com$"
+        },
+        "cloud_run": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "service_name": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,62}$"
+            },
+            "image": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "cpu": {
+              "type": "string",
+              "enum": [
+                "0.5",
+                "1",
+                "2",
+                "4",
+                "8"
+              ]
+            },
+            "memory": {
+              "type": "string",
+              "enum": [
+                "128Mi",
+                "256Mi",
+                "512Mi",
+                "1Gi",
+                "2Gi",
+                "4Gi",
+                "8Gi",
+                "16Gi",
+                "32Gi"
+              ]
+            },
+            "concurrency": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "min_instances": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            },
+            "max_instances": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "ingress": {
+              "type": "string",
+              "enum": [
+                "all",
+                "internal",
+                "internal-and-cloud-load-balancing"
+              ]
+            },
+            "allow_unauthenticated": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "cloud_functions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "function_name": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,62}$"
+            },
+            "runtime_id": {
+              "type": "string",
+              "enum": [
+                "nodejs20",
+                "nodejs22",
+                "python311",
+                "python312",
+                "go122",
+                "java21"
+              ]
+            },
+            "entry_point": {
+              "type": "string"
+            },
+            "memory_mb": {
+              "type": "integer",
+              "minimum": 128,
+              "maximum": 32768
+            },
+            "timeout_seconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3600
+            },
+            "trigger": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "http",
+                    "pubsub",
+                    "storage",
+                    "firestore",
+                    "scheduler"
+                  ]
+                },
+                "topic": {
+                  "type": "string"
+                },
+                "bucket": {
+                  "type": "string"
+                },
+                "firestore_document": {
+                  "type": "string"
+                },
+                "schedule": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "app_engine": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "service": {
+              "type": "string"
+            },
+            "runtime_id": {
+              "type": "string",
+              "enum": [
+                "nodejs20",
+                "nodejs22",
+                "python311",
+                "python312",
+                "go122",
+                "java21",
+                "custom"
+              ]
+            },
+            "instance_class": {
+              "type": "string",
+              "enum": [
+                "F1",
+                "F2",
+                "F4",
+                "F4_1G",
+                "B1",
+                "B2",
+                "B4",
+                "B4_1G",
+                "B8"
+              ]
+            },
+            "scaling": {
+              "type": "string",
+              "enum": [
+                "automatic",
+                "basic",
+                "manual"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

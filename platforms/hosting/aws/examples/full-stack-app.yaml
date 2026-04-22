@@ -1,0 +1,42 @@
+version: "1.0"
+name: AWS ECS Full Stack
+type: web-app
+summary: Full-stack ECS deployment with Fargate tasks and CDK IaC.
+description: >
+  Two ECS services on Fargate (web + worker) in us-west-2. CDK for IaC.
+  Uses an RDS Postgres cluster provisioned separately.
+
+platforms:
+  aws:
+    runtime: ecs
+    region: us-west-2
+    iac: cdk
+    ecs:
+      cluster: app-cluster
+      launch_type: FARGATE
+      services:
+        - { name: Web,    image: "123456789012.dkr.ecr.us-west-2.amazonaws.com/app-web:latest",    cpu: 512,  memory_mb: 1024, desired_count: 2, port: 3000 }
+        - { name: Worker, image: "123456789012.dkr.ecr.us-west-2.amazonaws.com/app-worker:latest", cpu: 512,  memory_mb: 1024, desired_count: 1, port: 9000 }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 60
+  safe_for_auto_spawn: false
+  data_residency: [us]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: RDS Postgres connection string (stored in Secrets Manager).
+    secret: true
+  - name: SESSION_SECRET
+    description: Session signing secret.
+    secret: true
+
+deployment:
+  targets: [aws]
+
+metadata:
+  license: MIT
+  author: { name: Stack Co., handle: stack-co, org: Stack }
+  source: { type: git, url: https://github.com/stack-co/aws-ecs-full-stack }
+  id: com.stack-co.aws-ecs-full-stack

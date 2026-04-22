@@ -1,0 +1,206 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/azure/azure-spawn.schema.json",
+  "title": "universal-spawn with Azure platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "azure"
+          ],
+          "properties": {
+            "azure": {
+              "$ref": "#/definitions/azure"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "azure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime",
+        "location"
+      ],
+      "properties": {
+        "runtime": {
+          "type": "string",
+          "enum": [
+            "static_web_apps",
+            "functions",
+            "container_apps"
+          ]
+        },
+        "location": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+$"
+        },
+        "resource_group": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.()-]{1,90}$"
+        },
+        "static_web_apps": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "app_location": {
+              "type": "string"
+            },
+            "api_location": {
+              "type": "string"
+            },
+            "output_location": {
+              "type": "string"
+            },
+            "app_build_command": {
+              "type": "string"
+            },
+            "sku": {
+              "type": "string",
+              "enum": [
+                "Free",
+                "Standard"
+              ]
+            }
+          }
+        },
+        "functions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "plan": {
+              "type": "string",
+              "enum": [
+                "Consumption",
+                "Premium",
+                "Dedicated",
+                "FlexConsumption"
+              ]
+            },
+            "runtime_id": {
+              "type": "string",
+              "enum": [
+                "node-20",
+                "node-22",
+                "python-3.11",
+                "python-3.12",
+                "dotnet-isolated-8.0",
+                "java-21"
+              ]
+            },
+            "trigger": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "http",
+                    "timer",
+                    "queue",
+                    "blob",
+                    "servicebus",
+                    "eventgrid"
+                  ]
+                },
+                "queue_name": {
+                  "type": "string"
+                },
+                "schedule": {
+                  "type": "string"
+                },
+                "blob_path": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "container_apps": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "environment": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string"
+            },
+            "cpu": {
+              "type": "string",
+              "enum": [
+                "0.25",
+                "0.5",
+                "0.75",
+                "1.0",
+                "1.25",
+                "1.5",
+                "1.75",
+                "2.0"
+              ]
+            },
+            "memory": {
+              "type": "string",
+              "enum": [
+                "0.5Gi",
+                "1.0Gi",
+                "1.5Gi",
+                "2.0Gi",
+                "2.5Gi",
+                "3.0Gi",
+                "3.5Gi",
+                "4.0Gi"
+              ]
+            },
+            "min_replicas": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 30
+            },
+            "max_replicas": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 300
+            },
+            "ingress": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "external": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "target_port": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 65535
+                },
+                "transport": {
+                  "type": "string",
+                  "enum": [
+                    "auto",
+                    "http",
+                    "http2",
+                    "tcp"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

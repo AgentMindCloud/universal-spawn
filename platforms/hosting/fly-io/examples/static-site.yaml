@@ -1,0 +1,32 @@
+version: "1.0"
+name: Fly Static Site
+type: site
+summary: Minimal static site on Fly.io via an nginx container.
+description: Dockerfile-packaged nginx serving static assets. Primary region only.
+
+platforms:
+  fly-io:
+    app: static-site
+    primary_region: iad
+    vm: { size: shared-cpu-1x, memory_mb: 256 }
+    http_service:
+      internal_port: 80
+      force_https: true
+      auto_stop_machines: true
+      auto_start_machines: true
+      min_machines_running: 0
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [fly-io]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Static Co., handle: static-co }
+  source: { type: git, url: https://github.com/static-co/fly-static }
+  id: com.static-co.fly-static

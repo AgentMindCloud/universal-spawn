@@ -1,0 +1,48 @@
+version: "1.0"
+name: Azure Container Apps Full Stack
+type: web-app
+summary: Container Apps full-stack deployment with external ingress + managed identity.
+description: >
+  Production web service on Azure Container Apps: 1 vCPU / 2Gi,
+  min 1 / max 20 replicas, HTTP/2 ingress. Database connection via
+  Key Vault reference.
+
+platforms:
+  azure:
+    runtime: container_apps
+    location: westus2
+    resource_group: rg-acme-prod
+    container_apps:
+      environment: cae-acme-prod
+      image: acmeprod.azurecr.io/web:latest
+      cpu: "1.0"
+      memory: 2.0Gi
+      min_replicas: 1
+      max_replicas: 20
+      ingress:
+        external: true
+        target_port: 3000
+        transport: http2
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 50
+  safe_for_auto_spawn: false
+  data_residency: [us]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Postgres connection string (Key Vault reference).
+    secret: true
+  - name: SESSION_SECRET
+    description: Session cookie signing secret (Key Vault reference).
+    secret: true
+
+deployment:
+  targets: [azure]
+
+metadata:
+  license: MIT
+  author: { name: Acme IT, handle: acme-it, org: Acme }
+  source: { type: git, url: https://github.com/acme-it/azure-container-apps-web }
+  id: com.acme-it.azure-container-apps-web

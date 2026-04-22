@@ -1,0 +1,283 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/aws/aws-spawn.schema.json",
+  "title": "universal-spawn with AWS platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "aws"
+          ],
+          "properties": {
+            "aws": {
+              "$ref": "#/definitions/aws"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "aws": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime",
+        "region"
+      ],
+      "properties": {
+        "runtime": {
+          "type": "string",
+          "enum": [
+            "lambda",
+            "ecs",
+            "app_runner",
+            "amplify"
+          ]
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^[a-z]{2}-[a-z]+-[0-9]+$"
+        },
+        "iac": {
+          "type": "string",
+          "enum": [
+            "sam",
+            "cdk",
+            "terraform",
+            "cloudformation",
+            "manual"
+          ]
+        },
+        "lambda": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "runtime_id": {
+              "type": "string",
+              "enum": [
+                "nodejs20.x",
+                "nodejs22.x",
+                "python3.11",
+                "python3.12",
+                "python3.13",
+                "java21",
+                "provided.al2023",
+                "container"
+              ]
+            },
+            "functions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9-]{0,63}$"
+                  },
+                  "handler": {
+                    "type": "string"
+                  },
+                  "memory_mb": {
+                    "type": "integer",
+                    "minimum": 128,
+                    "maximum": 10240
+                  },
+                  "timeout_seconds": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 900
+                  },
+                  "route": {
+                    "type": "string",
+                    "description": "API Gateway route."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ecs": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "cluster": {
+              "type": "string"
+            },
+            "launch_type": {
+              "type": "string",
+              "enum": [
+                "FARGATE",
+                "FARGATE_SPOT"
+              ]
+            },
+            "services": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "image"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9-]{0,63}$"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "cpu": {
+                    "type": "integer",
+                    "minimum": 256,
+                    "maximum": 16384
+                  },
+                  "memory_mb": {
+                    "type": "integer",
+                    "minimum": 512,
+                    "maximum": 122880
+                  },
+                  "desired_count": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 500
+                  },
+                  "port": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 65535
+                  }
+                }
+              }
+            }
+          }
+        },
+        "app_runner": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "service": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "image"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "port": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 65535
+                },
+                "cpu": {
+                  "type": "string",
+                  "enum": [
+                    "0.25 vCPU",
+                    "0.5 vCPU",
+                    "1 vCPU",
+                    "2 vCPU",
+                    "4 vCPU"
+                  ]
+                },
+                "memory": {
+                  "type": "string",
+                  "enum": [
+                    "0.5 GB",
+                    "1 GB",
+                    "2 GB",
+                    "3 GB",
+                    "4 GB",
+                    "6 GB",
+                    "8 GB",
+                    "10 GB",
+                    "12 GB"
+                  ]
+                },
+                "auto_scaling": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "max_concurrency": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 200
+                    },
+                    "min_size": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 25
+                    },
+                    "max_size": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 25
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "amplify": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "app": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "framework": {
+                  "type": "string",
+                  "enum": [
+                    "next",
+                    "remix",
+                    "astro",
+                    "vite-react",
+                    "nuxt",
+                    "svelte-kit",
+                    "gatsby",
+                    "static"
+                  ]
+                },
+                "build_spec": {
+                  "type": "string",
+                  "description": "Path to amplify.yml."
+                },
+                "ssr": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "custom_domain": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hosting/heroku/heroku-spawn.schema.json",
+  "title": "universal-spawn with Heroku platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "heroku"
+          ],
+          "properties": {
+            "heroku": {
+              "$ref": "#/definitions/heroku"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "heroku": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stack": {
+          "type": "string",
+          "enum": [
+            "heroku-24",
+            "heroku-22",
+            "container"
+          ]
+        },
+        "buildpacks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "url"
+            ],
+            "properties": {
+              "url": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "formation": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "quantity",
+              "size"
+            ],
+            "properties": {
+              "quantity": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "size": {
+                "type": "string",
+                "enum": [
+                  "eco",
+                  "basic",
+                  "standard-1x",
+                  "standard-2x",
+                  "performance-m",
+                  "performance-l",
+                  "private-s",
+                  "private-m",
+                  "private-l",
+                  "shield-s",
+                  "shield-m",
+                  "shield-l"
+                ]
+              }
+            }
+          }
+        },
+        "addons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "plan"
+            ],
+            "properties": {
+              "plan": {
+                "type": "string",
+                "description": "e.g. heroku-postgresql:essential-0"
+              },
+              "as": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "scripts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "postdeploy": {
+              "type": "string"
+            },
+            "pr_predestroy": {
+              "type": "string"
+            }
+          }
+        },
+        "region": {
+          "type": "string",
+          "enum": [
+            "us",
+            "eu"
+          ]
+        }
+      }
+    }
+  }
+}

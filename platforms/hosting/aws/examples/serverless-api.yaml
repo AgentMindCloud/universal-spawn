@@ -1,0 +1,40 @@
+version: "1.0"
+name: AWS Lambda API
+type: api-service
+summary: API Gateway + Lambda + DynamoDB via SAM.
+description: >
+  Three Lambda functions behind API Gateway HTTP routes. SAM for IaC.
+  Env vars stored in SSM Parameter Store.
+
+platforms:
+  aws:
+    runtime: lambda
+    region: us-east-1
+    iac: sam
+    lambda:
+      runtime_id: nodejs22.x
+      functions:
+        - { name: GetOrder,    handler: dist/get-order.handler,    memory_mb: 512, timeout_seconds: 10, route: "GET /orders/{id}" }
+        - { name: CreateOrder, handler: dist/create-order.handler, memory_mb: 512, timeout_seconds: 10, route: "POST /orders" }
+        - { name: CancelOrder, handler: dist/cancel-order.handler, memory_mb: 512, timeout_seconds: 10, route: "POST /orders/{id}/cancel" }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  rate_limit_qps: 100
+  cost_limit_usd_daily: 25
+
+env_vars_required:
+  - name: DDB_TABLE_NAME
+    description: DynamoDB table name.
+  - name: API_SECRET
+    description: API signing secret stored in SSM.
+    secret: true
+
+deployment:
+  targets: [aws]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Orders Co., handle: orders-co }
+  source: { type: git, url: https://github.com/orders-co/aws-lambda-api }
+  id: com.orders-co.aws-lambda-api

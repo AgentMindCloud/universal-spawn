@@ -1,0 +1,38 @@
+version: "1.0"
+name: Render Template
+type: web-app
+description: Template for a Render-targeted universal-spawn manifest.
+
+platforms:
+  render:
+    region: oregon
+    services:
+      - name: web
+        kind: web
+        runtime: node
+        plan: starter
+        build_command: "pnpm install && pnpm build"
+        start_command: "pnpm start"
+        health_check_path: /healthz
+        auto_deploy: true
+        env_var_group: app
+    databases:
+      - { name: db, kind: postgresql, plan: starter, postgres_major_version: 16 }
+    env_var_groups:
+      - { name: app }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Injected by the managed Postgres service.
+    secret: true
+
+deployment:
+  targets: [render]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/render-template }

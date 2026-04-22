@@ -1,0 +1,49 @@
+version: "1.0"
+name: GCP Cloud Run App
+type: web-app
+summary: Full-stack Cloud Run deployment with custom service account and Secret Manager.
+description: >
+  Cloud Run service with 1 vCPU / 1Gi, min 1 / max 20 instances,
+  internal ingress plus load balancer, and a dedicated service
+  account. DATABASE_URL stored in Secret Manager.
+
+platforms:
+  gcp:
+    runtime: cloud_run
+    project_id: acme-prod
+    region: europe-west4
+    service_account: app@acme-prod.iam.gserviceaccount.com
+    cloud_run:
+      service_name: web
+      image: europe-west4-docker.pkg.dev/acme-prod/images/web:latest
+      port: 3000
+      cpu: "1"
+      memory: 1Gi
+      concurrency: 80
+      min_instances: 1
+      max_instances: 20
+      ingress: internal-and-cloud-load-balancing
+      allow_unauthenticated: false
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 50
+  safe_for_auto_spawn: false
+  data_residency: [eu]
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Postgres connection string (Secret Manager).
+    secret: true
+  - name: SESSION_SECRET
+    description: Session cookie signing secret (Secret Manager).
+    secret: true
+
+deployment:
+  targets: [gcp]
+
+metadata:
+  license: MIT
+  author: { name: Acme IT, handle: acme-it, org: Acme }
+  source: { type: git, url: https://github.com/acme-it/gcp-cloud-run-app }
+  id: com.acme-it.gcp-cloud-run-app

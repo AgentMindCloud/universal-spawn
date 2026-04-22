@@ -1,0 +1,52 @@
+version: "1.0"
+name: Render Web API and Worker
+type: api-service
+summary: Render Blueprint with one web service, one worker, Postgres.
+description: >
+  Node web service + background worker + managed Postgres. Workers
+  read from Postgres for job queue processing.
+
+platforms:
+  render:
+    region: frankfurt
+    services:
+      - name: api
+        kind: web
+        runtime: node
+        plan: standard
+        build_command: "pnpm install && pnpm build"
+        start_command: "pnpm start"
+        health_check_path: /healthz
+        env_var_group: app
+      - name: worker
+        kind: worker
+        runtime: node
+        plan: starter
+        build_command: "pnpm install && pnpm build:worker"
+        start_command: "pnpm worker"
+        env_var_group: app
+    databases:
+      - { name: db, kind: postgresql, plan: standard, postgres_major_version: 16 }
+    env_var_groups:
+      - { name: app }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  rate_limit_qps: 100
+
+env_vars_required:
+  - name: DATABASE_URL
+    description: Injected by the Postgres service.
+    secret: true
+  - name: API_SECRET
+    description: API signing secret.
+    secret: true
+
+deployment:
+  targets: [render]
+
+metadata:
+  license: Apache-2.0
+  author: { name: API Co., handle: api-co }
+  source: { type: git, url: https://github.com/api-co/render-api-worker }
+  id: com.api-co.render-api-worker
