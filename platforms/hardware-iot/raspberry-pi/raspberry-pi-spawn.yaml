@@ -1,0 +1,24 @@
+version: "1.0"
+name: Raspberry Pi Template
+type: firmware
+description: Template for a Raspberry-Pi-targeted universal-spawn manifest.
+
+platforms:
+  raspberry-pi:
+    model: pi-5
+    os: raspberry-pi-os
+    install_method: script
+    entry_file: install.sh
+
+safety:
+  min_permissions: [fs:write, network:outbound]
+
+env_vars_required: []
+
+deployment:
+  targets: [raspberry-pi]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/raspberry-pi-template }

@@ -1,0 +1,24 @@
+version: "1.0"
+name: LEGO SPIKE Template
+type: firmware
+description: Template for a LEGO-SPIKE-targeted universal-spawn manifest.
+
+platforms:
+  lego-spike:
+    generation: spike-prime
+    language: python
+    entry_file: project/main.py
+    app_version: "3.4"
+
+safety:
+  min_permissions: [usb:claim:vid=0x0694]
+
+env_vars_required: []
+
+deployment:
+  targets: [lego-spike]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/lego-spike-template }

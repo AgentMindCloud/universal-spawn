@@ -1,0 +1,23 @@
+version: "1.0"
+name: Arduino Template
+type: firmware
+description: Template for an Arduino-targeted universal-spawn manifest.
+
+platforms:
+  arduino:
+    kind: sketch
+    fqbn: "arduino:avr:uno"
+    entry_ino: src/main.ino
+
+safety:
+  min_permissions: [usb:claim:vid=0x2341]
+
+env_vars_required: []
+
+deployment:
+  targets: [arduino]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/arduino-template }

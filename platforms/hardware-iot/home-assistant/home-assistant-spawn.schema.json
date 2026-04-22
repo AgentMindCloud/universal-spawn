@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hardware-iot/home-assistant/home-assistant-spawn.schema.json",
+  "title": "universal-spawn with Home Assistant platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "home-assistant"
+          ],
+          "properties": {
+            "home-assistant": {
+              "$ref": "#/definitions/home-assistant"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "home-assistant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "integration",
+            "blueprint"
+          ]
+        },
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "iot_class": {
+          "type": "string",
+          "enum": [
+            "assumed_state",
+            "cloud_polling",
+            "cloud_push",
+            "local_polling",
+            "local_push",
+            "calculated"
+          ]
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "blueprint_kind": {
+          "type": "string",
+          "enum": [
+            "automation",
+            "script",
+            "template"
+          ]
+        }
+      }
+    }
+  }
+}

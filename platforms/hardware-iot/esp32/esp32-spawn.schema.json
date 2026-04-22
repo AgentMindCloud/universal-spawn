@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hardware-iot/esp32/esp32-spawn.schema.json",
+  "title": "universal-spawn with ESP32 platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "esp32"
+          ],
+          "properties": {
+            "esp32": {
+              "$ref": "#/definitions/esp32"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "esp32": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "chip"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "firmware",
+            "flash-via-companion"
+          ]
+        },
+        "chip": {
+          "type": "string",
+          "enum": [
+            "esp32",
+            "esp32-c3",
+            "esp32-s2",
+            "esp32-s3",
+            "esp32-c6",
+            "esp32-h2",
+            "esp32-p4"
+          ]
+        },
+        "framework": {
+          "type": "string",
+          "enum": [
+            "arduino",
+            "esp-idf",
+            "nuttx",
+            "zephyr"
+          ]
+        },
+        "partitions_csv": {
+          "type": "string"
+        },
+        "ota_channel": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "prebuilt_binary_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    }
+  }
+}

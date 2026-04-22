@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Sensor MicroPython
+type: firmware
+summary: Minimal MicroPython sensor sketch on a Pico (rp2 port).
+description: Single main.py.
+
+platforms:
+  micropython:
+    port: rp2
+    entry_script: src/main.py
+    libraries: ["github:peterhinch/micropython-async"]
+
+safety:
+  min_permissions: [usb:claim]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [micropython]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/micropython-plate-sensor }
+  id: com.plate-studio.micropython-plate-sensor

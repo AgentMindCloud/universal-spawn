@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Lab SPIKE Python
+type: firmware
+summary: Full LEGO SPIKE Prime Python project — drives a small data logger.
+description: Python-flavored SPIKE Prime project.
+
+platforms:
+  lego-spike:
+    generation: spike-prime
+    language: python
+    entry_file: project/main.py
+    app_version: "3.4"
+
+safety:
+  min_permissions: [usb:claim:vid=0x0694]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [lego-spike]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/lego-spike-plate-logger }
+  id: com.plate-studio.lego-spike-plate-logger

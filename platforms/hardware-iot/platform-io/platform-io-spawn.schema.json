@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hardware-iot/platform-io/platform-io-spawn.schema.json",
+  "title": "universal-spawn with PlatformIO platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "platform-io"
+          ],
+          "properties": {
+            "platform-io": {
+              "$ref": "#/definitions/platform-io"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "platform-io": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entry_env",
+        "board"
+      ],
+      "properties": {
+        "entry_env": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "board": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]+$"
+        },
+        "framework": {
+          "type": "string",
+          "enum": [
+            "arduino",
+            "espidf",
+            "mbed",
+            "stm32cube",
+            "zephyr",
+            "nuttx"
+          ]
+        },
+        "libraries": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

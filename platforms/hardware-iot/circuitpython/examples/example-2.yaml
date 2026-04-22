@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Pixel Frame
+type: firmware
+summary: Full CircuitPython project animating a NeoPixel parchment frame.
+description: Pico W board + four bundle libraries.
+
+platforms:
+  circuitpython:
+    board: raspberry_pi_pico_w
+    entry_script: code.py
+    bundle_libraries: [adafruit_bus_device, neopixel, adafruit_led_animation, adafruit_requests]
+
+safety:
+  min_permissions: [usb:claim, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [circuitpython]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/circuitpython-plate-pixel-frame }
+  id: com.plate-studio.circuitpython-plate-pixel-frame

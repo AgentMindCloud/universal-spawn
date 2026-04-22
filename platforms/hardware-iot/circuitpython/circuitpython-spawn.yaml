@@ -1,0 +1,23 @@
+version: "1.0"
+name: CircuitPython Template
+type: firmware
+description: Template for a CircuitPython-targeted universal-spawn manifest.
+
+platforms:
+  circuitpython:
+    board: adafruit_qtpy_esp32s3_n4r2
+    entry_script: code.py
+    bundle_libraries: [adafruit_bus_device, adafruit_dht]
+
+safety:
+  min_permissions: [usb:claim]
+
+env_vars_required: []
+
+deployment:
+  targets: [circuitpython]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/circuitpython-template }

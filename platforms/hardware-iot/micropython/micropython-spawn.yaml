@@ -1,0 +1,22 @@
+version: "1.0"
+name: MicroPython Template
+type: firmware
+description: Template for a MicroPython-targeted universal-spawn manifest.
+
+platforms:
+  micropython:
+    port: rp2
+    entry_script: src/main.py
+
+safety:
+  min_permissions: [usb:claim]
+
+env_vars_required: []
+
+deployment:
+  targets: [micropython]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/micropython-template }

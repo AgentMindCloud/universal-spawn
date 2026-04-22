@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Pi Install Script
+type: cli-tool
+summary: Minimal first-boot install script for a Pi 5.
+description: Bash script run after first boot; installs the parchment dashboard.
+
+platforms:
+  raspberry-pi:
+    model: pi-5
+    os: raspberry-pi-os
+    install_method: script
+    entry_file: install.sh
+
+safety:
+  min_permissions: [fs:write, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [raspberry-pi]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/raspberry-pi-plate-install }
+  id: com.plate-studio.raspberry-pi-plate-install

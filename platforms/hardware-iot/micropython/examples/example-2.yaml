@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Sensor Frozen Build
+type: firmware
+summary: Full MicroPython firmware build with frozen modules for an ESP32.
+description: Custom-built firmware with two frozen modules.
+
+platforms:
+  micropython:
+    port: esp32
+    entry_script: src/main.py
+    frozen_modules: [src/sensor, src/wifi_setup]
+
+safety:
+  min_permissions: [usb:claim:vid=0x303a]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [micropython]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/micropython-plate-frozen }
+  id: com.plate-studio.micropython-plate-frozen

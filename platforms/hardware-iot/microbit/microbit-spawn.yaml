@@ -1,0 +1,24 @@
+version: "1.0"
+name: micro:bit Template
+type: firmware
+description: Template for a micro:bit-targeted universal-spawn manifest.
+
+platforms:
+  microbit:
+    variant: v2
+    toolchain: makecode
+    entry_file: src/project.json
+    makecode_share_url: "https://makecode.microbit.org/_aaaaaa"
+
+safety:
+  min_permissions: [usb:claim:vid=0x0d28]
+
+env_vars_required: []
+
+deployment:
+  targets: [microbit]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/microbit-template }

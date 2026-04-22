@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate Sensor Flash-via-Companion
+type: firmware
+summary: Full Arduino flash-via-companion manifest — companion app pulls the prebuilt .hex and flashes via WebUSB.
+description: >
+  Companion installer (Arduino Lab, web flasher) reads this manifest,
+  downloads the prebuilt binary from `prebuilt_binary_url`, and
+  flashes it onto the target board over WebUSB. No local toolchain.
+
+platforms:
+  arduino:
+    kind: flash-via-companion
+    fqbn: "arduino:avr:uno"
+    prebuilt_binary_url: "https://releases.plate.example/plate-sensor.hex"
+
+safety:
+  min_permissions: [usb:claim:vid=0x2341]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [arduino]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/arduino-plate-sensor-flash }
+  id: com.plate-studio.arduino-plate-sensor-flash

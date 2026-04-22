@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hardware-iot/raspberry-pi/raspberry-pi-spawn.schema.json",
+  "title": "universal-spawn with Raspberry Pi platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "raspberry-pi"
+          ],
+          "properties": {
+            "raspberry-pi": {
+              "$ref": "#/definitions/raspberry-pi"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "raspberry-pi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "install_method"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": [
+            "pi-1",
+            "pi-2",
+            "pi-3",
+            "pi-4",
+            "pi-5",
+            "compute-module-4",
+            "compute-module-5",
+            "pico",
+            "pico-2",
+            "pico-w",
+            "pico-2-w",
+            "zero",
+            "zero-2-w"
+          ]
+        },
+        "os": {
+          "type": "string",
+          "enum": [
+            "raspberry-pi-os",
+            "raspberry-pi-os-lite",
+            "ubuntu",
+            "dietpi",
+            "none"
+          ]
+        },
+        "install_method": {
+          "type": "string",
+          "enum": [
+            "image-flash",
+            "overlay",
+            "script"
+          ]
+        },
+        "image_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "entry_file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

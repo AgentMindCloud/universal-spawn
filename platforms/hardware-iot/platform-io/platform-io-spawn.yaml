@@ -1,0 +1,23 @@
+version: "1.0"
+name: PlatformIO Template
+type: firmware
+description: Template for a PlatformIO-targeted universal-spawn manifest.
+
+platforms:
+  platform-io:
+    entry_env: esp32-s3-devkitc-1
+    board: esp32-s3-devkitc-1
+    framework: arduino
+
+safety:
+  min_permissions: [usb:claim:vid=0x303a]
+
+env_vars_required: []
+
+deployment:
+  targets: [platform-io]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/platform-io-template }

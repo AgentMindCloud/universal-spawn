@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hardware-iot/arduino/arduino-spawn.schema.json",
+  "title": "universal-spawn with Arduino platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "arduino"
+          ],
+          "properties": {
+            "arduino": {
+              "$ref": "#/definitions/arduino"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "arduino": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "fqbn"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "sketch",
+            "library",
+            "flash-via-companion"
+          ]
+        },
+        "fqbn": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*:[a-z][a-z0-9_-]*:[A-Za-z][A-Za-z0-9_-]*$"
+        },
+        "entry_ino": {
+          "type": "string"
+        },
+        "libraries": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prebuilt_binary_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    }
+  }
+}

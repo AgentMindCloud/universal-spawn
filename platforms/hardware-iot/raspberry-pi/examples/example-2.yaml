@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate OS Image
+type: firmware
+summary: Full prebuilt SD-card image for a Pi Zero 2 W kiosk display.
+description: Distributed as a flashable .img.xz at a hosted URL. dietpi base.
+
+platforms:
+  raspberry-pi:
+    model: zero-2-w
+    os: dietpi
+    install_method: image-flash
+    image_url: "https://releases.plate.example/plate-kiosk.img.xz"
+
+safety:
+  min_permissions: [fs:write, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [raspberry-pi]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: GPL-3.0-only
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/raspberry-pi-kiosk-image }
+  id: com.plate-studio.raspberry-pi-kiosk-image

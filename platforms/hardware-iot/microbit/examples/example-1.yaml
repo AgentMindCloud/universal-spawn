@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Pixel Lesson
+type: firmware
+summary: Minimal micro:bit MakeCode lesson — animates the parchment palette on the LED grid.
+description: V2 board. MakeCode share URL provided.
+
+platforms:
+  microbit:
+    variant: v2
+    toolchain: makecode
+    entry_file: src/lesson.json
+    makecode_share_url: "https://makecode.microbit.org/_xyz123abc"
+
+safety:
+  min_permissions: [usb:claim:vid=0x0d28]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [microbit]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/microbit-plate-lesson }
+  id: com.plate-studio.microbit-plate-lesson

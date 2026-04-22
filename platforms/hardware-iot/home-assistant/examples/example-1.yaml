@@ -1,0 +1,30 @@
+version: "1.0"
+name: Plate Sensor Integration
+type: extension
+summary: Minimal Home Assistant integration for a parchment-grade humidity sensor.
+description: Local-push IoT class. One Python requirement.
+
+platforms:
+  home-assistant:
+    kind: integration
+    domain: plate_sensor
+    iot_class: local_push
+    requirements: ["aiohttp>=3.9"]
+    dependencies: []
+
+safety:
+  min_permissions: [network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [home-assistant]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/home-assistant-plate-sensor }
+  id: com.plate-studio.home-assistant-plate-sensor

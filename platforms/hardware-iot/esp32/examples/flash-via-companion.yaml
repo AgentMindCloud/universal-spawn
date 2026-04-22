@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate Sensor Web-Flasher
+type: firmware
+summary: Full ESP32-S3 flash-via-companion manifest — esptool-js flashes the prebuilt binary over WebSerial.
+description: >
+  Companion installer (esptool-js in browser) reads this manifest,
+  downloads the prebuilt .bin, and flashes the device over WebSerial
+  with no local toolchain required.
+
+platforms:
+  esp32:
+    kind: flash-via-companion
+    chip: esp32-s3
+    prebuilt_binary_url: "https://releases.plate.example/plate-sensor-esp32s3.bin"
+
+safety:
+  min_permissions: [usb:claim:vid=0x303a]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [esp32]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/esp32-plate-sensor-flash }
+  id: com.plate-studio.esp32-plate-sensor-flash

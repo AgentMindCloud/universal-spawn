@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Lab MicroPython
+type: firmware
+summary: Full micro:bit MicroPython project building a small data logger.
+description: V2 board, MicroPython toolchain.
+
+platforms:
+  microbit:
+    variant: v2
+    toolchain: micropython
+    entry_file: src/main.py
+
+safety:
+  min_permissions: [usb:claim:vid=0x0d28]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [microbit]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/microbit-plate-logger }
+  id: com.plate-studio.microbit-plate-logger

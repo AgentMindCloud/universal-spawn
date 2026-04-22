@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hardware-iot/lego-spike/lego-spike-spawn.schema.json",
+  "title": "universal-spawn with LEGO SPIKE platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "lego-spike"
+          ],
+          "properties": {
+            "lego-spike": {
+              "$ref": "#/definitions/lego-spike"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "lego-spike": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generation",
+        "language"
+      ],
+      "properties": {
+        "generation": {
+          "type": "string",
+          "enum": [
+            "spike-prime",
+            "spike-essential"
+          ]
+        },
+        "language": {
+          "type": "string",
+          "enum": [
+            "icon-blocks",
+            "python"
+          ]
+        },
+        "entry_file": {
+          "type": "string"
+        },
+        "app_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)+$"
+        }
+      }
+    }
+  }
+}

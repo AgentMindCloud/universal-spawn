@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Sensor CircuitPython
+type: firmware
+summary: Minimal CircuitPython sketch reading a humidity sensor.
+description: One code.py + two bundle libraries.
+
+platforms:
+  circuitpython:
+    board: adafruit_qtpy_esp32s3_n4r2
+    entry_script: code.py
+    bundle_libraries: [adafruit_bus_device, adafruit_dht]
+
+safety:
+  min_permissions: [usb:claim]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [circuitpython]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/circuitpython-plate-sensor }
+  id: com.plate-studio.circuitpython-plate-sensor

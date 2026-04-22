@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/hardware-iot/micropython/micropython-spawn.schema.json",
+  "title": "universal-spawn with MicroPython platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "micropython"
+          ],
+          "properties": {
+            "micropython": {
+              "$ref": "#/definitions/micropython"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "micropython": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "port"
+      ],
+      "properties": {
+        "port": {
+          "type": "string",
+          "enum": [
+            "esp32",
+            "esp8266",
+            "rp2",
+            "stm32",
+            "samd",
+            "nrf",
+            "mimxrt",
+            "renesas-ra",
+            "unix"
+          ]
+        },
+        "entry_script": {
+          "type": "string"
+        },
+        "frozen_modules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "libraries": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

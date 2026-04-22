@@ -1,0 +1,25 @@
+version: "1.0"
+name: ESP32 Template
+type: firmware
+description: Template for an ESP32-targeted universal-spawn manifest.
+
+platforms:
+  esp32:
+    kind: firmware
+    chip: esp32-s3
+    framework: esp-idf
+    partitions_csv: partitions.csv
+    ota_channel: stable
+
+safety:
+  min_permissions: [usb:claim:vid=0x303a]
+
+env_vars_required: []
+
+deployment:
+  targets: [esp32]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/esp32-template }
