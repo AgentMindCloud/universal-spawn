@@ -1,0 +1,27 @@
+version: "1.0"
+name: Colab Notebook
+description: >
+  A Colab-runnable notebook hosted in this repo. CPU runtime by
+  default; bump to GPU for ML notebooks.
+type: notebook
+
+platforms:
+  google-colab:
+    notebook_url: "https://colab.research.google.com/github/yourhandle/your-repo/blob/main/notebook.ipynb"
+    runtime: cpu
+    machine_type: standard
+    runtime_version: "3.11"
+
+safety:
+  min_permissions: [network:outbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [google-colab]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/colab-notebook }

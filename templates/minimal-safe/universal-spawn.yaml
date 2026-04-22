@@ -1,0 +1,32 @@
+version: "1.0"
+
+name: Minimal Safe Project
+
+description: >
+  The smallest universal-spawn manifest that validates and follows the
+  spec's safety defaults. Replace this paragraph with a real one-liner
+  about what the project does.
+
+type: web-app
+
+# Empty platforms block satisfies the master schema's anyOf clause
+# (platforms OR deployment must be present). Replace with a real
+# platform extension once you've picked one — Vercel, Cloudflare,
+# Claude, Discord, etc.
+platforms:
+  vercel: {}
+
+safety:
+  # First-spawn confirmation required by default.
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+metadata:
+  license: MIT
+  author:
+    name: Your Name
+    handle: yourhandle
+  source:
+    type: git
+    url: https://github.com/yourhandle/your-project

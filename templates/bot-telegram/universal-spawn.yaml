@@ -1,0 +1,29 @@
+version: "1.0"
+name: Telegram Bot
+description: >
+  A Telegram long-poll bot with two commands. Replace bot_username
+  with the @-handle BotFather assigned.
+type: bot
+
+platforms:
+  telegram:
+    bot_username: yourname_bot
+    transport: long-poll
+    commands:
+      - { command: start, description: "Start the bot." }
+      - { command: help,  description: "Show help." }
+
+safety:
+  min_permissions: [network:outbound:api.telegram.org]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: TELEGRAM_BOT_TOKEN, description: Bot token from @BotFather, secret: true }
+
+deployment:
+  targets: [telegram]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/telegram-bot }

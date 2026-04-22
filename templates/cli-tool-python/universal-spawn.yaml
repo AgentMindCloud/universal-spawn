@@ -1,0 +1,30 @@
+version: "1.0"
+name: Python CLI Tool
+description: >
+  A Python CLI distributed via PyPI. Single console_scripts entry.
+  Pairs with pyproject.toml; both files coexist.
+type: cli-tool
+
+platforms:
+  pypi:
+    distribution: your-cli
+    python_range: ">=3.11"
+    shape: cli
+    entry_points:
+      your-cli: "your_cli.main:main"
+    repository: pypi
+    build_backend: hatchling
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [pypi]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/your-cli }

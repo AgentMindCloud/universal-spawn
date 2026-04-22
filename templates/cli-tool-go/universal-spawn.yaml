@@ -1,0 +1,30 @@
+version: "1.0"
+name: Go CLI Tool
+description: >
+  A Go CLI distributed as a GitHub release binary plus a Docker
+  image (Distroless base). Multi-arch — linux/amd64 + linux/arm64.
+type: cli-tool
+
+platforms:
+  docker:
+    kind: single-container
+    dockerfile: Dockerfile
+    image: ghcr.io/yourhandle/your-cli:latest
+    build_platforms: [linux/amd64, linux/arm64]
+    registry: ghcr.io
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [docker]
+  build:
+    engine: docker
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/go-cli }

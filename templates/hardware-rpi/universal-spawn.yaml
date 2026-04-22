@@ -1,0 +1,28 @@
+version: "1.0"
+name: Raspberry Pi Install
+description: >
+  A first-boot install script for a Raspberry Pi 5 running Raspberry
+  Pi OS. Installs the universal-spawn dashboard. Replace `entry_file`
+  with your real install script.
+type: firmware
+
+platforms:
+  raspberry-pi:
+    model: pi-5
+    os: raspberry-pi-os
+    install_method: script
+    entry_file: install.sh
+
+safety:
+  min_permissions: [fs:write, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [raspberry-pi]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/rpi-install }

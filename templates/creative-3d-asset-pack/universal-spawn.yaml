@@ -1,0 +1,33 @@
+version: "1.0"
+name: 3D Asset Pack
+description: >
+  A 3D asset pack shipped as a Blender asset library and as a
+  Cinema 4D .lib4d archive. Same props in both formats.
+type: design-template
+
+platforms:
+  blender:
+    kind: asset-library
+    blender_version: "4.2"
+    asset_library_path: lib/blender
+  cinema4d:
+    kind: asset-library
+    min_version: "2024"
+    entry_file: dist/props.lib4d
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [blender, cinema4d]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Your Studio, handle: your-studio }
+  source: { type: git, url: https://github.com/your-studio/3d-asset-pack }
+  categories: [graphics]

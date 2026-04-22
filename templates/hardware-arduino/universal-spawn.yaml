@@ -1,0 +1,27 @@
+version: "1.0"
+name: Arduino Sketch
+description: >
+  An Arduino sketch for an Uno board. Single .ino, one library
+  dependency. Pairs with library.properties.
+type: firmware
+
+platforms:
+  arduino:
+    kind: sketch
+    fqbn: "arduino:avr:uno"
+    entry_ino: src/main.ino
+    libraries: [Adafruit_Sensor]
+
+safety:
+  min_permissions: [usb:claim:vid=0x2341]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [arduino]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/arduino-sketch }

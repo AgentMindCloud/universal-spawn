@@ -1,0 +1,29 @@
+version: "1.0"
+name: MCP Server
+description: >
+  A Model Context Protocol server, host-neutral. Default transport
+  is stdio. One sample tool exposed to the host.
+type: extension
+
+platforms:
+  anthropic-mcp:
+    transport: stdio
+    command: "node"
+    args: ["dist/index.js"]
+    tools:
+      - { name: example_tool, description: "Example tool exposed to the host." }
+    hosts: [claude-desktop, claude-code, cursor, windsurf, zed]
+
+safety:
+  min_permissions: [fs:read, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [mcp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/mcp-server }

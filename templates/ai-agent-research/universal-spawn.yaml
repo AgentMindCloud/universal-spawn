@@ -1,0 +1,44 @@
+version: "1.0"
+name: Research Agent
+description: >
+  Multi-source research agent. Cross-references web search, arXiv,
+  and an optional RAG corpus, returns a citeable summary in the
+  Residual Frequencies lab-notebook voice.
+type: ai-agent
+
+platforms:
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+    surface: [claude-api, claude-code]
+    tools:
+      - { name: research, function_ref: tools/research.json }
+    thinking: { type: enabled, budget_tokens: 16384 }
+    prompt_cache: true
+  perplexity:
+    model: sonar-deep-research
+    return_citations: true
+    return_images: false
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:api.perplexity.ai
+    - network:outbound:export.arxiv.org
+    - model:call:claude-opus-4-7
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: ANTHROPIC_API_KEY, description: Anthropic key, secret: true }
+  - { name: PPLX_API_KEY, description: Perplexity key, secret: true }
+
+deployment:
+  targets: [claude]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Research Lab, handle: research-lab }
+  source: { type: git, url: https://github.com/research-lab/research-agent }
+  keywords: [research, agent, citations]

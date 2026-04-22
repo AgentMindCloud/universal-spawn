@@ -1,0 +1,12 @@
+{
+  "name": "reply",
+  "description": "Compose a reply to a single X mention.",
+  "input_schema": {
+    "type": "object",
+    "required": ["mention_id", "context"],
+    "properties": {
+      "mention_id": { "type": "string" },
+      "context":    { "type": "string", "maxLength": 500 }
+    }
+  }
+}

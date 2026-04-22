@@ -1,0 +1,32 @@
+version: "1.0"
+name: Course Lesson
+description: >
+  A single course lesson — Astro static site for the lesson page,
+  Colab companion notebook for the exercises. Two sibling targets;
+  one universal manifest.
+type: site
+
+platforms:
+  netlify:
+    build_command: "pnpm build"
+    publish: "dist"
+    node_version: "20"
+    env_contexts: [production]
+  google-colab:
+    notebook_url: "https://colab.research.google.com/github/yourhandle/course-lesson/blob/main/exercises.ipynb"
+    runtime: cpu
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [netlify, google-colab]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Course Author, handle: course-author }
+  source: { type: git, url: https://github.com/course-author/course-lesson }
+  categories: [education]

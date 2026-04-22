@@ -1,0 +1,28 @@
+version: "1.0"
+name: VS Code Extension
+description: >
+  A VS Code Marketplace extension; runs in VS Code and its forks
+  (Cursor, Windsurf, VSCodium). Pairs with package.json.
+type: extension
+
+platforms:
+  vscode:
+    kind: extension
+    publisher_id: yourhandle
+    extension_id: yourhandle.your-extension
+    min_vscode: "^1.90.0"
+    forks: [vscode, cursor, windsurf, vscodium]
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [vscode]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/vscode-extension }

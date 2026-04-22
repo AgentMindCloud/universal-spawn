@@ -1,0 +1,31 @@
+version: "1.0"
+name: Figma Design System Kit
+description: >
+  A Figma community-file template — duplicatable design system with
+  components, tokens, and grid presets. No code; the consumer renders
+  a "Duplicate to your Figma" button from `community_file`.
+type: design-template
+
+platforms:
+  figma:
+    kind: template
+    editor_type: [figma]
+    network_access: none
+    community_file: "https://www.figma.com/community/file/0000000000000000000"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [figma]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Your Studio, handle: your-studio }
+  source: { type: git, url: https://github.com/your-studio/figma-design-kit }
+  categories: [graphics]

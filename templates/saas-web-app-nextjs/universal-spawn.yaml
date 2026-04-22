@@ -1,0 +1,41 @@
+version: "1.0"
+name: NextJS SaaS Starter
+description: >
+  Next.js + Postgres + NextAuth SaaS starter, deployed to Vercel.
+  One HTTP entrypoint at /. Manifest pairs with vercel.json — both
+  files coexist; neither replaces the other.
+type: web-app
+
+platforms:
+  vercel:
+    framework: nextjs
+    install_command: "pnpm install"
+    build_command: "pnpm build"
+    output: .next
+    node_version: "20"
+    regions: [iad1]
+    env_promotion: [production, preview]
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: DATABASE_URL,    description: Postgres connection string, secret: true }
+  - { name: NEXTAUTH_SECRET, description: NextAuth JWT signing secret, secret: true }
+  - { name: NEXTAUTH_URL,    description: Canonical deployment URL }
+
+deployment:
+  targets: [vercel]
+  build:
+    engine: node
+    install: "pnpm install"
+    command: "pnpm build"
+    output: ".next"
+    node_version: "20"
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/nextjs-saas }

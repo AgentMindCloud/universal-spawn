@@ -1,0 +1,34 @@
+version: "1.0"
+name: Astro SaaS Starter
+description: >
+  Astro + content collections SaaS starter, deployed to Netlify
+  with Functions for the auth + checkout endpoints. Pairs with
+  netlify.toml.
+type: web-app
+
+platforms:
+  netlify:
+    build_command: "pnpm build"
+    publish: "dist"
+    functions: "netlify/functions"
+    node_version: "20"
+    env_contexts: [production, deploy-preview]
+    plugins:
+      - { package: "@netlify/plugin-astro" }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 8
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: STRIPE_SECRET_KEY, description: Stripe server key, secret: true }
+  - { name: AUTH_SECRET,        description: Session signing secret, secret: true }
+
+deployment:
+  targets: [netlify]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/astro-saas }

@@ -1,0 +1,25 @@
+{
+  "name": "reply",
+  "description": "Compose a reply to a single X mention. Returns the text the bot will post.",
+  "parameters": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["mention_id", "context"],
+    "properties": {
+      "mention_id": {
+        "type": "string",
+        "description": "The X tweet id of the mention being replied to."
+      },
+      "context": {
+        "type": "string",
+        "description": "Up to 500 characters of preceding context the bot should consider when composing its reply."
+      },
+      "tone": {
+        "type": "string",
+        "enum": ["lab", "casual", "formal"],
+        "default": "lab",
+        "description": "Voice register. 'lab' is the Residual Frequencies lab-notebook voice."
+      }
+    }
+  }
+}

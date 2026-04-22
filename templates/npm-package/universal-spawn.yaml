@@ -1,0 +1,27 @@
+version: "1.0"
+name: NPM Package
+description: >
+  An ESM npm library. Public access; Node 20+. Pairs additively with
+  package.json — universal-spawn does not replace it.
+type: library
+
+platforms:
+  npm:
+    package_name: "@yourhandle/your-lib"
+    shape: library
+    access: public
+    node_range: ">=20"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [npm]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/npm-package }

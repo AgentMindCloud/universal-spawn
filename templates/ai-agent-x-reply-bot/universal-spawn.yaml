@@ -1,0 +1,42 @@
+version: "1.0"
+name: X Reply Bot
+description: >
+  An X (Twitter) reply bot powered by Claude Opus. Listens for
+  mentions of @yourbot, generates a contextual reply, and posts.
+type: ai-agent
+
+platforms:
+  x-twitter:
+    account: yourbot
+    scopes: [tweet.read, tweet.write, users.read, offline.access]
+    tier: basic
+    streams: [streams/mentions.json]
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+    surface: [claude-api]
+    tools:
+      - { name: reply, function_ref: tools/reply.json }
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:api.twitter.com
+    - network:outbound:api.x.com
+    - model:call:claude-opus-4-7
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 15
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: ANTHROPIC_API_KEY, description: Anthropic API key, secret: true }
+  - { name: X_OAUTH_CLIENT_ID, description: X OAuth 2.0 client id }
+  - { name: X_OAUTH_CLIENT_SECRET, description: X OAuth 2.0 client secret, secret: true }
+
+deployment:
+  targets: [x-twitter, claude]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/x-reply-bot }

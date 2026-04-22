@@ -1,0 +1,29 @@
+version: "1.0"
+name: Slack Bot
+description: >
+  A Slack Bolt bot. One /ping slash command. Pairs with a
+  slack.manifest.json that you create in the Slack app UI.
+type: bot
+
+platforms:
+  slack:
+    manifest_file: slack.manifest.json
+    bot_scopes: [chat:write, commands]
+    slash_commands:
+      - { command: "/ping", description: "Ping the bot." }
+
+safety:
+  min_permissions: [network:outbound:slack.com]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: SLACK_BOT_TOKEN, description: xoxb token, secret: true }
+  - { name: SLACK_SIGNING_SECRET, description: Signing secret, secret: true }
+
+deployment:
+  targets: [slack]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/slack-bot }

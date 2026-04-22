@@ -1,0 +1,28 @@
+version: "1.0"
+name: Firefox Extension
+description: >
+  A Firefox WebExtension MV3. Active-tab scope plus storage. Replace
+  the gecko_id with a value you own; AMO requires it.
+type: extension
+
+platforms:
+  firefox-extension:
+    manifest_version: 3
+    gecko_id: "your-extension@yourhandle.example"
+    permissions: [activeTab, storage]
+    background_script: background.js
+    strict_min_version: "120.0"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [firefox-extension]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/firefox-extension }

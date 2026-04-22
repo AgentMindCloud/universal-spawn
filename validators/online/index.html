@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>universal-spawn — online validator</title>
+  <meta name="color-scheme" content="light only" />
+  <style>
+    /* ─── Residual Frequencies · Parchment palette ───────────────────────── */
+    :root {
+      --parchment: #ede3cf;
+      --ink: #1a1a1a;
+      --accent: #a13d24;
+      --muted-ink: #3b372e;
+      --rule: rgba(26,26,26,0.18);
+      --serif: 'Instrument Serif', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { background: var(--parchment); color: var(--ink); margin: 0; padding: 0; }
+    body { font: 14px/1.55 var(--mono); padding: 24px; min-height: 100vh; }
+    main { max-width: 1100px; margin: 0 auto; }
+
+    /* Plate frame */
+    .plate { border: 1px solid var(--ink); padding: 22px 28px 26px; background: var(--parchment); position: relative; }
+    .plate::before {
+      content: ""; position: absolute; inset: 6px; border: 0.5px solid var(--ink); pointer-events: none;
+    }
+    header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 18px; border-bottom: 0.5px solid var(--rule); margin-bottom: 22px; }
+    h1 { margin: 0; font: italic 44px/1 var(--serif); letter-spacing: -0.01em; }
+    .sub { font: 11px/1 var(--mono); letter-spacing: 3px; text-transform: uppercase; color: var(--muted-ink); }
+    .meta { text-align: right; }
+    .meta div { font: 10px/1.4 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--muted-ink); }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+
+    .pane h2 { margin: 0 0 8px; font: italic 22px/1 var(--serif); }
+    .pane h2 .ix { font: 10px/1 var(--mono); letter-spacing: 3px; text-transform: uppercase; color: var(--muted-ink); margin-right: 8px; }
+    textarea {
+      width: 100%; min-height: 380px; resize: vertical;
+      background: var(--parchment); color: var(--ink);
+      border: 1px solid var(--ink); padding: 12px 14px;
+      font: 13px/1.5 var(--mono); tab-size: 2;
+    }
+    textarea:focus { outline: none; border-color: var(--accent); }
+
+    .actions { display: flex; gap: 8px; margin: 12px 0 18px; flex-wrap: wrap; }
+    button {
+      background: var(--ink); color: var(--parchment);
+      border: 1px solid var(--ink); padding: 8px 14px;
+      font: 11px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    }
+    button:hover { background: var(--accent); border-color: var(--accent); }
+    button.secondary { background: var(--parchment); color: var(--ink); }
+    button.secondary:hover { color: var(--accent); border-color: var(--accent); }
+
+    .results { background: var(--parchment); padding: 0; }
+    .verdict { padding: 14px 16px; border: 1px solid var(--ink); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+    .verdict .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--ink); }
+    .verdict.ok .dot { background: var(--ink); }
+    .verdict.fail .dot { background: var(--accent); }
+    .verdict h3 { margin: 0; font: italic 24px/1 var(--serif); }
+    .verdict .blurb { font: 11px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--muted-ink); margin-left: auto; }
+
+    section.block { margin-bottom: 18px; }
+    section.block h4 { font: 11px/1 var(--mono); letter-spacing: 3px; text-transform: uppercase; color: var(--muted-ink); margin: 0 0 8px; }
+    ul.errs { list-style: none; padding: 0; margin: 0; }
+    ul.errs li { border-left: 2px solid var(--accent); padding: 6px 10px; margin-bottom: 6px; background: rgba(161,61,36,0.04); }
+    ul.warns li { border-left: 2px solid var(--ink); background: rgba(26,26,26,0.04); }
+    ul.platforms li { padding: 4px 10px; border-bottom: 0.5px solid var(--rule); display: flex; gap: 12px; align-items: baseline; }
+    ul.platforms li .pid { font-weight: 600; min-width: 160px; }
+    ul.platforms li .status.ok { color: var(--ink); }
+    ul.platforms li .status.note { color: var(--muted-ink); }
+    .empty { color: var(--muted-ink); padding: 12px 0; }
+
+    footer { display: flex; justify-content: space-between; align-items: baseline; padding-top: 18px; margin-top: 22px; border-top: 0.5px solid var(--rule); font: 10px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--muted-ink); }
+    a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }
+    a:hover { background: rgba(161,61,36,0.08); }
+    .pill { display: inline-block; padding: 1px 6px; border: 1px solid var(--ink); margin-left: 6px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+
+    .err-loading { padding: 14px; border: 1px solid var(--accent); color: var(--accent); margin-bottom: 14px; display: none; }
+  </style>
+</head>
+<body>
+<main class="plate">
+  <header>
+    <div>
+      <h1>universal-spawn</h1>
+      <div class="sub">Online validator · v1.0 master schema</div>
+    </div>
+    <div class="meta">
+      <div>Plate · paste &amp; validate</div>
+      <div>Residual Frequencies / Parchment</div>
+    </div>
+  </header>
+
+  <div id="loadError" class="err-loading">
+    Could not load Ajv / js-yaml from CDN. The validator needs network on first
+    load to pull two libraries (~150 KB total). Try again, or install the CLI:
+    <code>npm i -g universal-spawn</code>.
+  </div>
+
+  <div class="grid">
+    <section class="pane">
+      <h2><span class="ix">001</span>Manifest</h2>
+      <textarea id="src" spellcheck="false" placeholder="Paste your universal-spawn.yaml or .json here..."></textarea>
+      <div class="actions">
+        <button id="btnValidate">Validate</button>
+        <button class="secondary" id="btnSample">Insert sample</button>
+        <button class="secondary" id="btnClear">Clear</button>
+      </div>
+    </section>
+
+    <section class="pane">
+      <h2><span class="ix">002</span>Verdict</h2>
+      <div class="results" id="results">
+        <div class="verdict"><span class="dot"></span><h3>Awaiting input</h3><span class="blurb">paste a manifest →</span></div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div>universal-spawn · open standard · Apache 2.0</div>
+    <div>github.com/AgentMindCloud/universal-spawn</div>
+  </footer>
+</main>
+
+<!-- Embedded v1.0 master schema. Identical to spec/v1.0/universal-spawn.schema.json. -->
+<script id="masterSchema" type="application/schema+json">
+{"$schema":"http://json-schema.org/draft-07/schema#","$id":"https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json","title":"Universal Spawn Manifest","description":"Normative JSON Schema for a universal-spawn v1.0 manifest. A single declarative file describing what a creation is, where it runs, what it needs, and what it promises.","$comment":"This schema is draft-07 intentionally. Draft-07 has the broadest validator support across ecosystems (Ajv, python-jsonschema, go-jsonschema, rust-jsonschema, swift-json-schema). A v1.1 draft-2020-12 companion is tracked under spec/v1.0.0/.","type":"object","additionalProperties":false,"required":["version","name","description","type"],"anyOf":[{"required":["platforms"],"$comment":"Either list at least one platform extension..."},{"required":["deployment"],"$comment":"...or a deployment target set. A manifest with neither has nothing for any consumer to act on."}],"properties":{"version":{"type":"string","enum":["1.0"],"description":"Version of the universal-spawn spec this manifest targets. Only '1.0' is accepted by this schema.","$comment":"Consumers MUST reject a manifest whose major version they do not implement. Unlike semver packages, spec versions are tightly bounded enums so validators cannot 'do their best'."},"name":{"type":"string","minLength":1,"maxLength":80,"pattern":"^[A-Za-z0-9](?:[A-Za-z0-9 ._-]*[A-Za-z0-9])?$","description":"Human-readable display name. Alphanumerics, space, dot, underscore, dash. No leading or trailing whitespace. No emoji.","$comment":"We accept spaces so real product names render correctly ('Hello World', 'Research Agent'). We reject emoji via lint because JSON Schema regex cannot portably express the Unicode property escape needed to detect them; the spec prose forbids emoji explicitly."},"description":{"type":"string","minLength":10,"maxLength":500,"description":"One paragraph, 10-500 characters. First sentence should stand alone as a summary; indexers use it as a snippet.","$comment":"The lower bound exists to discourage placeholder descriptions. The upper bound exists so description fits in a card."},"type":{"type":"string","description":"Primary category of this creation. Determines which platforms can spawn it and what fields are expected.","enum":["ai-agent","ai-skill","ai-model","web-app","api-service","cli-tool","library","dataset","notebook","creative-tool","design-template","game-mod","game-world","hardware-device","firmware","bot","extension","plugin","site","container","workflow"],"$comment":"Additions happen only on minor spec bumps. Removals never."},"summary":{"type":"string","maxLength":140,"description":"Optional one-line summary for social cards. <=140 characters.","$comment":"Sized for the narrowest card surface; longer text is silently truncated by consumers."},"homepage":{"type":"string","format":"uri","description":"Canonical public homepage."},"platforms":{"type":"object","description":"Platform-specific extensions. Each key is a platform id (claude, gemini, openai, vercel, netlify, unity, figma, discord, huggingface, ...). Each value is validated separately by that platform's extension schema.","additionalProperties":{"type":"object"},"$comment":"Intentionally permissive at this level \u2014 the platform's own schema.extension.json is where strict validation happens. This keeps the master schema decoupled from the platform list."},"safety":{"type":"object","description":"Declarative safety envelope. The platform enforces; the manifest declares.","additionalProperties":false,"properties":{"min_permissions":{"type":"array","description":"Smallest set of capabilities this creation needs to function.","items":{"type":"string","pattern":"^[a-z][a-z0-9]*:[a-z][a-z0-9_-]*(:[A-Za-z0-9_./=:-]+)?$","$comment":"Format: 'namespace:action' or 'namespace:action:scope'. Scope accepts hostnames, filesystem paths, and key=value identifiers."}},"rate_limit_qps":{"type":"number","minimum":0,"description":"Self-declared maximum outbound request rate, queries per second."},"cost_limit_usd_daily":{"type":"number","minimum":0,"description":"Self-declared upper bound on daily USD cost."},"safe_for_auto_spawn":{"type":"boolean","description":"True only if the author certifies this manifest is safe to spawn without human confirmation under min_permissions and the declared limits.","default":false},"data_residency":{"type":"array","description":"Regions where data generated by this creation may legally reside.","items":{"type":"string","enum":["us","eu","uk","ca","au","jp","sg","br","in","any"]}}}},"deployment":{"type":"object","description":"How this creation deploys, if it deploys as a service.","additionalProperties":false,"properties":{"targets":{"type":"array","description":"Ordered preference list. First entry is the canonical target.","minItems":1,"items":{"type":"string","minLength":1}},"regions":{"type":"array","description":"Preferred deployment regions (platform-specific region codes).","items":{"type":"string","minLength":1}},"build":{"type":"object","additionalProperties":false,"properties":{"command":{"type":"string"},"output":{"type":"string"},"engine":{"type":"string","description":"Runtime or framework engine (node, python, rust, docker, unity, ...)"},"install":{"type":"string"},"node_version":{"type":"string"}}}}},"env_vars_required":{"type":"array","description":"Environment variables the creation needs. Declare by NAME only; never a value.","items":{"type":"object","required":["name"],"additionalProperties":false,"properties":{"name":{"type":"string","pattern":"^[A-Z][A-Z0-9_]*$","description":"SCREAMING_SNAKE_CASE. First character A-Z, remainder A-Z0-9_."},"description":{"type":"string","minLength":3},"required":{"type":"boolean","default":true},"secret":{"type":"boolean","default":false},"example":{"type":"string"}},"$comment":"Secret values are never stored in a manifest; they are supplied by the platform's credential store at spawn time."}},"visuals":{"type":"object","description":"Visual assets. Following the Residual Frequencies visual system is recommended but not required.","additionalProperties":false,"properties":{"icon":{"type":"string","format":"uri-reference","description":"512x512 icon. SVG preferred."},"hero_plate":{"type":"string","format":"uri-reference","description":"Hero plate illustration."},"banner":{"type":"string","format":"uri-reference"},"palette":{"type":"string","enum":["parchment","ink","field"],"description":"Residual Frequencies palette id."}}},"metadata":{"type":"object","description":"Identity and licensing. Strongly recommended.","additionalProperties":false,"properties":{"license":{"type":"string","description":"SPDX identifier or 'proprietary'."},"author":{"$ref":"#/definitions/party"},"maintainers":{"type":"array","items":{"$ref":"#/definitions/party"}},"source":{"type":"object","required":["type","url"],"additionalProperties":false,"properties":{"type":{"type":"string","enum":["git","hg","svn","archive"]},"url":{"type":"string","format":"uri"},"branch":{"type":"string"},"commit":{"type":"string","pattern":"^[a-f0-9]{7,64}$"},"path":{"type":"string","default":"."}}},"keywords":{"type":"array","maxItems":16,"items":{"type":"string","pattern":"^[a-z0-9][a-z0-9-]*$","maxLength":32}},"categories":{"type":"array","maxItems":4,"items":{"type":"string"}},"id":{"type":"string","pattern":"^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$","description":"Optional reverse-DNS stable identifier.","$comment":"Reverse-DNS ids survive renames, forks, and platform migrations. Recommended but not required; the repo URL + commit in metadata.source is sufficient for uniqueness."}}},"x-ext":{"type":"object","description":"Free-form escape hatch. Keys MUST begin with a reverse-DNS vendor prefix. Consumers MAY ignore all x-ext content.","additionalProperties":true}},"definitions":{"party":{"type":"object","required":["name"],"additionalProperties":false,"properties":{"name":{"type":"string","minLength":1},"handle":{"type":"string","pattern":"^[A-Za-z0-9][A-Za-z0-9_-]{0,38}$"},"url":{"type":"string","format":"uri"},"email":{"type":"string","format":"email"},"org":{"type":"string"}}}}}
+</script>
+
+<!-- Ajv (draft-07) and js-yaml from CDN with SRI. ~150 KB total at first load, then cached. -->
+<script src="https://cdn.jsdelivr.net/npm/ajv@8.17.1/dist/ajv7.bundle.min.js"
+        integrity="sha384-W5ekSRXHtLdEbg9lc2Vy8avLuwH8jt7uCZuVXk+vu0EodkY5/fNHEhVB4o+JABBM"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+        onerror="document.getElementById('loadError').style.display='block'"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"
+        integrity="sha384-2dn/ZnvotHnG+kmyEklpIH8m96NLVxvP5Si3txMpnVWUj+ujgJ7gwnCFb88EFYnH"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+        onerror="document.getElementById('loadError').style.display='block'"></script>
+
+<script>
+  // ─── Public surface ─────────────────────────────────────────────────────
+  const SAMPLE = `version: "1.0"
+name: Sample Plate
+description: A small example to demonstrate the universal-spawn online validator.
+type: web-app
+platforms:
+  vercel:
+    framework: nextjs
+safety:
+  min_permissions:
+    - network:inbound
+    - network:outbound
+metadata:
+  license: MIT
+  author: { name: Sample Studio, handle: sample-studio }
+  source: { type: git, url: https://github.com/sample-studio/sample-plate }
+`;
+
+  function loadSchema() {
+    const txt = document.getElementById("masterSchema").textContent.trim();
+    return JSON.parse(txt);
+  }
+
+  function ready() {
+    return typeof Ajv7 !== "undefined" && typeof jsyaml !== "undefined";
+  }
+
+  function parseManifest(text) {
+    const t = text.trim();
+    if (!t) return null;
+    if (t.startsWith("{") || t.startsWith("[")) return JSON.parse(t);
+    return jsyaml.load(t);
+  }
+
+  function fmt(err) {
+    const path = err.instancePath ? err.instancePath.replace(/^\//, "") : "<root>";
+    return `${path || "<root>"}: ${err.message}`;
+  }
+
+  function semanticWarnings(doc) {
+    const warns = [];
+    if (
+      doc &&
+      doc.safety &&
+      doc.safety.safe_for_auto_spawn === true &&
+      !(Array.isArray(doc.env_vars_required) && doc.env_vars_required.length > 0)
+    ) {
+      warns.push("safety.safe_for_auto_spawn=true with no env_vars_required: double-check.");
+    }
+    return warns;
+  }
+
+  function platformsList(doc) {
+    if (!doc || typeof doc.platforms !== "object" || doc.platforms === null) return [];
+    return Object.keys(doc.platforms).sort();
+  }
+
+  function renderVerdict({ ok, errs, warns, plats, fileKind }) {
+    const r = document.getElementById("results");
+    const head = ok
+      ? `<div class="verdict ok"><span class="dot"></span><h3>Valid</h3><span class="blurb">v1.0 master · ${fileKind}</span></div>`
+      : `<div class="verdict fail"><span class="dot"></span><h3>Invalid</h3><span class="blurb">${errs.length} error · v1.0 master</span></div>`;
+
+    const errsHtml = errs.length === 0
+      ? `<section class="block"><h4>Errors</h4><div class="empty">— none —</div></section>`
+      : `<section class="block"><h4>Errors</h4><ul class="errs">${errs.map(e => `<li>${escapeHtml(e)}</li>`).join("")}</ul></section>`;
+
+    const warnsHtml = warns.length === 0
+      ? `<section class="block"><h4>Warnings</h4><div class="empty">— none —</div></section>`
+      : `<section class="block"><h4>Warnings</h4><ul class="errs warns">${warns.map(w => `<li>${escapeHtml(w)}</li>`).join("")}</ul></section>`;
+
+    let platsHtml;
+    if (plats.length === 0) {
+      platsHtml = `<section class="block"><h4>Platforms declared</h4><div class="empty">— none in <code>platforms.*</code> —</div></section>`;
+    } else {
+      const items = plats.map(p =>
+        `<li><span class="pid">${escapeHtml(p)}</span><span class="status note">declared · use platform extension schema for strict checking</span></li>`
+      ).join("");
+      platsHtml = `<section class="block"><h4>Platforms declared</h4><ul class="errs platforms">${items}</ul></section>`;
+    }
+
+    r.innerHTML = head + errsHtml + warnsHtml + platsHtml;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[c]);
+  }
+
+  function runValidate() {
+    const text = document.getElementById("src").value;
+    if (!text.trim()) {
+      renderVerdict({ ok: false, errs: ["<root>: paste a manifest first"], warns: [], plats: [], fileKind: "(empty)" });
+      return;
+    }
+    if (!ready()) {
+      renderVerdict({
+        ok: false,
+        errs: ["<root>: validator libraries didn't load. Check network connectivity and try again."],
+        warns: [], plats: [], fileKind: "(deps missing)"
+      });
+      return;
+    }
+    let doc;
+    try { doc = parseManifest(text); }
+    catch (e) {
+      renderVerdict({ ok: false, errs: [`<root>: parse error — ${e.message}`], warns: [], plats: [], fileKind: "parse-fail" });
+      return;
+    }
+    const ajv = new Ajv7({ allErrors: true, strict: false });
+    const schema = loadSchema();
+    const validate = ajv.compile(schema);
+    const ok = validate(doc);
+    const errs = ok ? [] : (validate.errors || []).map(fmt);
+    const warns = semanticWarnings(doc);
+    const plats = platformsList(doc);
+    const fileKind = (text.trim().startsWith("{") || text.trim().startsWith("[")) ? "JSON" : "YAML";
+    renderVerdict({ ok, errs, warns, plats, fileKind });
+  }
+
+  document.getElementById("btnValidate").addEventListener("click", runValidate);
+  document.getElementById("btnSample").addEventListener("click", () => {
+    document.getElementById("src").value = SAMPLE;
+    runValidate();
+  });
+  document.getElementById("btnClear").addEventListener("click", () => {
+    document.getElementById("src").value = "";
+    document.getElementById("results").innerHTML =
+      '<div class="verdict"><span class="dot"></span><h3>Awaiting input</h3><span class="blurb">paste a manifest →</span></div>';
+  });
+</script>
+</body>
+</html>

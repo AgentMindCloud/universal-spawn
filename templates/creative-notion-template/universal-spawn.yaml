@@ -1,0 +1,25 @@
+version: "1.0"
+name: Notion Workspace Template
+description: >
+  A duplicatable Notion template page — drop into any user's
+  workspace via Notion's built-in "duplicate" pattern.
+type: design-template
+
+platforms:
+  notion:
+    page_url: "https://notion.so/yourhandle/0000000000000000000000000000"
+    kind: template
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [notion]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/notion-template }

@@ -1,0 +1,41 @@
+version: "1.0"
+name: Ask Discord Bot
+description: >
+  A Discord bot with one /ask slash command. The bot routes the
+  user's question through Claude Sonnet and replies in the channel
+  with the answer.
+type: bot
+
+platforms:
+  discord:
+    application_id: "111111111111111111"
+    scopes: [bot, applications.commands]
+    intents: [guilds]
+    permissions: "2147483648"
+    slash_commands: [commands/ask.json]
+  claude:
+    skill_type: subagent
+    model: claude-sonnet-4-6
+    surface: [claude-api]
+
+safety:
+  min_permissions:
+    - network:outbound:discord.com
+    - network:outbound:gateway.discord.gg
+    - network:outbound:api.anthropic.com
+    - model:call:claude-sonnet-4-6
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 8
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: DISCORD_BOT_TOKEN, description: Discord bot token, secret: true }
+  - { name: ANTHROPIC_API_KEY, description: Anthropic API key, secret: true }
+
+deployment:
+  targets: [discord]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/discord-ask-bot }

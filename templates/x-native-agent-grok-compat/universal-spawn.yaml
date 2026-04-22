@@ -1,0 +1,77 @@
+version: "1.0"
+
+name: Plate Reply Bot
+description: >
+  An X (Twitter) reply bot powered by Grok-4. Listens for mentions of
+  the @plate_reply account, generates a contextual reply through
+  Grok-4-fast, and posts it. Ships alongside a legacy
+  grok-install.yaml so existing Grok consumers keep working unchanged.
+
+type: ai-agent
+
+summary: X reply bot powered by Grok-4, shipped with grok-install compat.
+
+platforms:
+  x-twitter:
+    account: plate_reply
+    scopes: [tweet.read, tweet.write, users.read, offline.access]
+    tier: pro
+    streams: [streams/mentions.json]
+    uses_grok: true
+  grok:
+    model: grok-4-fast
+    surface: [grok-api, grok-x-integration]
+    system_prompt_file: prompts/system.md
+    tools:
+      - name: reply
+        function_ref: tools/reply.json
+        strict: true
+    streaming: true
+    real_time_data: true
+    temperature: 0.4
+    grok_install_compat:
+      version: "2.14"
+      x_handle: plate_reply
+
+safety:
+  min_permissions:
+    - network:outbound:api.x.ai
+    - network:outbound:api.twitter.com
+    - network:outbound:api.x.com
+    - model:call:grok-4-fast
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 20
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: XAI_API_KEY
+    description: xAI API key for Grok inference.
+    secret: true
+  - name: X_OAUTH_CLIENT_ID
+    description: X OAuth 2.0 client id.
+    secret: false
+  - name: X_OAUTH_CLIENT_SECRET
+    description: X OAuth 2.0 client secret.
+    secret: true
+
+deployment:
+  targets: [grok, x-twitter]
+
+visuals:
+  palette: parchment
+  icon: assets/icon.svg
+
+metadata:
+  license: Apache-2.0
+  id: com.plate-studio.x-reply-bot
+  author:
+    name: Plate Studio
+    handle: plate-studio
+  source:
+    type: git
+    url: https://github.com/plate-studio/x-reply-bot
+
+x-ext:
+  org.agentmindcloud.grok-install:
+    version: "2.14"
+    note: legacy grok-install.yaml ships alongside this manifest.

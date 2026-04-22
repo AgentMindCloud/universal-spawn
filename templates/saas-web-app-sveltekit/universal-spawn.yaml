@@ -1,0 +1,37 @@
+version: "1.0"
+name: SvelteKit SaaS Starter
+description: >
+  SvelteKit SaaS starter deployed to Cloudflare Pages with D1 +
+  Workers KV bindings. Pairs with wrangler.toml.
+type: web-app
+
+platforms:
+  cloudflare:
+    surface: pages
+    build:
+      command: "pnpm build"
+      output: ".svelte-kit/cloudflare"
+    compatibility_date: "2025-01-15"
+    nodejs_compat: true
+    bindings:
+      d1:
+        - { binding: DB, database_name: app-db }
+      kv:
+        - { binding: SESSIONS, id: "00000000000000000000000000000000" }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  cost_limit_usd_daily: 10
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: SESSION_SECRET, description: Session cookie secret, secret: true }
+
+deployment:
+  targets: [cloudflare]
+  build: { engine: node, install: "pnpm install", command: "pnpm build", output: ".svelte-kit/cloudflare" }
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/sveltekit-saas }

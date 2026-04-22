@@ -1,0 +1,28 @@
+version: "1.0"
+name: Unity URP Asset Pack
+description: >
+  A Unity Asset Store package — drop-in props + materials authored
+  for the URP render pipeline. Targets Unity 2023.2+.
+type: game-mod
+
+platforms:
+  unity:
+    kind: asset-store-package
+    min_editor: "2023.2"
+    render_pipeline: urp
+    asset_store_category: 3d-models
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [unity]
+
+metadata:
+  license: proprietary
+  author: { name: Your Studio, handle: your-studio }
+  source: { type: git, url: https://github.com/your-studio/unity-asset-pack }
+  categories: [gaming, graphics]

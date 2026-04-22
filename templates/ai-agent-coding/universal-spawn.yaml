@@ -1,0 +1,42 @@
+version: "1.0"
+name: Coding Agent
+description: >
+  An agentic coding assistant powered by Claude Opus. Reads + edits
+  the working tree, runs a small set of safe shell commands via the
+  Bash tool, and produces a per-task review at the end.
+type: ai-agent
+
+platforms:
+  claude:
+    skill_type: subagent
+    model: claude-opus-4-7
+    surface: [claude-api, claude-code]
+    tools:
+      - { name: read,    function_ref: tools/read.json }
+      - { name: write,   function_ref: tools/write.json }
+      - { name: bash,    function_ref: tools/bash.json }
+      - { name: review,  function_ref: tools/review.json }
+    thinking: { type: enabled, budget_tokens: 8192 }
+    prompt_cache: true
+
+safety:
+  min_permissions:
+    - fs:read
+    - fs:write
+    - fs:exec:/usr/bin/git
+    - network:outbound:api.anthropic.com
+    - model:call:claude-opus-4-7
+  rate_limit_qps: 2
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: ANTHROPIC_API_KEY, description: Anthropic key, secret: true }
+
+deployment:
+  targets: [claude]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/coding-agent }

@@ -1,0 +1,28 @@
+version: "1.0"
+name: itch.io Web Build Starter
+description: >
+  An itch.io HTML5 web-playable build pushed via butler to the `web`
+  channel. Browser-only; mobile-friendly frame; name-your-price.
+type: game-world
+
+platforms:
+  itch-io:
+    kind: html5
+    butler_channel: web
+    html5_frame: { width: 1280, height: 720, fullscreen_button: true, mobile_friendly: true }
+    payment: name-your-price
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - { name: BUTLER_API_KEY, description: butler API key for itch upload, secret: true }
+
+deployment:
+  targets: [itch-io]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Your Studio, handle: your-studio }
+  source: { type: git, url: https://github.com/your-studio/itch-web-build }

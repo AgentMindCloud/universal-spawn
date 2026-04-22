@@ -1,0 +1,36 @@
+{
+  "name": "universal-spawn",
+  "version": "1.0.0",
+  "description": "Validator + CLI for the universal-spawn manifest standard.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "homepage": "https://universal-spawn.dev",
+  "repository": "github:AgentMindCloud/universal-spawn",
+  "bin": {
+    "universal-spawn": "src/cli.js"
+  },
+  "main": "src/validator.js",
+  "exports": {
+    ".": "./src/validator.js"
+  },
+  "files": [
+    "src/",
+    "v1.0.schema.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "commander": "^12.1.0",
+    "yaml": "^2.6.1"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  }
+}

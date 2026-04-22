@@ -1,0 +1,27 @@
+version: "1.0"
+name: Jupyter Notebook Project
+description: >
+  Local Jupyter notebook project starter. One entry notebook plus a
+  requirements.txt; default Python 3 kernel.
+type: notebook
+
+platforms:
+  jupyter:
+    kind: notebook-project
+    entry_notebook: notebooks/index.ipynb
+    requirements: requirements.txt
+    kernel: python3
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [jupyter]
+
+metadata:
+  license: BSD-3-Clause
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/jupyter-project }

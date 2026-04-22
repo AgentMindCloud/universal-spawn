@@ -1,0 +1,28 @@
+version: "1.0"
+name: PyPI Library
+description: >
+  A pure-Python library distributed on PyPI. Python 3.11+; hatchling
+  build backend. Pairs additively with pyproject.toml.
+type: library
+
+platforms:
+  pypi:
+    distribution: your-lib
+    python_range: ">=3.11"
+    shape: library
+    repository: pypi
+    build_backend: hatchling
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [pypi]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/pypi-library }

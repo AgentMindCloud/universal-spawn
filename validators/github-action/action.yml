@@ -1,0 +1,62 @@
+name: 'universal-spawn validate'
+description: 'Validate a universal-spawn manifest at the repo root.'
+author: 'AgentMindCloud'
+branding:
+  icon: 'check-circle'
+  color: 'orange'
+
+inputs:
+  path:
+    description: 'Path to the manifest file. Default: auto-detect (universal-spawn.{yaml,yml,json} | spawn.{yaml,yml,json}).'
+    required: false
+    default: ''
+  node-version:
+    description: 'Node version to install for the validator runtime.'
+    required: false
+    default: '20'
+  fail-on-warning:
+    description: 'When true, treat validator warnings as errors.'
+    required: false
+    default: 'false'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install universal-spawn CLI
+      shell: bash
+      run: npm i -g universal-spawn
+
+    - name: Detect manifest path
+      id: detect
+      shell: bash
+      run: |
+        path="${{ inputs.path }}"
+        if [ -z "$path" ]; then
+          for cand in universal-spawn.yaml universal-spawn.yml universal-spawn.json spawn.yaml spawn.yml spawn.json; do
+            if [ -f "$cand" ]; then
+              path="$cand"
+              break
+            fi
+          done
+        fi
+        if [ -z "$path" ]; then
+          echo "No manifest found at the repo root. Set the 'path' input or add universal-spawn.yaml."
+          exit 1
+        fi
+        echo "path=$path" >> "$GITHUB_OUTPUT"
+
+    - name: Validate
+      shell: bash
+      env:
+        FAIL_ON_WARNING: ${{ inputs.fail-on-warning }}
+      run: |
+        if [ "$FAIL_ON_WARNING" = "true" ]; then
+          universal-spawn validate "${{ steps.detect.outputs.path }}" --strict
+        else
+          universal-spawn validate "${{ steps.detect.outputs.path }}"
+        fi

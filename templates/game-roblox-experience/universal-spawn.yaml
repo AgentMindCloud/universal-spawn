@@ -1,0 +1,29 @@
+version: "1.0"
+name: Roblox Experience Starter
+description: >
+  A Roblox experience deployed via Rojo. Single place, one universe.
+  Replace the universe_id and place_id with the values you create on
+  the Creator Hub.
+type: game-world
+
+platforms:
+  roblox:
+    kind: experience
+    universe_id: "1111111111"
+    place_id: "2222222222"
+    rojo_project: default.project.json
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - { name: ROBLOX_API_KEY, description: Roblox Open Cloud API key, secret: true }
+
+deployment:
+  targets: [roblox]
+
+metadata:
+  license: proprietary
+  author: { name: Your Studio, handle: your-studio }
+  source: { type: git, url: https://github.com/your-studio/roblox-experience }

@@ -1,0 +1,27 @@
+version: "1.0"
+name: Figma Plugin
+description: >
+  A Figma plugin running in Figma + FigJam with no network access.
+  Pairs with figma.manifest.json (the Figma-side metadata).
+type: plugin
+
+platforms:
+  figma:
+    kind: plugin
+    manifest_file: figma.manifest.json
+    editor_type: [figma, figjam]
+    network_access: none
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [figma]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/figma-plugin }

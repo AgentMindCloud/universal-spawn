@@ -1,0 +1,27 @@
+version: "1.0"
+name: Obsidian Vault Snapshot
+description: >
+  A distributable Obsidian vault — unzip and open as a fully
+  preconfigured vault with starter notes and a review-rubric template.
+type: design-template
+
+platforms:
+  obsidian:
+    kind: vault-snapshot
+    vault_archive: dist/vault.zip
+    min_app_version: "1.5.0"
+    desktop_only: false
+
+safety:
+  min_permissions: [fs:read, fs:write]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [obsidian]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/obsidian-vault }

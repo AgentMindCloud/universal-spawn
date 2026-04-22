@@ -1,0 +1,29 @@
+version: "1.0"
+name: Node CLI Tool
+description: >
+  A Node.js CLI distributed via npm. One bin entry. Pairs with
+  package.json; both files coexist.
+type: cli-tool
+
+platforms:
+  npm:
+    package_name: "@yourhandle/your-cli"
+    shape: cli
+    access: public
+    node_range: ">=20"
+    bin_map:
+      your-cli: "./bin/your-cli.js"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [npm]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/your-cli }

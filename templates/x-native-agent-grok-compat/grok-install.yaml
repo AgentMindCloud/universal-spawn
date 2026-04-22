@@ -1,0 +1,52 @@
+# Legacy AgentMindCloud/grok-install v2.14 manifest.
+# Coexists with universal-spawn.yaml. Grok consumers read this file
+# verbatim. Do not delete it just because universal-spawn.yaml exists.
+
+$schema_version: "2.14"
+name: com.plate-studio.x-reply-bot
+display_name: Plate Reply Bot
+tagline: X reply bot powered by Grok-4, shipped with grok-install compat.
+description: >
+  An X (Twitter) reply bot powered by Grok-4. Listens for mentions of
+  the @plate_reply account, generates a contextual reply through
+  Grok-4-fast, and posts it.
+
+model: grok-4-fast
+surfaces: [grok-api, grok-x-integration]
+system_prompt: prompts/system.md
+streaming: true
+x_live_feed: true
+
+entrypoints:
+  tool:
+    - name: reply
+      function_ref: tools/reply.json
+      strict: true
+
+permissions:
+  - network:outbound:api.x.ai
+  - network:outbound:api.twitter.com
+  - network:outbound:api.x.com
+  - model:call:grok-4-fast
+
+limits:
+  rate_qps: 5
+  cost_usd_daily: 20
+
+auto_spawn_ok: false
+
+env:
+  - { name: XAI_API_KEY, required: true, secret: true }
+  - { name: X_OAUTH_CLIENT_ID, required: true, secret: false }
+  - { name: X_OAUTH_CLIENT_SECRET, required: true, secret: true }
+
+license: Apache-2.0
+
+author:
+  name: Plate Studio
+  x_handle: plate-studio
+
+source:
+  repo_url: https://github.com/plate-studio/x-reply-bot
+
+tags: [grok, x, twitter, bot, reply, parchment]
