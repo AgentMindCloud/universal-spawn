@@ -1,0 +1,26 @@
+version: "1.0"
+name: W&B Template
+type: workflow
+description: Template for a W&B-targeted universal-spawn manifest.
+
+platforms:
+  weights-and-biases:
+    entity: your-entity
+    project: your-project
+    visibility: private
+
+safety:
+  min_permissions: [network:outbound:api.wandb.ai]
+
+env_vars_required:
+  - name: WANDB_API_KEY
+    description: W&B API key.
+    secret: true
+
+deployment:
+  targets: [weights-and-biases]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/wandb-template }

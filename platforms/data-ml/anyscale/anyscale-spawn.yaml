@@ -1,0 +1,28 @@
+version: "1.0"
+name: Anyscale Template
+type: api-service
+description: Template for an Anyscale-targeted universal-spawn manifest.
+
+platforms:
+  anyscale:
+    service_file: service.yaml
+    ray_version: "2.36"
+    head_node: m6i.large
+    worker_nodes:
+      - { instance_type: g5.xlarge, min: 1, max: 4 }
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: ANYSCALE_TOKEN
+    description: Anyscale token.
+    secret: true
+
+deployment:
+  targets: [anyscale]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/anyscale-template }

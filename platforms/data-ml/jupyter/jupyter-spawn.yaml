@@ -1,0 +1,24 @@
+version: "1.0"
+name: Jupyter Template
+type: notebook
+description: Template for a Jupyter-targeted universal-spawn manifest.
+
+platforms:
+  jupyter:
+    kind: notebook-project
+    entry_notebook: notebooks/index.ipynb
+    requirements: requirements.txt
+    kernel: python3
+
+safety:
+  min_permissions: [fs:read]
+
+env_vars_required: []
+
+deployment:
+  targets: [jupyter]
+
+metadata:
+  license: BSD-3-Clause
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/jupyter-template }

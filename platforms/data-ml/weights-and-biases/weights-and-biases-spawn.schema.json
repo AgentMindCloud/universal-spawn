@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/weights-and-biases/weights-and-biases-spawn.schema.json",
+  "title": "universal-spawn with Weights & Biases platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "weights-and-biases"
+          ],
+          "properties": {
+            "weights-and-biases": {
+              "$ref": "#/definitions/weights-and-biases"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "weights-and-biases": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity",
+        "project"
+      ],
+      "properties": {
+        "entity": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "project": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+        },
+        "sweep_file": {
+          "type": "string"
+        },
+        "artifact_registry": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "private"
+          ]
+        }
+      }
+    }
+  }
+}

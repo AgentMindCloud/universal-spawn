@@ -1,0 +1,26 @@
+version: "1.0"
+name: Lightning AI Template
+type: notebook
+description: Template for a Lightning-AI-targeted universal-spawn manifest.
+
+platforms:
+  lightning-ai:
+    template: pytorch
+    machine: T4
+    entry_file: notebook.ipynb
+
+safety:
+  min_permissions: [network:outbound]
+
+env_vars_required:
+  - name: LIGHTNING_API_KEY
+    description: Lightning AI API key.
+    secret: true
+
+deployment:
+  targets: [lightning-ai]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/lightning-ai-template }

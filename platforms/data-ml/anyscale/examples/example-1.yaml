@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Ray Serve
+type: api-service
+summary: Minimal Anyscale Ray Serve deployment.
+description: One Ray Serve app on a single head node.
+
+platforms:
+  anyscale:
+    service_file: service.yaml
+    ray_version: "2.36"
+    head_node: m6i.large
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANYSCALE_TOKEN
+    description: Anyscale token.
+    secret: true
+
+deployment:
+  targets: [anyscale]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/anyscale-plate-serve }
+  id: com.plate-studio.anyscale-plate-serve

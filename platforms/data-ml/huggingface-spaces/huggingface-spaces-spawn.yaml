@@ -1,0 +1,29 @@
+version: "1.0"
+name: HF Spaces Template
+type: web-app
+description: Template for a HF-Spaces-targeted universal-spawn manifest.
+
+platforms:
+  huggingface-spaces:
+    sdk: gradio
+    visibility: public
+    hardware: zero-gpu
+    front_matter:
+      title: Your Demo
+      pinned: false
+
+safety:
+  min_permissions: [network:inbound, network:outbound:huggingface.co]
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: HF token used to publish the Space.
+    secret: true
+
+deployment:
+  targets: [huggingface-spaces]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/hf-spaces-template }

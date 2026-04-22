@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/huggingface-spaces/huggingface-spaces-spawn.schema.json",
+  "title": "universal-spawn with Hugging Face Spaces platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "huggingface-spaces"
+          ],
+          "properties": {
+            "huggingface-spaces": {
+              "$ref": "#/definitions/huggingface-spaces"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "huggingface-spaces": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sdk",
+        "visibility"
+      ],
+      "properties": {
+        "sdk": {
+          "type": "string",
+          "enum": [
+            "gradio",
+            "streamlit",
+            "docker",
+            "static"
+          ]
+        },
+        "hardware": {
+          "type": "string",
+          "enum": [
+            "cpu-basic",
+            "cpu-upgrade",
+            "t4-small",
+            "t4-medium",
+            "a10g-small",
+            "a10g-large",
+            "a100-large",
+            "zero-gpu"
+          ]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "private"
+          ]
+        },
+        "front_matter": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "emoji": {
+              "type": "string"
+            },
+            "color_from": {
+              "type": "string"
+            },
+            "color_to": {
+              "type": "string"
+            },
+            "pinned": {
+              "type": "boolean",
+              "default": false
+            },
+            "license": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

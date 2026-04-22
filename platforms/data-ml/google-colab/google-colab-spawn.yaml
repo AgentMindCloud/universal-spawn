@@ -1,0 +1,23 @@
+version: "1.0"
+name: Colab Template
+type: notebook
+description: Template for a Colab-targeted universal-spawn manifest.
+
+platforms:
+  google-colab:
+    notebook_url: "https://colab.research.google.com/github/yourhandle/your-repo/blob/main/notebook.ipynb"
+    runtime: cpu
+    machine_type: standard
+
+safety:
+  min_permissions: [network:outbound]
+
+env_vars_required: []
+
+deployment:
+  targets: [google-colab]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/colab-template }

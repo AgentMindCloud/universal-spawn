@@ -1,0 +1,35 @@
+version: "1.0"
+name: Plate Gradio Demo
+type: web-app
+summary: Minimal Gradio Space previewing parchment plate archetypes.
+description: Public Gradio Space, zero-GPU tier.
+
+platforms:
+  huggingface-spaces:
+    sdk: gradio
+    visibility: public
+    hardware: zero-gpu
+    front_matter:
+      title: Plate Demo
+      pinned: false
+      license: apache-2.0
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: HF token.
+    secret: true
+
+deployment:
+  targets: [huggingface-spaces]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/hf-plate-demo }
+  id: com.plate-studio.hf-plate-demo

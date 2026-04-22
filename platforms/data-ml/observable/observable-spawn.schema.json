@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/observable/observable-spawn.schema.json",
+  "title": "universal-spawn with Observable platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "observable"
+          ],
+          "properties": {
+            "observable": {
+              "$ref": "#/definitions/observable"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "observable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "notebook",
+            "framework"
+          ]
+        },
+        "notebook_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "framework_root": {
+          "type": "string"
+        },
+        "fork_protection": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

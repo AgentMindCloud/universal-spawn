@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/replicate/replicate-spawn.schema.json",
+  "title": "universal-spawn with Replicate (data-ml) platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "replicate"
+          ],
+          "properties": {
+            "replicate": {
+              "$ref": "#/definitions/replicate"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "replicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cog_file": {
+          "type": "string"
+        },
+        "training": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "command": {
+              "type": "string"
+            },
+            "hardware": {
+              "type": "string",
+              "enum": [
+                "cpu",
+                "t4",
+                "a40",
+                "a100-40gb",
+                "a100-80gb",
+                "h100"
+              ]
+            },
+            "max_run_time_minutes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4320
+            }
+          }
+        },
+        "notebook_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "dataset_slug": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

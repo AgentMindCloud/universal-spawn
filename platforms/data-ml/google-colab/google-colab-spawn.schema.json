@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/google-colab/google-colab-spawn.schema.json",
+  "title": "universal-spawn with Google Colab platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "google-colab"
+          ],
+          "properties": {
+            "google-colab": {
+              "$ref": "#/definitions/google-colab"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "google-colab": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "notebook_url"
+      ],
+      "properties": {
+        "notebook_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "runtime": {
+          "type": "string",
+          "enum": [
+            "cpu",
+            "gpu",
+            "tpu"
+          ]
+        },
+        "machine_type": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "high-ram",
+            "a100",
+            "v100",
+            "t4",
+            "l4",
+            "v2-8",
+            "v3-8"
+          ]
+        },
+        "runtime_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)*$"
+        },
+        "requires_drive": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

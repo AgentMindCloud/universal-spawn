@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate Classifier Train
+type: workflow
+summary: Minimal training run for the parchment-plate classifier.
+description: Single training run on an A40, 30-minute cap.
+
+platforms:
+  replicate:
+    cog_file: cog.yaml
+    training: { command: "cog train", hardware: a40, max_run_time_minutes: 30 }
+
+safety:
+  min_permissions: [network:outbound:api.replicate.com]
+  cost_limit_usd_daily: 5
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: REPLICATE_API_TOKEN
+    description: Replicate token.
+    secret: true
+
+deployment:
+  targets: [replicate]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/replicate-classifier-train }
+  id: com.plate-studio.replicate-classifier-train

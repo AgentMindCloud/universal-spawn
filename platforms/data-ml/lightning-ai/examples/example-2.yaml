@@ -1,0 +1,33 @@
+version: "1.0"
+name: Multi-GPU Plate Trainer
+type: workflow
+summary: Full Lightning AI Studio on an A100 with a Lightning Trainer entry.
+description: PyTorch Lightning template, A100 machine, lightning_module entry.
+
+platforms:
+  lightning-ai:
+    template: lightning
+    machine: A100
+    entry_file: train.py
+
+safety:
+  min_permissions: [network:outbound, gpu:compute]
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: LIGHTNING_API_KEY
+    description: Lightning API key.
+    secret: true
+  - name: WANDB_API_KEY
+    description: W&B key.
+    secret: true
+
+deployment:
+  targets: [lightning-ai]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/lightning-plate-trainer }
+  id: com.plate-studio.lightning-plate-trainer

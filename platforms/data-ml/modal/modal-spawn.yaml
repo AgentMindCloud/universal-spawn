@@ -1,0 +1,30 @@
+version: "1.0"
+name: Modal Template
+type: workflow
+description: Template for a Modal-targeted universal-spawn manifest.
+
+platforms:
+  modal:
+    entry_file: app.py
+    app_name: your-app
+    gpu: none
+    image_kind: debian-slim
+
+safety:
+  min_permissions: [network:outbound:api.modal.com]
+
+env_vars_required:
+  - name: MODAL_TOKEN_ID
+    description: Modal token id.
+    secret: true
+  - name: MODAL_TOKEN_SECRET
+    description: Modal token secret.
+    secret: true
+
+deployment:
+  targets: [modal]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/modal-template }

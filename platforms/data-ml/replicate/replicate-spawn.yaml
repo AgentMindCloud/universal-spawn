@@ -1,0 +1,29 @@
+version: "1.0"
+name: Replicate Data-ML Template
+type: workflow
+description: Template for a Replicate-data-ml-targeted universal-spawn manifest.
+
+platforms:
+  replicate:
+    cog_file: cog.yaml
+    training:
+      command: "cog train"
+      hardware: a40
+      max_run_time_minutes: 60
+    notebook_url: "https://colab.research.google.com/github/yourhandle/your-replicate-train/blob/main/train.ipynb"
+
+safety:
+  min_permissions: [network:outbound:api.replicate.com]
+
+env_vars_required:
+  - name: REPLICATE_API_TOKEN
+    description: Replicate token.
+    secret: true
+
+deployment:
+  targets: [replicate]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/replicate-train-template }

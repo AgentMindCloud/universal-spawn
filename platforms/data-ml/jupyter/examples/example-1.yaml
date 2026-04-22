@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate EDA Project
+type: notebook
+summary: Minimal Jupyter notebook project for parchment-plate EDA.
+description: One entry notebook + requirements.txt; default Python 3 kernel.
+
+platforms:
+  jupyter:
+    kind: notebook-project
+    entry_notebook: notebooks/eda.ipynb
+    requirements: requirements.txt
+    kernel: python3
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [jupyter]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: BSD-3-Clause
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/jupyter-plate-eda }
+  id: com.plate-studio.jupyter-plate-eda

@@ -1,0 +1,30 @@
+version: "1.0"
+name: Plate EDA Notebook
+type: notebook
+summary: Minimal Kaggle Python notebook exploring the parchment-plate dataset.
+description: One notebook, no GPU, no internet. Reads from one input dataset.
+
+platforms:
+  kaggle:
+    kind: notebook
+    slug: plate-studio/plate-eda
+    language: python
+    kernel_type: notebook
+    enable_gpu: false
+    enable_internet: false
+    dataset_sources: [plate-studio/parchment-plates]
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [kaggle]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/kaggle-plate-eda }
+  id: com.plate-studio.kaggle-plate-eda

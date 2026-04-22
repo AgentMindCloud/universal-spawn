@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/paperspace/paperspace-spawn.schema.json",
+  "title": "universal-spawn with Paperspace platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "paperspace"
+          ],
+          "properties": {
+            "paperspace": {
+              "$ref": "#/definitions/paperspace"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "paperspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface"
+      ],
+      "properties": {
+        "surface": {
+          "type": "string",
+          "enum": [
+            "gradient-notebook",
+            "gradient-deployment",
+            "machine"
+          ]
+        },
+        "gpu": {
+          "type": "string",
+          "enum": [
+            "cpu",
+            "M4000",
+            "P4000",
+            "P5000",
+            "P6000",
+            "RTX4000",
+            "RTX5000",
+            "A4000",
+            "A5000",
+            "A6000",
+            "A100",
+            "H100"
+          ]
+        },
+        "team_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]{6,32}$"
+        },
+        "project_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]{6,64}$"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

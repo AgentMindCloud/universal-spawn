@@ -1,0 +1,32 @@
+version: "1.0"
+name: Bayes Sweep
+type: workflow
+summary: Full W&B Bayesian sweep + artifact-registry deployment.
+description: Public project with a Bayes sweep over learning rate + dropout, artifacts registered to a model registry.
+
+platforms:
+  weights-and-biases:
+    entity: plate-studio
+    project: parchment-sweep
+    sweep_file: sweep.yaml
+    artifact_registry: parchment-models
+    visibility: public
+
+safety:
+  min_permissions: [network:outbound:api.wandb.ai]
+  cost_limit_usd_daily: 10
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: WANDB_API_KEY
+    description: W&B API key.
+    secret: true
+
+deployment:
+  targets: [weights-and-biases]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/wandb-bayes-sweep }
+  id: com.plate-studio.wandb-bayes-sweep

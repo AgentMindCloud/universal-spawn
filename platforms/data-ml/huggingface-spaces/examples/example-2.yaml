@@ -1,0 +1,33 @@
+version: "1.0"
+name: Inference Streamlit App
+type: web-app
+summary: Full Streamlit-SDK Space backed by an A10g-small GPU for live inference.
+description: Streamlit interface; calls a HF inference endpoint.
+
+platforms:
+  huggingface-spaces:
+    sdk: streamlit
+    visibility: private
+    hardware: a10g-small
+    front_matter:
+      title: Inference UI
+      pinned: true
+
+safety:
+  min_permissions: [network:inbound, network:outbound:huggingface.co]
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: HF token.
+    secret: true
+
+deployment:
+  targets: [huggingface-spaces]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Inference Co., handle: inference-co }
+  source: { type: git, url: https://github.com/inference-co/hf-inference-streamlit }
+  id: com.inference-co.hf-inference-streamlit

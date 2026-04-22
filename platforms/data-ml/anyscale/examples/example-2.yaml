@@ -1,0 +1,33 @@
+version: "1.0"
+name: Plate Ray Cluster
+type: workflow
+summary: Full Anyscale cluster with GPU worker autoscaling for plate generation.
+description: Head node + GPU workers (g5.xlarge, 1-8 autoscale).
+
+platforms:
+  anyscale:
+    service_file: service.yaml
+    ray_version: "2.36"
+    head_node: m6i.xlarge
+    worker_nodes:
+      - { instance_type: g5.xlarge, min: 1, max: 8 }
+    cloud: aws-us-west-2
+
+safety:
+  min_permissions: [network:inbound, network:outbound, gpu:compute]
+  cost_limit_usd_daily: 60
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANYSCALE_TOKEN
+    description: Anyscale token.
+    secret: true
+
+deployment:
+  targets: [anyscale]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/anyscale-plate-cluster }
+  id: com.plate-studio.anyscale-plate-cluster

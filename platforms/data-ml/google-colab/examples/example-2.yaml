@@ -1,0 +1,32 @@
+version: "1.0"
+name: Train ViT on Plates
+type: notebook
+summary: Full Colab notebook training a ViT classifier on parchment-plate images.
+description: A100 runtime; mounts Drive for the dataset and checkpoints.
+
+platforms:
+  google-colab:
+    notebook_url: "https://colab.research.google.com/github/plate-studio/train-vit-colab/blob/main/train.ipynb"
+    runtime: gpu
+    machine_type: a100
+    runtime_version: "3.11"
+    requires_drive: true
+
+safety:
+  min_permissions: [network:outbound, fs:read, fs:write, gpu:compute]
+  cost_limit_usd_daily: 12
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: WANDB_API_KEY
+    description: W&B key for experiment tracking.
+    secret: true
+
+deployment:
+  targets: [google-colab]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/train-vit-colab }
+  id: com.plate-studio.train-vit-colab

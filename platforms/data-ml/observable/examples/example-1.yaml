@@ -1,0 +1,27 @@
+version: "1.0"
+name: Plate Notebook
+type: notebook
+summary: Minimal Observable notebook visualising the parchment plate archetypes.
+description: Single notebook URL.
+
+platforms:
+  observable:
+    kind: notebook
+    notebook_url: "https://observablehq.com/@plate-studio/plate-archetypes"
+
+safety:
+  min_permissions: []
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [observable]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: ISC
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/observable-plate-archetypes }
+  id: com.plate-studio.observable-plate-archetypes

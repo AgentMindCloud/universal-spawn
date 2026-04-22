@@ -1,0 +1,26 @@
+version: "1.0"
+name: Plate EDA Colab
+type: notebook
+summary: Minimal Colab notebook for parchment-plate EDA.
+description: CPU-only standard machine.
+
+platforms:
+  google-colab:
+    notebook_url: "https://colab.research.google.com/github/plate-studio/plate-eda-colab/blob/main/eda.ipynb"
+    runtime: cpu
+    machine_type: standard
+
+safety:
+  min_permissions: [network:outbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [google-colab]
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/plate-eda-colab }
+  id: com.plate-studio.plate-eda-colab

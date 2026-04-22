@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/lightning-ai/lightning-ai-spawn.schema.json",
+  "title": "universal-spawn with Lightning AI platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "lightning-ai"
+          ],
+          "properties": {
+            "lightning-ai": {
+              "$ref": "#/definitions/lightning-ai"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "lightning-ai": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "template": {
+          "type": "string",
+          "enum": [
+            "python",
+            "pytorch",
+            "jax",
+            "tensorflow",
+            "lightning"
+          ]
+        },
+        "machine": {
+          "type": "string",
+          "enum": [
+            "cpu",
+            "T4",
+            "L4",
+            "A10G",
+            "A100",
+            "L40S",
+            "H100"
+          ]
+        },
+        "entry_file": {
+          "type": "string"
+        },
+        "team_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]{6,64}$"
+        }
+      }
+    }
+  }
+}

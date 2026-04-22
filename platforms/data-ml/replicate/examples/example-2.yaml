@@ -1,0 +1,31 @@
+version: "1.0"
+name: Plate ControlNet Notebook
+type: notebook
+summary: Full Replicate training notebook + companion Colab link.
+description: Notebook walks through training a ControlNet variant for parchment plates; companion Colab opens with one click.
+
+platforms:
+  replicate:
+    cog_file: cog.yaml
+    training: { command: "cog train", hardware: a100-40gb, max_run_time_minutes: 240 }
+    notebook_url: "https://colab.research.google.com/github/plate-studio/replicate-controlnet/blob/main/train.ipynb"
+    dataset_slug: plate-studio/parchment-train
+
+safety:
+  min_permissions: [network:outbound:api.replicate.com]
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: REPLICATE_API_TOKEN
+    description: Replicate token.
+    secret: true
+
+deployment:
+  targets: [replicate]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/replicate-controlnet }
+  id: com.plate-studio.replicate-controlnet

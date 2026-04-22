@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/kaggle/kaggle-spawn.schema.json",
+  "title": "universal-spawn with Kaggle platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "kaggle"
+          ],
+          "properties": {
+            "kaggle": {
+              "$ref": "#/definitions/kaggle"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "kaggle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "slug"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "notebook",
+            "dataset"
+          ]
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9_][a-z0-9_-]+/[a-z0-9_][a-z0-9_-]+$"
+        },
+        "language": {
+          "type": "string",
+          "enum": [
+            "python",
+            "r",
+            "rust"
+          ]
+        },
+        "kernel_type": {
+          "type": "string",
+          "enum": [
+            "notebook",
+            "script"
+          ]
+        },
+        "enable_gpu": {
+          "type": "boolean",
+          "default": false
+        },
+        "enable_internet": {
+          "type": "boolean",
+          "default": false
+        },
+        "dataset_sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9_][a-z0-9_-]+/[a-z0-9_][a-z0-9_-]+$"
+          }
+        },
+        "competition": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        }
+      }
+    }
+  }
+}

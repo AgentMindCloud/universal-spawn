@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Framework Site
+type: site
+summary: Full Observable Framework data app with multiple pages.
+description: Reactive Observable Framework site under `src/`.
+
+platforms:
+  observable:
+    kind: framework
+    framework_root: src
+    fork_protection: true
+
+safety:
+  min_permissions: [network:inbound]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [observable]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: ISC
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/observable-plate-framework }
+  id: com.plate-studio.observable-plate-framework

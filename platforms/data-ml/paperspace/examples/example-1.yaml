@@ -1,0 +1,28 @@
+version: "1.0"
+name: Plate Notebook
+type: notebook
+summary: Minimal Paperspace Gradient notebook for parchment EDA.
+description: A4000 GPU. Default container.
+
+platforms:
+  paperspace:
+    surface: gradient-notebook
+    gpu: A4000
+
+safety:
+  min_permissions: [network:outbound, gpu:compute]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: PAPERSPACE_API_KEY
+    description: API key.
+    secret: true
+
+deployment:
+  targets: [paperspace]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/paperspace-plate-notebook }
+  id: com.plate-studio.paperspace-plate-notebook

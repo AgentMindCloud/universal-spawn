@@ -1,0 +1,22 @@
+version: "1.0"
+name: Observable Template
+type: notebook
+description: Template for an Observable-targeted universal-spawn manifest.
+
+platforms:
+  observable:
+    kind: notebook
+    notebook_url: "https://observablehq.com/@yourhandle/your-notebook"
+
+safety:
+  min_permissions: [network:outbound]
+
+env_vars_required: []
+
+deployment:
+  targets: [observable]
+
+metadata:
+  license: ISC
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/observable-template }

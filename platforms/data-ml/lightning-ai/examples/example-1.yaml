@@ -1,0 +1,29 @@
+version: "1.0"
+name: Plate PyTorch Studio
+type: notebook
+summary: Minimal Lightning AI Studio for plate ML on a T4.
+description: PyTorch template, T4 machine, single notebook.
+
+platforms:
+  lightning-ai:
+    template: pytorch
+    machine: T4
+    entry_file: notebook.ipynb
+
+safety:
+  min_permissions: [network:outbound, gpu:compute]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: LIGHTNING_API_KEY
+    description: Lightning API key.
+    secret: true
+
+deployment:
+  targets: [lightning-ai]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/lightning-plate-pytorch }
+  id: com.plate-studio.lightning-plate-pytorch

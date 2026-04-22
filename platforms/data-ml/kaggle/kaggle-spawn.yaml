@@ -1,0 +1,25 @@
+version: "1.0"
+name: Kaggle Template
+type: notebook
+description: Template for a Kaggle-targeted universal-spawn manifest.
+
+platforms:
+  kaggle:
+    kind: notebook
+    slug: yourhandle/your-notebook
+    language: python
+    kernel_type: notebook
+    enable_gpu: false
+
+safety:
+  min_permissions: [fs:read]
+
+env_vars_required: []
+
+deployment:
+  targets: [kaggle]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/kaggle-template }

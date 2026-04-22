@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/modal/modal-spawn.schema.json",
+  "title": "universal-spawn with Modal platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "modal"
+          ],
+          "properties": {
+            "modal": {
+              "$ref": "#/definitions/modal"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "modal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entry_file",
+        "app_name"
+      ],
+      "properties": {
+        "entry_file": {
+          "type": "string"
+        },
+        "app_name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,63}$"
+        },
+        "gpu": {
+          "type": "string",
+          "enum": [
+            "none",
+            "T4",
+            "L4",
+            "A10G",
+            "A100",
+            "A100-80GB",
+            "H100",
+            "H200",
+            "B200"
+          ]
+        },
+        "image_kind": {
+          "type": "string",
+          "enum": [
+            "debian-slim",
+            "from-registry",
+            "dockerfile"
+          ]
+        },
+        "volumes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "secrets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

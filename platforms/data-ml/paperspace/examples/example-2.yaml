@@ -1,0 +1,33 @@
+version: "1.0"
+name: Plate Inference Deployment
+type: workflow
+summary: Full Gradient deployment serving a parchment classifier behind a custom image.
+description: Gradient deployment on H100. Custom image. Production tier.
+
+platforms:
+  paperspace:
+    surface: gradient-deployment
+    gpu: H100
+    image: ghcr.io/plate-studio/parchment-infer:latest
+
+safety:
+  min_permissions: [network:inbound, network:outbound, gpu:compute]
+  cost_limit_usd_daily: 120
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: PAPERSPACE_API_KEY
+    description: API key.
+    secret: true
+  - name: HF_TOKEN
+    description: HF token.
+    secret: true
+
+deployment:
+  targets: [paperspace]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/paperspace-plate-deployment }
+  id: com.plate-studio.paperspace-plate-deployment

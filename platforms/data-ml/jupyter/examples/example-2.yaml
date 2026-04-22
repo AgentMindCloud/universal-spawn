@@ -1,0 +1,27 @@
+version: "1.0"
+name: Parchment Lab Extension
+type: extension
+summary: Full JupyterLab extension recoloring the lab UI to the parchment palette.
+description: Lab extension installed via pip; lights up the Residual Frequencies palette.
+
+platforms:
+  jupyter:
+    kind: lab-extension
+    lab_extension_id: "@plate-studio/jupyterlab-parchment-theme"
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [jupyter]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: BSD-3-Clause
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/jupyterlab-parchment-theme }
+  id: com.plate-studio.jupyterlab-parchment-theme

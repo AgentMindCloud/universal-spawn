@@ -1,0 +1,35 @@
+version: "1.0"
+name: Plate Classifier Submission
+type: notebook
+summary: Full Kaggle competition entry with GPU + internet + private dataset upload.
+description: GPU-enabled notebook entering the parchment-classifier competition. Trains, predicts, submits.
+
+platforms:
+  kaggle:
+    kind: notebook
+    slug: plate-studio/plate-classifier-submission
+    language: python
+    kernel_type: notebook
+    enable_gpu: true
+    enable_internet: true
+    dataset_sources: [plate-studio/parchment-train, plate-studio/parchment-test]
+    competition: parchment-classifier
+
+safety:
+  min_permissions: [network:outbound, fs:read, gpu:compute]
+  cost_limit_usd_daily: 0
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: KAGGLE_API_TOKEN
+    description: Kaggle API token used for submission.
+    secret: true
+
+deployment:
+  targets: [kaggle]
+
+metadata:
+  license: MIT
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/kaggle-plate-submission }
+  id: com.plate-studio.kaggle-plate-submission

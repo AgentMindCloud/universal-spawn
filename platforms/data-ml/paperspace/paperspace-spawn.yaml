@@ -1,0 +1,26 @@
+version: "1.0"
+name: Paperspace Template
+type: notebook
+description: Template for a Paperspace-targeted universal-spawn manifest.
+
+platforms:
+  paperspace:
+    surface: gradient-notebook
+    gpu: A4000
+    image: paperspace/gradient-base:pt230-tf215-cudaa122-py311
+
+safety:
+  min_permissions: [network:inbound, network:outbound]
+
+env_vars_required:
+  - name: PAPERSPACE_API_KEY
+    description: Paperspace API key.
+    secret: true
+
+deployment:
+  targets: [paperspace]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/paperspace-template }

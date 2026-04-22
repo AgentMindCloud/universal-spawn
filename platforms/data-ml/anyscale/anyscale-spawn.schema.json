@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/data-ml/anyscale/anyscale-spawn.schema.json",
+  "title": "universal-spawn with Anyscale platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "anyscale"
+          ],
+          "properties": {
+            "anyscale": {
+              "$ref": "#/definitions/anyscale"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "anyscale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "service_file",
+        "ray_version"
+      ],
+      "properties": {
+        "service_file": {
+          "type": "string"
+        },
+        "ray_version": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)+$"
+        },
+        "head_node": {
+          "type": "string"
+        },
+        "worker_nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "instance_type": {
+                "type": "string"
+              },
+              "min": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "max": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "cloud": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
