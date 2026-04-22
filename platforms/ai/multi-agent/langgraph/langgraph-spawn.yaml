@@ -1,0 +1,53 @@
+version: "1.0"
+name: LangGraph Template
+type: workflow
+description: Template for a LangGraph-targeted universal-spawn manifest.
+
+platforms:
+  langgraph:
+    language: python
+    entry_graph: { file: app/graph.py, symbol: graph }
+    state_schema_ref: app/state.py
+    nodes:
+      - name: router
+        kind: router
+      - name: agent
+        kind: agent
+        llm: { provider: anthropic, model: claude-sonnet-4-6 }
+        tools: [search]
+      - name: tools
+        kind: tool
+      - name: reducer
+        kind: reducer
+    edges:
+      - { from: START, to: router }
+      - { from: router, conditional_ref: app/router_edges.py }
+      - { from: agent, to: tools }
+      - { from: tools, to: reducer }
+      - { from: reducer, to: END }
+    checkpoint:
+      store: sqlite
+      dsn_env: LANGGRAPH_CHECKPOINT_DSN
+    interrupt:
+      before: [tools]
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 10
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key.
+    secret: true
+  - name: LANGGRAPH_CHECKPOINT_DSN
+    description: SQLite path for the checkpoint store.
+    example: "file:///var/lib/langgraph/ckpt.sqlite"
+
+deployment:
+  targets: [langgraph]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/langgraph-template }

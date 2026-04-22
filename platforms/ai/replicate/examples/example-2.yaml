@@ -1,0 +1,37 @@
+version: "1.0"
+name: Replicate Whisper Pipeline
+type: ai-model
+summary: Full Whisper-large-v3 transcription pipeline with webhook.
+description: >
+  Replicate pipeline that transcribes audio via Whisper-large-v3 and
+  notifies the caller via a completion webhook. Runs on an a100-40gb.
+
+platforms:
+  replicate:
+    model: openai/whisper
+    version: "8099696689d249cf8b122d833c36ac3f75505c666a395ca40ef26f68e7d3d16e"
+    input_schema_ref: schemas/whisper-input.json
+    hardware: a100-40gb
+    webhook_ref: webhooks/completion.json
+
+safety:
+  min_permissions: [network:outbound:api.replicate.com]
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: REPLICATE_API_TOKEN
+    description: Replicate API token.
+    secret: true
+  - name: WEBHOOK_SIGNING_SECRET
+    description: Shared secret for verifying completion webhooks.
+    secret: true
+
+deployment:
+  targets: [replicate]
+
+metadata:
+  license: MIT
+  author: { name: Transcription Co., handle: transcription-co }
+  source: { type: git, url: https://github.com/transcription-co/replicate-whisper }
+  id: com.transcription-co.replicate-whisper

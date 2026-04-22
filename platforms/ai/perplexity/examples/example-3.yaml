@@ -1,0 +1,36 @@
+version: "1.0"
+name: Parchment News Digest
+type: ai-skill
+summary: Creative Pplx skill that digests parchment-style plate news daily.
+description: >
+  Queries Sonar for generative-art plate news from the last day,
+  returns a three-line digest in lab-notebook voice. No tools.
+
+platforms:
+  perplexity:
+    model: sonar
+    search_recency_filter: day
+    return_citations: true
+    return_images: false
+    temperature: 0.7
+
+safety:
+  min_permissions: [network:outbound:api.perplexity.ai]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: PPLX_API_KEY
+    description: Perplexity API key.
+    secret: true
+
+deployment:
+  targets: [perplexity]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/parchment-news }
+  categories: [ai, writing, graphics]
+  id: com.plate-studio.parchment-news

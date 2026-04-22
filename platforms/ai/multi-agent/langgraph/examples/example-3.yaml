@@ -1,0 +1,50 @@
+version: "1.0"
+name: Plate Review Cycle
+type: workflow
+summary: Creative LangGraph cycle that keeps revising a plate caption until score threshold.
+description: >
+  Plate captioner cycle: writer → critic → router (score). Router
+  loops back to writer until the critic's score clears threshold,
+  then to END. Demonstrates graph cycles with conditional edges.
+
+platforms:
+  langgraph:
+    language: typescript
+    entry_graph: { file: src/graph.ts, symbol: reviewGraph }
+    state_schema_ref: src/state.ts
+    nodes:
+      - name: writer
+        kind: agent
+        llm: { provider: anthropic, model: claude-sonnet-4-6 }
+      - name: critic
+        kind: agent
+        llm: { provider: anthropic, model: claude-sonnet-4-6 }
+      - name: router
+        kind: router
+    edges:
+      - { from: START, to: writer }
+      - { from: writer, to: critic }
+      - { from: critic, to: router }
+      - { from: router, conditional_ref: src/router.ts }
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  cost_limit_usd_daily: 5
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key.
+    secret: true
+
+deployment:
+  targets: [langgraph]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/langgraph-review-cycle }
+  categories: [ai, writing, graphics]
+  id: com.plate-studio.langgraph-review-cycle

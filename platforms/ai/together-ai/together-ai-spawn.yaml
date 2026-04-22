@@ -1,0 +1,32 @@
+version: "1.0"
+name: Together Template
+type: ai-agent
+description: Template for a Together-AI-targeted universal-spawn manifest.
+
+platforms:
+  together-ai:
+    model: meta-llama/Llama-3.3-70B-Instruct-Turbo
+    surface: chat
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    response_format: text
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.together.xyz]
+  rate_limit_qps: 5
+
+env_vars_required:
+  - name: TOGETHER_API_KEY
+    description: Together API key.
+    secret: true
+
+deployment:
+  targets: [together-ai]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/together-template }

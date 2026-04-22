@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/multi-agent/vercel-ai-sdk/vercel-ai-sdk-spawn.schema.json",
+  "title": "universal-spawn with Vercel AI SDK platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "vercel-ai-sdk"
+          ],
+          "properties": {
+            "vercel-ai-sdk": {
+              "$ref": "#/definitions/vercel-ai-sdk"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "vercel-ai-sdk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "enum": [
+            "openai",
+            "anthropic",
+            "google",
+            "mistral",
+            "cohere",
+            "xai",
+            "groq",
+            "together",
+            "fireworks"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "zod_schema_ref",
+              "handler_ref"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$"
+              },
+              "zod_schema_ref": {
+                "type": "string",
+                "description": "Relative path to the Zod schema module exporting the tool params schema."
+              },
+              "handler_ref": {
+                "type": "string",
+                "description": "Relative path to the handler module."
+              }
+            }
+          }
+        },
+        "generate_object": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_ref": {
+              "type": "string"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "json",
+                "tool"
+              ]
+            }
+          }
+        },
+        "stream": {
+          "type": "boolean",
+          "default": true
+        },
+        "runtime": {
+          "type": "string",
+          "enum": [
+            "node",
+            "edge",
+            "nextjs"
+          ]
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "system_prompt_file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

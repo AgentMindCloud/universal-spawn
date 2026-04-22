@@ -1,0 +1,36 @@
+version: "1.0"
+name: Parchment Dataset
+type: dataset
+summary: Creative HF dataset repo containing Residual Frequencies plate metadata.
+description: >
+  A HF dataset repo that aggregates plate metadata (archetype, year,
+  author, palette) for 10k parchment plates across the open design
+  commons. Private during beta, public after review.
+
+platforms:
+  huggingface:
+    repo_kind: dataset
+    visibility: private
+    card_file: README.md
+    tags: ["design", "plate", "metadata", "parchment"]
+
+safety:
+  min_permissions: [network:outbound:huggingface.co]
+  data_residency: [us, eu]
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: Hugging Face access token.
+    secret: true
+
+deployment:
+  targets: [huggingface]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/parchment-dataset }
+  categories: [data, graphics]
+  id: com.plate-studio.parchment-dataset

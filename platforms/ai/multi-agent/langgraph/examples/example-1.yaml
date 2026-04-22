@@ -1,0 +1,40 @@
+version: "1.0"
+name: LangGraph Minimal
+type: workflow
+summary: Minimal two-node LangGraph with in-memory checkpointing.
+description: Agent + tools node, START → agent → tools → END. No conditional routing.
+
+platforms:
+  langgraph:
+    language: python
+    entry_graph: { file: app/graph.py, symbol: graph }
+    nodes:
+      - name: agent
+        kind: agent
+        llm: { provider: anthropic, model: claude-haiku-4-5-20251001 }
+        tools: [web_search]
+      - name: tools
+        kind: tool
+    edges:
+      - { from: START, to: agent }
+      - { from: agent, to: tools }
+      - { from: tools, to: END }
+    checkpoint: { store: memory }
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key.
+    secret: true
+
+deployment:
+  targets: [langgraph]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Graph Co., handle: graph-co }
+  source: { type: git, url: https://github.com/graph-co/langgraph-min }
+  id: com.graph-co.langgraph-min

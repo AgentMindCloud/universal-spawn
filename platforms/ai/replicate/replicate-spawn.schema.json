@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/./replicate/replicate-spawn.schema.json",
+  "title": "universal-spawn with Replicate platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "replicate"
+          ],
+          "properties": {
+            "replicate": {
+              "$ref": "#/definitions/replicate"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "replicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "version"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+/[a-z0-9._-]+$",
+          "description": "Replicate model slug `owner/name`."
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "Model version hash (SHA-256)."
+        },
+        "input_schema_ref": {
+          "type": "string",
+          "description": "Relative path to the Replicate input schema JSON."
+        },
+        "hardware": {
+          "type": "string",
+          "enum": [
+            "cpu",
+            "t4",
+            "a40",
+            "a100-40gb",
+            "a100-80gb",
+            "h100"
+          ]
+        },
+        "webhook_ref": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

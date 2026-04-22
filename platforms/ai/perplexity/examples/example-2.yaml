@@ -1,0 +1,41 @@
+version: "1.0"
+name: Perplexity Deep Research
+type: ai-agent
+summary: Full Sonar deep-research agent with domain filter and recency window.
+description: >
+  Uses sonar-deep-research for multi-step research. Domain filter
+  limits to three whitelisted sources, recency set to the last
+  month. Returns citations and images.
+
+platforms:
+  perplexity:
+    model: sonar-deep-research
+    search_domain_filter:
+      - arxiv.org
+      - nature.com
+      - science.org
+    search_recency_filter: month
+    return_citations: true
+    return_images: true
+    temperature: 0.1
+    system_prompt_file: prompts/system.md
+
+safety:
+  min_permissions: [network:outbound:api.perplexity.ai]
+  rate_limit_qps: 2
+  cost_limit_usd_daily: 40
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: PPLX_API_KEY
+    description: Perplexity API key with deep-research access.
+    secret: true
+
+deployment:
+  targets: [perplexity]
+
+metadata:
+  license: proprietary
+  author: { name: Research Lab, handle: research-lab, org: Lab }
+  source: { type: git, url: https://github.com/research-lab/pplx-deep-research }
+  id: com.research-lab.pplx-deep-research

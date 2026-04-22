@@ -1,0 +1,29 @@
+version: "1.0"
+name: Together Chat Helper
+type: ai-agent
+summary: Minimal Qwen-2.5-72B chat on Together AI.
+description: Single-shot chat using the Qwen instruct turbo endpoint. No tools.
+
+platforms:
+  together-ai:
+    model: Qwen/Qwen2.5-72B-Instruct-Turbo
+    surface: chat
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.together.xyz]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: TOGETHER_API_KEY
+    description: Together API key.
+    secret: true
+
+deployment:
+  targets: [together-ai]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Helper Co., handle: helper-co }
+  source: { type: git, url: https://github.com/helper-co/together-chat }
+  id: com.helper-co.together-chat

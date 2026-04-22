@@ -1,0 +1,49 @@
+version: "1.0"
+name: Parchment Nested Chat
+type: ai-agent
+summary: Creative nested-chat pattern for a plate-writing salon.
+description: >
+  Nested-chat: an outer salon director talks with two inner specialist
+  chats (typographer, pigment critic). Creative exploration of how
+  to structure multi-topic agent conversations.
+
+platforms:
+  autogen:
+    pattern: nested-chat
+    agents:
+      - name: director
+        type: assistant
+        llm: { provider: mistral, model: mistral-large-latest }
+      - name: typographer
+        type: assistant
+        llm: { provider: mistral, model: mistral-medium-latest }
+      - name: pigment_critic
+        type: assistant
+        llm: { provider: mistral, model: mistral-medium-latest }
+      - name: user
+        type: user_proxy
+    user_proxy:
+      name: user
+      human_input_mode: TERMINATE
+    termination: { max_messages: 30, text: "CURTAIN" }
+
+safety:
+  min_permissions: [network:outbound:api.mistral.ai]
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: Mistral API key.
+    secret: true
+
+deployment:
+  targets: [autogen]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/autogen-salon }
+  categories: [ai, graphics, writing]
+  id: com.plate-studio.autogen-salon

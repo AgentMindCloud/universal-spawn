@@ -1,0 +1,37 @@
+version: "1.0"
+name: Plate Gradio Demo
+type: web-app
+summary: Full Gradio Space that previews plate archetypes with GPU inference.
+description: >
+  Gradio Space that serves a plate-archetype classifier with a UI.
+  Public visibility, zero-GPU hardware tier. Mirrors assets under
+  assets/.
+
+platforms:
+  huggingface:
+    repo_kind: space
+    visibility: public
+    card_file: README.md
+    tags: ["gradio", "parchment", "demo"]
+    space_sdk: gradio
+    hardware: zero-gpu
+
+safety:
+  min_permissions: [network:inbound, network:outbound:huggingface.co]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: Hugging Face access token used to publish the Space.
+    secret: true
+
+deployment:
+  targets: [huggingface]
+
+visuals: { palette: parchment, icon: assets/icon.svg, hero_plate: assets/hero.svg }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/hf-plate-demo }
+  id: com.plate-studio.hf-plate-demo

@@ -1,0 +1,30 @@
+version: "1.0"
+name: Hugging Face Template
+type: ai-model
+description: Template for a Hugging Face-targeted universal-spawn manifest.
+
+platforms:
+  huggingface:
+    repo_kind: model
+    visibility: public
+    card_file: README.md
+    tags: ["text-generation", "parchment"]
+    inference:
+      pipeline_tag: text-generation
+      library_name: transformers
+
+safety:
+  min_permissions: [network:outbound:huggingface.co]
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: Hugging Face access token.
+    secret: true
+
+deployment:
+  targets: [huggingface]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/hf-template }

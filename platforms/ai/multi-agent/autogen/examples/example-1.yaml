@@ -1,0 +1,36 @@
+version: "1.0"
+name: AutoGen Debate
+type: workflow
+summary: Minimal round-robin two-agent debate.
+description: Two assistants debate a claim; terminates at 10 messages.
+
+platforms:
+  autogen:
+    pattern: round-robin
+    agents:
+      - name: pro
+        type: assistant
+        llm: { provider: openai, model: gpt-4o-mini }
+      - name: con
+        type: assistant
+        llm: { provider: openai, model: gpt-4o-mini }
+    termination:
+      max_messages: 10
+
+safety:
+  min_permissions: [network:outbound:api.openai.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: OPENAI_API_KEY
+    description: OpenAI API key.
+    secret: true
+
+deployment:
+  targets: [autogen]
+
+metadata:
+  license: MIT
+  author: { name: Debate Co., handle: debate-co }
+  source: { type: git, url: https://github.com/debate-co/autogen-debate }
+  id: com.debate-co.autogen-debate

@@ -1,0 +1,32 @@
+version: "1.0"
+name: LiteLLM Library
+type: library
+summary: Minimal LiteLLM library-mode router with one model.
+description: In-process router, one model (Claude Haiku), no cache, no budget.
+
+platforms:
+  litellm:
+    mode: library
+    model_list:
+      - model_name: default
+        litellm_params:
+          model: anthropic/claude-haiku-4-5-20251001
+          api_key_env: ANTHROPIC_API_KEY
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [litellm]
+
+metadata:
+  license: MIT
+  author: { name: Router Co., handle: router-co }
+  source: { type: git, url: https://github.com/router-co/litellm-library }
+  id: com.router-co.litellm-library

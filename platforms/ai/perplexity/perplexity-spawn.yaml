@@ -1,0 +1,28 @@
+version: "1.0"
+name: Perplexity Template
+type: ai-agent
+description: Template for a Perplexity Sonar-targeted universal-spawn manifest.
+
+platforms:
+  perplexity:
+    model: sonar-pro
+    return_citations: true
+    return_images: false
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.perplexity.ai]
+  rate_limit_qps: 3
+
+env_vars_required:
+  - name: PPLX_API_KEY
+    description: Perplexity API key.
+    secret: true
+
+deployment:
+  targets: [perplexity]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/perplexity-template }

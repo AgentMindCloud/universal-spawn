@@ -1,0 +1,32 @@
+version: "1.0"
+name: MCP Filesystem
+type: extension
+summary: Minimal MCP server exposing the local filesystem read-only.
+description: >
+  Small stdio-based MCP server that advertises one resource template
+  (`file://*`) and no tools. Read-only by design.
+
+platforms:
+  anthropic-mcp:
+    transport: stdio
+    command: "npx"
+    args: ["-y", "@modelcontextprotocol/server-filesystem"]
+    resources:
+      - uri_template: "file://{path}"
+        description: Local filesystem path read-only.
+    hosts: [claude-desktop, claude-code, cursor, windsurf]
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [mcp]
+
+metadata:
+  license: MIT
+  author: { name: MCP Tooling, handle: mcp-tooling }
+  source: { type: git, url: https://github.com/mcp-tooling/mcp-filesystem }
+  id: com.mcp-tooling.filesystem

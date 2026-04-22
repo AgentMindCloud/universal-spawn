@@ -1,0 +1,39 @@
+version: "1.0"
+name: FLUX Plate Generator
+type: ai-skill
+summary: Creative FLUX image generator for Residual Frequencies plates.
+description: >
+  Image-generation skill that produces parchment-style plate sketches
+  at 1024x1024. Uses FLUX.1-schnell on Together AI.
+
+platforms:
+  together-ai:
+    model: black-forest-labs/FLUX.1-schnell
+    surface: images
+    image:
+      size: 1024x1024
+      steps: 8
+      guidance_scale: 3.5
+      n: 1
+
+safety:
+  min_permissions: [network:outbound:api.together.xyz]
+  cost_limit_usd_daily: 5
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: TOGETHER_API_KEY
+    description: Together API key.
+    secret: true
+
+deployment:
+  targets: [together-ai]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/flux-plate-generator }
+  categories: [ai, graphics]
+  id: com.plate-studio.flux-plate-generator

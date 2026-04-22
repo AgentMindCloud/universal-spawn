@@ -1,0 +1,35 @@
+version: "1.0"
+name: DeepSeek Plate Critic
+type: ai-skill
+summary: Creative DeepSeek-R1 critic that analyzes parchment plates.
+description: >
+  Uses DeepSeek-R1 on Fireworks to produce a one-paragraph critical
+  reading of a Residual Frequencies plate, scored against the visual
+  system's grammar (frame, ticks, accent usage).
+
+platforms:
+  fireworks:
+    model: accounts/fireworks/models/deepseek-r1
+    response_format: text
+    temperature: 0.4
+
+safety:
+  min_permissions: [network:outbound:api.fireworks.ai]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: FIREWORKS_API_KEY
+    description: Fireworks API key.
+    secret: true
+
+deployment:
+  targets: [fireworks]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Critic, handle: plate-critic }
+  source: { type: git, url: https://github.com/plate-critic/deepseek-plate-critic }
+  categories: [ai, graphics, writing]
+  id: com.plate-critic.deepseek-plate-critic

@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/multi-agent/langchain/langchain-spawn.schema.json",
+  "title": "universal-spawn with LangChain platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "langchain"
+          ],
+          "properties": {
+            "langchain": {
+              "$ref": "#/definitions/langchain"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "langchain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "language",
+        "provider",
+        "model",
+        "entry_chain"
+      ],
+      "properties": {
+        "language": {
+          "type": "string",
+          "enum": [
+            "python",
+            "typescript"
+          ]
+        },
+        "provider": {
+          "type": "string",
+          "enum": [
+            "openai",
+            "anthropic",
+            "google",
+            "mistral",
+            "cohere",
+            "together",
+            "fireworks",
+            "local"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "entry_chain": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "file",
+            "symbol"
+          ],
+          "properties": {
+            "file": {
+              "type": "string",
+              "description": "Relative path to the module exporting the entry chain."
+            },
+            "symbol": {
+              "type": "string",
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+            }
+          }
+        },
+        "retriever": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "vector",
+                "web",
+                "parent-document",
+                "none"
+              ]
+            },
+            "vector_store": {
+              "type": "string",
+              "enum": [
+                "chroma",
+                "pinecone",
+                "weaviate",
+                "qdrant",
+                "pgvector",
+                "faiss"
+              ]
+            },
+            "embeddings_model": {
+              "type": "string"
+            },
+            "top_k": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        },
+        "langsmith_tracing": {
+          "type": "boolean",
+          "default": false
+        },
+        "langsmith_project": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

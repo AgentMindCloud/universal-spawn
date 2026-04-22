@@ -1,0 +1,38 @@
+version: "1.0"
+name: LangChain QA
+type: ai-agent
+summary: Minimal LangChain QA chain over a Chroma vector store.
+description: One chain, Anthropic Sonnet, Chroma vector store, five-result retrieval.
+
+platforms:
+  langchain:
+    language: python
+    provider: anthropic
+    model: claude-sonnet-4-6
+    entry_chain: { file: app/chain.py, symbol: chain }
+    retriever:
+      kind: vector
+      vector_store: chroma
+      embeddings_model: text-embedding-3-small
+      top_k: 5
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com, network:outbound:api.openai.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key.
+    secret: true
+  - name: OPENAI_API_KEY
+    description: OpenAI API key for embeddings.
+    secret: true
+
+deployment:
+  targets: [langchain]
+
+metadata:
+  license: Apache-2.0
+  author: { name: QA Co., handle: qa-co }
+  source: { type: git, url: https://github.com/qa-co/langchain-qa }
+  id: com.qa-co.langchain-qa

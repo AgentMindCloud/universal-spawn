@@ -1,0 +1,42 @@
+version: "1.0"
+name: AutoGen Template
+type: ai-agent
+description: Template for an AutoGen-targeted universal-spawn manifest.
+
+platforms:
+  autogen:
+    pattern: selector
+    agents:
+      - name: planner
+        type: assistant
+        llm: { provider: openai, model: gpt-5 }
+      - name: coder
+        type: assistant
+        llm: { provider: openai, model: gpt-5 }
+      - name: user
+        type: user_proxy
+    user_proxy:
+      name: user
+      human_input_mode: TERMINATE
+      code_execution: true
+    termination:
+      max_messages: 20
+      text: "TERMINATE"
+
+safety:
+  min_permissions: [network:outbound:api.openai.com]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 8
+
+env_vars_required:
+  - name: OPENAI_API_KEY
+    description: OpenAI API key.
+    secret: true
+
+deployment:
+  targets: [autogen]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/autogen-template }

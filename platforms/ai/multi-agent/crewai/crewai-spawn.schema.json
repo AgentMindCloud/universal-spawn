@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/multi-agent/crewai/crewai-spawn.schema.json",
+  "title": "universal-spawn with CrewAI platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "crewai"
+          ],
+          "properties": {
+            "crewai": {
+              "$ref": "#/definitions/crewai"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "crewai": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "process",
+        "roles",
+        "tasks"
+      ],
+      "properties": {
+        "process": {
+          "type": "string",
+          "enum": [
+            "sequential",
+            "hierarchical",
+            "parallel"
+          ]
+        },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "goal"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+              },
+              "goal": {
+                "type": "string"
+              },
+              "backstory": {
+                "type": "string"
+              },
+              "llm": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "enum": [
+                      "openai",
+                      "anthropic",
+                      "google",
+                      "mistral",
+                      "cohere",
+                      "together",
+                      "local"
+                    ]
+                  },
+                  "model": {
+                    "type": "string"
+                  }
+                }
+              },
+              "tools": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "allow_delegation": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "description",
+              "role"
+            ],
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "expected_output": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+              },
+              "context_from": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "verbose": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

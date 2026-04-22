@@ -1,0 +1,46 @@
+version: "1.0"
+name: Mastra Plate Curator
+type: ai-agent
+summary: Creative Mastra agent curating a parchment plate feed.
+description: >
+  One agent subscribed to an RSS plate feed. Scores each item against
+  the Residual Frequencies rubric, posts scores to libSQL for a later
+  digest. Deploys on Vercel Edge.
+
+platforms:
+  mastra:
+    agents:
+      - name: curator
+        model: mistral/mistral-large-latest
+        instructions_file: agents/curator.md
+        tools: [score_plate]
+        memory: true
+    memory:
+      store: libsql
+      url_env: MASTRA_LIBSQL_URL
+    deploy: { runtime: vercel-edge }
+
+safety:
+  min_permissions: [network:outbound:api.mistral.ai]
+  cost_limit_usd_daily: 3
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: Mistral key.
+    secret: true
+  - name: MASTRA_LIBSQL_URL
+    description: libSQL URL.
+    secret: true
+
+deployment:
+  targets: [mastra]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/mastra-curator }
+  categories: [ai, graphics]
+  id: com.plate-studio.mastra-curator

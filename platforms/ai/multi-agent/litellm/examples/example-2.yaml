@@ -1,0 +1,69 @@
+version: "1.0"
+name: LiteLLM Proxy Cluster
+type: workflow
+summary: Full LiteLLM proxy with six providers, fallbacks, Redis cache, and daily budget.
+description: >
+  Proxy-mode LiteLLM with Anthropic, OpenAI, Gemini, Mistral, Together,
+  and a local Ollama. Each family has a fallback chain. Redis cache
+  with 1-hour TTL. $50 daily budget.
+
+platforms:
+  litellm:
+    mode: proxy
+    model_list:
+      - { model_name: reasoning, litellm_params: { model: anthropic/claude-opus-4-7, api_key_env: ANTHROPIC_API_KEY, rpm: 60 } }
+      - { model_name: reasoning-backup, litellm_params: { model: openai/gpt-5, api_key_env: OPENAI_API_KEY, rpm: 60 } }
+      - { model_name: fast, litellm_params: { model: anthropic/claude-haiku-4-5-20251001, api_key_env: ANTHROPIC_API_KEY, rpm: 120 } }
+      - { model_name: fast-backup, litellm_params: { model: gemini/gemini-2-5-flash, api_key_env: GOOGLE_API_KEY, rpm: 120 } }
+      - { model_name: cheap, litellm_params: { model: mistral/mistral-small-latest, api_key_env: MISTRAL_API_KEY, rpm: 60 } }
+      - { model_name: local, litellm_params: { model: ollama/llama3.3, api_base: http://ollama:11434 } }
+    fallbacks:
+      reasoning: [reasoning-backup, fast]
+      fast: [fast-backup, cheap, local]
+    router:
+      routing_strategy: least-busy
+      allowed_fails: 2
+    cache:
+      type: redis
+      redis_url_env: LITELLM_REDIS_URL
+      ttl_seconds: 3600
+    budget:
+      max_budget_usd: 50
+      reset_period: daily
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:api.openai.com
+    - network:outbound:generativelanguage.googleapis.com
+    - network:outbound:api.mistral.ai
+    - network:outbound:ollama
+  rate_limit_qps: 20
+  cost_limit_usd_daily: 50
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+  - name: OPENAI_API_KEY
+    description: OpenAI key.
+    secret: true
+  - name: GOOGLE_API_KEY
+    description: Google key.
+    secret: true
+  - name: MISTRAL_API_KEY
+    description: Mistral key.
+    secret: true
+  - name: LITELLM_REDIS_URL
+    description: Redis URL.
+    secret: true
+
+deployment:
+  targets: [litellm]
+
+metadata:
+  license: MIT
+  author: { name: Platform Team, handle: platform-team, org: Platform }
+  source: { type: git, url: https://github.com/platform-team/litellm-cluster }
+  id: com.platform-team.litellm-cluster

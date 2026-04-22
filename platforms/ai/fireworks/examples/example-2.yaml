@@ -1,0 +1,52 @@
+version: "1.0"
+name: FireFunction Router
+type: ai-agent
+summary: Full FireFunction-V2 router with strict JSON Schema output.
+description: >
+  Uses a FireFunction-V2 model to route incoming API calls to one of
+  five internal tools. Enforces response shape via JSON Schema.
+
+platforms:
+  fireworks:
+    model: accounts/fireworks/models/firefunction-v2
+    fire_function: true
+    tools:
+      - name: create_order
+        function_ref: tools/create_order.json
+        strict: true
+      - name: cancel_order
+        function_ref: tools/cancel_order.json
+        strict: true
+      - name: refund_order
+        function_ref: tools/refund_order.json
+        strict: true
+      - name: lookup_sku
+        function_ref: tools/lookup_sku.json
+        strict: true
+      - name: escalate
+        function_ref: tools/escalate.json
+        strict: true
+    response_format: json_schema
+    response_schema_ref: schemas/response.json
+    temperature: 0
+    max_tokens: 1024
+
+safety:
+  min_permissions: [network:outbound:api.fireworks.ai]
+  rate_limit_qps: 10
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: FIREWORKS_API_KEY
+    description: Fireworks API key.
+    secret: true
+
+deployment:
+  targets: [fireworks]
+
+metadata:
+  license: proprietary
+  author: { name: Commerce Co., handle: commerce-co, org: Commerce }
+  source: { type: git, url: https://github.com/commerce-co/firefunction-router }
+  id: com.commerce-co.firefunction-router

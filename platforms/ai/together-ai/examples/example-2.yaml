@@ -1,0 +1,49 @@
+version: "1.0"
+name: Together DeepSeek Router
+type: ai-agent
+summary: Full DeepSeek-V3 agent with tool router and JSON output.
+description: >
+  Uses DeepSeek-V3 on Together for an enterprise tool router. Four
+  tools, strict JSON, and a workspace spend cap.
+
+platforms:
+  together-ai:
+    model: deepseek-ai/DeepSeek-V3
+    surface: chat
+    tools:
+      - name: create_ticket
+        function_ref: tools/create_ticket.json
+        strict: true
+      - name: search_kb
+        function_ref: tools/search_kb.json
+        strict: true
+      - name: escalate
+        function_ref: tools/escalate.json
+        strict: true
+      - name: close_ticket
+        function_ref: tools/close_ticket.json
+        strict: true
+    response_format: json_object
+    temperature: 0
+    max_tokens: 2048
+    system_prompt_file: prompts/router.md
+
+safety:
+  min_permissions: [network:outbound:api.together.xyz]
+  rate_limit_qps: 10
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: TOGETHER_API_KEY
+    description: Together API key.
+    secret: true
+
+deployment:
+  targets: [together-ai]
+
+metadata:
+  license: proprietary
+  author: { name: Support Co., handle: support-co, org: Support }
+  source: { type: git, url: https://github.com/support-co/together-router }
+  id: com.support-co.together-router

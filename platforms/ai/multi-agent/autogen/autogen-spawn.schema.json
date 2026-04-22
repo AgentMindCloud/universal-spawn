@@ -1,0 +1,141 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/multi-agent/autogen/autogen-spawn.schema.json",
+  "title": "universal-spawn with AutoGen (Microsoft) platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "autogen"
+          ],
+          "properties": {
+            "autogen": {
+              "$ref": "#/definitions/autogen"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "autogen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pattern",
+        "agents"
+      ],
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "enum": [
+            "round-robin",
+            "selector",
+            "swarm",
+            "nested-chat"
+          ]
+        },
+        "agents": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "type"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]{0,63}$"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "assistant",
+                  "user_proxy",
+                  "retrieve_assistant",
+                  "conversable"
+                ]
+              },
+              "system_message_file": {
+                "type": "string"
+              },
+              "llm": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "enum": [
+                      "openai",
+                      "anthropic",
+                      "azure-openai",
+                      "google",
+                      "mistral",
+                      "local"
+                    ]
+                  },
+                  "model": {
+                    "type": "string"
+                  }
+                }
+              },
+              "tools": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "user_proxy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "human_input_mode": {
+              "type": "string",
+              "enum": [
+                "NEVER",
+                "ALWAYS",
+                "TERMINATE"
+              ]
+            },
+            "code_execution": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "termination": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_messages": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "text": {
+              "type": "string",
+              "description": "Message substring that terminates the chat when produced."
+            }
+          }
+        }
+      }
+    }
+  }
+}

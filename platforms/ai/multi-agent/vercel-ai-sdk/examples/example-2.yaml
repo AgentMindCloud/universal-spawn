@@ -1,0 +1,52 @@
+version: "1.0"
+name: AI SDK Typed Agent
+type: ai-agent
+summary: Full Vercel AI SDK agent with four Zod-typed tools and generateObject output.
+description: >
+  Production agent backed by the AI SDK on the Edge runtime. Four
+  tools with Zod schemas, generateObject for the final typed response,
+  streaming enabled.
+
+platforms:
+  vercel-ai-sdk:
+    provider: anthropic
+    model: claude-opus-4-7
+    tools:
+      - name: search
+        zod_schema_ref: tools/search.schema.ts
+        handler_ref: tools/search.handler.ts
+      - name: fetch_url
+        zod_schema_ref: tools/fetch_url.schema.ts
+        handler_ref: tools/fetch_url.handler.ts
+      - name: summarize
+        zod_schema_ref: tools/summarize.schema.ts
+        handler_ref: tools/summarize.handler.ts
+      - name: cite
+        zod_schema_ref: tools/cite.schema.ts
+        handler_ref: tools/cite.handler.ts
+    generate_object:
+      schema_ref: schemas/report.schema.ts
+      mode: tool
+    stream: true
+    runtime: edge
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  rate_limit_qps: 10
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [vercel-ai-sdk, vercel]
+
+metadata:
+  license: proprietary
+  author: { name: Platform Co., handle: platform-co, org: Platform }
+  source: { type: git, url: https://github.com/platform-co/ai-sdk-agent }
+  id: com.platform-co.ai-sdk-agent

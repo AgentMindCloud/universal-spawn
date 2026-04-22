@@ -1,0 +1,30 @@
+version: "1.0"
+name: AI SDK Chat
+type: ai-agent
+summary: Minimal Vercel AI SDK chat route on Next.js.
+description: Streaming chat on Anthropic Sonnet, one tool, Next.js runtime.
+
+platforms:
+  vercel-ai-sdk:
+    provider: anthropic
+    model: claude-sonnet-4-6
+    stream: true
+    runtime: nextjs
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [vercel-ai-sdk, vercel]
+
+metadata:
+  license: MIT
+  author: { name: Chat Co., handle: chat-co }
+  source: { type: git, url: https://github.com/chat-co/ai-sdk-chat }
+  id: com.chat-co.ai-sdk-chat

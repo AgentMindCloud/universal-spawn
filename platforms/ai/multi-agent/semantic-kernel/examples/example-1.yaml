@@ -1,0 +1,32 @@
+version: "1.0"
+name: SK Hello
+type: ai-skill
+summary: Minimal Semantic Kernel skill in Python with one prompt function.
+description: Single-skill kernel. Python. OpenAI connector. Function-calling planner.
+
+platforms:
+  semantic-kernel:
+    language: python
+    connector: openai
+    model: gpt-4o-mini
+    skills:
+      - { name: Greet, kind: prompt, path: skills/greet }
+    planner: function-calling
+
+safety:
+  min_permissions: [network:outbound:api.openai.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: OPENAI_API_KEY
+    description: OpenAI API key.
+    secret: true
+
+deployment:
+  targets: [semantic-kernel]
+
+metadata:
+  license: MIT
+  author: { name: SK Co., handle: sk-co }
+  source: { type: git, url: https://github.com/sk-co/sk-hello }
+  id: com.sk-co.sk-hello

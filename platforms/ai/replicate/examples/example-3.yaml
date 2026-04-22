@@ -1,0 +1,37 @@
+version: "1.0"
+name: ControlNet Plate Composer
+type: creative-tool
+summary: Creative ControlNet pipeline that composes parchment plates from sketches.
+description: >
+  Replicate ControlNet model that takes a rough canny-edge sketch and
+  renders a finished Residual Frequencies plate. Creative pipeline
+  for the Plate Studio gallery.
+
+platforms:
+  replicate:
+    model: jagilley/controlnet-canny
+    version: "aff48af9c68d162388d230a2ab003f68d2638d88307bdaf1c2f1ac95079c9613"
+    input_schema_ref: schemas/controlnet-input.json
+    hardware: a40
+
+safety:
+  min_permissions: [network:outbound:api.replicate.com]
+  cost_limit_usd_daily: 8
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: REPLICATE_API_TOKEN
+    description: Replicate API token.
+    secret: true
+
+deployment:
+  targets: [replicate]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/controlnet-plates }
+  categories: [ai, graphics]
+  id: com.plate-studio.controlnet-plates

@@ -1,0 +1,54 @@
+version: "1.0"
+name: LangChain Research
+type: ai-agent
+summary: Full LangChain research chain with LangSmith tracing and parent-document retrieval.
+description: >
+  Research agent that pulls from a Pinecone index via parent-document
+  retrieval, streams responses through a Claude Opus chat model, and
+  reports every trace to LangSmith.
+
+platforms:
+  langchain:
+    language: python
+    provider: anthropic
+    model: claude-opus-4-7
+    entry_chain: { file: app/research.py, symbol: graph }
+    retriever:
+      kind: parent-document
+      vector_store: pinecone
+      embeddings_model: text-embedding-3-large
+      top_k: 8
+    langsmith_tracing: true
+    langsmith_project: research-agent
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:api.openai.com
+    - network:outbound:api.pinecone.io
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 30
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key.
+    secret: true
+  - name: OPENAI_API_KEY
+    description: OpenAI key (embeddings).
+    secret: true
+  - name: PINECONE_API_KEY
+    description: Pinecone key.
+    secret: true
+  - name: LANGCHAIN_API_KEY
+    description: LangSmith key.
+    secret: true
+
+deployment:
+  targets: [langchain]
+
+metadata:
+  license: proprietary
+  author: { name: Research Lab, handle: research-lab, org: Lab }
+  source: { type: git, url: https://github.com/research-lab/langchain-research }
+  id: com.research-lab.langchain-research

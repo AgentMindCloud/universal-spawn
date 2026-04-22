@@ -1,0 +1,45 @@
+version: "1.0"
+name: CrewAI Template
+type: workflow
+description: Template for a CrewAI-targeted universal-spawn manifest.
+
+platforms:
+  crewai:
+    process: sequential
+    roles:
+      - name: researcher
+        goal: Find authoritative sources on the topic.
+        backstory: Experienced archivist with a library sciences background.
+        llm: { provider: anthropic, model: claude-sonnet-4-6 }
+        tools: [web_search]
+      - name: writer
+        goal: Turn raw research into a clear brief.
+        backstory: Science journalist trained in lab-notebook style.
+        llm: { provider: anthropic, model: claude-opus-4-7 }
+    tasks:
+      - description: Research the topic provided by the user.
+        expected_output: A list of five citeable sources with short summaries.
+        role: researcher
+      - description: Write a 300-word brief using the researcher's findings.
+        expected_output: A 300-word brief with citations.
+        role: writer
+        context_from: [researcher]
+    verbose: false
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com, network:outbound:api.duckduckgo.com]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 10
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key used by both roles.
+    secret: true
+
+deployment:
+  targets: [crewai]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/crewai-template }

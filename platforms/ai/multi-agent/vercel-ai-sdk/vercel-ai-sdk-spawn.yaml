@@ -1,0 +1,37 @@
+version: "1.0"
+name: Vercel AI SDK Template
+type: ai-agent
+description: Template for a Vercel-AI-SDK-targeted universal-spawn manifest.
+
+platforms:
+  vercel-ai-sdk:
+    provider: anthropic
+    model: claude-sonnet-4-6
+    tools:
+      - name: search
+        zod_schema_ref: tools/search.schema.ts
+        handler_ref: tools/search.handler.ts
+    generate_object:
+      schema_ref: schemas/response.schema.ts
+      mode: auto
+    stream: true
+    runtime: nextjs
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 10
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [vercel-ai-sdk]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/vercel-ai-sdk-template }

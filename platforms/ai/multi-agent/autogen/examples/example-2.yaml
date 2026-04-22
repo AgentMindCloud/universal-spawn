@@ -1,0 +1,66 @@
+version: "1.0"
+name: AutoGen Coder Swarm
+type: workflow
+summary: Full swarm-pattern AutoGen team with planner, coder, tester, reviewer.
+description: >
+  Coder swarm with a planner, three coders, and a reviewer. Code
+  execution enabled for the user-proxy. Terminates on "DONE".
+
+platforms:
+  autogen:
+    pattern: swarm
+    agents:
+      - name: planner
+        type: assistant
+        llm: { provider: anthropic, model: claude-opus-4-7 }
+      - name: coder_a
+        type: assistant
+        llm: { provider: openai, model: gpt-5 }
+        tools: [python_repl]
+      - name: coder_b
+        type: assistant
+        llm: { provider: openai, model: gpt-5 }
+        tools: [python_repl]
+      - name: coder_c
+        type: assistant
+        llm: { provider: openai, model: gpt-5 }
+        tools: [python_repl]
+      - name: reviewer
+        type: assistant
+        llm: { provider: anthropic, model: claude-sonnet-4-6 }
+      - name: user
+        type: user_proxy
+    user_proxy:
+      name: user
+      human_input_mode: TERMINATE
+      code_execution: true
+    termination:
+      max_messages: 50
+      text: "DONE"
+
+safety:
+  min_permissions:
+    - network:outbound:api.openai.com
+    - network:outbound:api.anthropic.com
+    - fs:read
+    - fs:write:/tmp/autogen
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 40
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: OPENAI_API_KEY
+    description: OpenAI API key.
+    secret: true
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key.
+    secret: true
+
+deployment:
+  targets: [autogen]
+
+metadata:
+  license: proprietary
+  author: { name: Code Lab, handle: code-lab, org: Lab }
+  source: { type: git, url: https://github.com/code-lab/autogen-coder-swarm }
+  id: com.code-lab.autogen-coder-swarm

@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/./huggingface/huggingface-spawn.schema.json",
+  "title": "universal-spawn with Hugging Face platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "huggingface"
+          ],
+          "properties": {
+            "huggingface": {
+              "$ref": "#/definitions/huggingface"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "huggingface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repo_kind",
+        "visibility"
+      ],
+      "properties": {
+        "repo_kind": {
+          "type": "string",
+          "enum": [
+            "model",
+            "dataset",
+            "space"
+          ]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "public",
+            "private"
+          ]
+        },
+        "card_file": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9:.-]{0,63}$"
+          }
+        },
+        "space_sdk": {
+          "type": "string",
+          "enum": [
+            "docker",
+            "gradio",
+            "streamlit",
+            "static"
+          ]
+        },
+        "hardware": {
+          "type": "string",
+          "enum": [
+            "cpu-basic",
+            "cpu-upgrade",
+            "t4-small",
+            "t4-medium",
+            "a10g-small",
+            "a10g-large",
+            "a100-large",
+            "zero-gpu"
+          ]
+        },
+        "inference": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pipeline_tag": {
+              "type": "string"
+            },
+            "library_name": {
+              "type": "string",
+              "enum": [
+                "transformers",
+                "diffusers",
+                "sentence-transformers",
+                "timm",
+                "other"
+              ]
+            },
+            "endpoints": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "accelerator": {
+                    "type": "string",
+                    "enum": [
+                      "cpu",
+                      "gpu"
+                    ]
+                  },
+                  "instance_type": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "base_model": {
+          "type": "string",
+          "pattern": "^[^/]+/[^/]+$"
+        }
+      }
+    }
+  }
+}

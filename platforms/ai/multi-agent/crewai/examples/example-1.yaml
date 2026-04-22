@@ -1,0 +1,42 @@
+version: "1.0"
+name: Crew Triage
+type: workflow
+summary: Minimal two-role CrewAI crew for support-ticket triage.
+description: Router classifies tickets; responder drafts a reply. Sequential.
+
+platforms:
+  crewai:
+    process: sequential
+    roles:
+      - name: router
+        goal: Classify the incoming ticket into one of three priority buckets.
+        llm: { provider: anthropic, model: claude-haiku-4-5-20251001 }
+      - name: responder
+        goal: Draft an empathetic reply matching the priority.
+        llm: { provider: anthropic, model: claude-sonnet-4-6 }
+    tasks:
+      - description: Classify the ticket.
+        expected_output: priority (high/medium/low).
+        role: router
+      - description: Draft a reply.
+        expected_output: Two-paragraph empathetic reply.
+        role: responder
+        context_from: [router]
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key.
+    secret: true
+
+deployment:
+  targets: [crewai]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Triage Co., handle: triage-co }
+  source: { type: git, url: https://github.com/triage-co/crew-triage }
+  id: com.triage-co.crew-triage

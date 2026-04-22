@@ -1,0 +1,29 @@
+version: "1.0"
+name: Fireworks Chat
+type: ai-agent
+summary: Minimal Llama-3.3-70B chat on Fireworks.
+description: Single-shot chat on Fireworks's Llama-3.3-70B instruct model.
+
+platforms:
+  fireworks:
+    model: accounts/fireworks/models/llama-v3p3-70b-instruct
+    response_format: text
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.fireworks.ai]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: FIREWORKS_API_KEY
+    description: Fireworks API key.
+    secret: true
+
+deployment:
+  targets: [fireworks]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Chat Co., handle: chat-co }
+  source: { type: git, url: https://github.com/chat-co/fireworks-chat }
+  id: com.chat-co.fireworks-chat

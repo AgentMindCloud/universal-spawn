@@ -1,0 +1,56 @@
+version: "1.0"
+name: Plate Atelier
+type: workflow
+summary: Creative CrewAI atelier crew generating and critiquing plates.
+description: >
+  Three-role atelier: sketcher drafts a Residual Frequencies plate
+  concept, painter renders it in words, critic scores it against the
+  design rules. Parallel process — sketcher and critic run
+  concurrently after painter.
+
+platforms:
+  crewai:
+    process: parallel
+    roles:
+      - name: sketcher
+        goal: Draft a Residual Frequencies plate concept in 3 sentences.
+        llm: { provider: mistral, model: mistral-medium-latest }
+      - name: painter
+        goal: Expand the concept into a full lab-notebook caption.
+        llm: { provider: mistral, model: mistral-large-latest }
+      - name: critic
+        goal: Score the caption against the visual-system rules.
+        llm: { provider: mistral, model: mistral-medium-latest }
+    tasks:
+      - description: Sketch a plate concept.
+        expected_output: 3-sentence concept.
+        role: sketcher
+      - description: Write the caption.
+        expected_output: Caption in lab-notebook voice.
+        role: painter
+        context_from: [sketcher]
+      - description: Score the caption.
+        expected_output: 3-criterion score (frame, ticks, accent).
+        role: critic
+        context_from: [painter]
+
+safety:
+  min_permissions: [network:outbound:api.mistral.ai]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: MISTRAL_API_KEY
+    description: Mistral API key.
+    secret: true
+
+deployment:
+  targets: [crewai]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/plate-atelier }
+  categories: [ai, graphics, writing]
+  id: com.plate-studio.plate-atelier

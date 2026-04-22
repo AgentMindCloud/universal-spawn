@@ -1,0 +1,32 @@
+version: "1.0"
+name: Perplexity Fact Check
+type: ai-skill
+summary: Minimal Sonar-pro fact-check skill.
+description: >
+  Takes a claim, returns true/false/unclear with citations.
+  Domain filter excludes two noisy sources.
+
+platforms:
+  perplexity:
+    model: sonar-pro
+    search_domain_filter: ["-reddit.com", "-twitter.com"]
+    return_citations: true
+    temperature: 0
+
+safety:
+  min_permissions: [network:outbound:api.perplexity.ai]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: PPLX_API_KEY
+    description: Perplexity API key.
+    secret: true
+
+deployment:
+  targets: [perplexity]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Fact Co., handle: fact-co }
+  source: { type: git, url: https://github.com/fact-co/pplx-fact-check }
+  id: com.fact-co.pplx-fact-check

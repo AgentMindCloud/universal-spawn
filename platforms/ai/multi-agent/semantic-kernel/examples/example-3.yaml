@@ -1,0 +1,37 @@
+version: "1.0"
+name: SK Plate Judge
+type: ai-skill
+summary: Creative Semantic Kernel skill that judges plate submissions offline.
+description: >
+  Java kernel wrapping a local Ollama connector. One skill (Judge)
+  applies the Residual Frequencies rubric to a plate image + caption.
+  Offline, no network beyond local Ollama.
+
+platforms:
+  semantic-kernel:
+    language: java
+    connector: ollama
+    model: llama3.3
+    endpoint_url: http://localhost:11434
+    skills:
+      - { name: Judge, kind: prompt, path: skills/judge }
+    planner: none
+    memory: { store: volatile }
+
+safety:
+  min_permissions: [network:outbound:localhost]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [semantic-kernel]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/sk-plate-judge }
+  categories: [ai, graphics]
+  id: com.plate-studio.sk-plate-judge

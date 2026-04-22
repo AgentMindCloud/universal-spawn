@@ -1,0 +1,43 @@
+version: "1.0"
+name: Parchment Router
+type: workflow
+summary: Creative LiteLLM router switching between three models by plate archetype.
+description: >
+  One route per plate archetype (A..F). Each archetype prefers a
+  different model by creative fit — Opus for F (Module Constellation),
+  Sonnet for A, Haiku for D. Demonstrates custom routing by user
+  metadata.
+
+platforms:
+  litellm:
+    mode: library
+    model_list:
+      - { model_name: f-archetype, litellm_params: { model: anthropic/claude-opus-4-7, api_key_env: ANTHROPIC_API_KEY } }
+      - { model_name: a-archetype, litellm_params: { model: anthropic/claude-sonnet-4-6, api_key_env: ANTHROPIC_API_KEY } }
+      - { model_name: d-archetype, litellm_params: { model: anthropic/claude-haiku-4-5-20251001, api_key_env: ANTHROPIC_API_KEY } }
+    router:
+      routing_strategy: usage-based-routing
+      allowed_fails: 1
+    cache: { type: memory, ttl_seconds: 600 }
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  cost_limit_usd_daily: 10
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [litellm]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/parchment-router }
+  categories: [ai, graphics]
+  id: com.plate-studio.parchment-router

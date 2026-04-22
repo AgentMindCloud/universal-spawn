@@ -1,0 +1,31 @@
+version: "1.0"
+name: Replicate SDXL
+type: ai-model
+summary: Minimal SDXL image-generation manifest on Replicate.
+description: Pinned SDXL model for the Residual Frequencies plate pipeline.
+
+platforms:
+  replicate:
+    model: stability-ai/sdxl
+    version: "7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc"
+    input_schema_ref: schemas/sdxl-input.json
+    hardware: a40
+
+safety:
+  min_permissions: [network:outbound:api.replicate.com]
+  cost_limit_usd_daily: 3
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: REPLICATE_API_TOKEN
+    description: Replicate API token.
+    secret: true
+
+deployment:
+  targets: [replicate]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/replicate-sdxl }
+  id: com.plate-studio.replicate-sdxl

@@ -1,0 +1,56 @@
+version: "1.0"
+name: LiteLLM Template
+type: workflow
+description: Template for a LiteLLM-targeted universal-spawn manifest.
+
+platforms:
+  litellm:
+    mode: proxy
+    model_list:
+      - model_name: default
+        litellm_params:
+          model: anthropic/claude-sonnet-4-6
+          api_key_env: ANTHROPIC_API_KEY
+          rpm: 60
+      - model_name: fast
+        litellm_params:
+          model: openai/gpt-5-nano
+          api_key_env: OPENAI_API_KEY
+    fallbacks:
+      default: [fast]
+    router:
+      routing_strategy: simple-shuffle
+      allowed_fails: 3
+    cache:
+      type: redis
+      redis_url_env: LITELLM_REDIS_URL
+      ttl_seconds: 3600
+    budget:
+      max_budget_usd: 20
+      reset_period: daily
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:api.openai.com
+  rate_limit_qps: 10
+  cost_limit_usd_daily: 20
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+  - name: OPENAI_API_KEY
+    description: OpenAI key.
+    secret: true
+  - name: LITELLM_REDIS_URL
+    description: Redis URL for response cache.
+    secret: true
+
+deployment:
+  targets: [litellm]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/litellm-template }

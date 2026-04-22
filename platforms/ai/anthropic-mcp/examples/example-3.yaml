@@ -1,0 +1,41 @@
+version: "1.0"
+name: MCP Plate Archive
+type: extension
+summary: Creative MCP server exposing the Residual Frequencies plate archive.
+description: >
+  Serves the parchment plate archive over MCP. Each plate is a
+  resource with URI `plate://A..F/{id}`; two prompts help drafting
+  captions in lab-notebook voice. Any host.
+
+platforms:
+  anthropic-mcp:
+    transport: stdio
+    command: "python"
+    args: ["-m", "plate_archive_mcp"]
+    resources:
+      - uri_template: "plate://{archetype}/{id}"
+        description: A single Residual Frequencies plate.
+    prompts:
+      - name: caption_plate
+        description: Caption a plate in lab-notebook voice.
+      - name: critique_plate
+        description: Critique a plate against the visual-system rules.
+    hosts: [any]
+
+safety:
+  min_permissions: [fs:read]
+  safe_for_auto_spawn: true
+
+env_vars_required: []
+
+deployment:
+  targets: [mcp]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/plate-archive-mcp }
+  categories: [graphics, writing]
+  id: com.plate-studio.plate-archive-mcp

@@ -1,0 +1,39 @@
+version: "1.0"
+name: LangChain Plate Tutor
+type: ai-skill
+summary: Creative LangChain chain in TypeScript teaching parchment palette theory.
+description: >
+  TypeScript LangChain chain. Takes a design question, optionally
+  pulls from a web retriever, returns a three-paragraph lesson in
+  lab-notebook voice. Uses Cohere Command-R.
+
+platforms:
+  langchain:
+    language: typescript
+    provider: cohere
+    model: command-r-08-2024
+    entry_chain: { file: src/tutor.ts, symbol: tutorChain }
+    retriever:
+      kind: web
+      top_k: 3
+
+safety:
+  min_permissions: [network:outbound:api.cohere.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: COHERE_API_KEY
+    description: Cohere API key.
+    secret: true
+
+deployment:
+  targets: [langchain]
+
+visuals: { palette: parchment }
+
+metadata:
+  license: CC-BY-4.0
+  author: { name: Plate Studio, handle: plate-studio }
+  source: { type: git, url: https://github.com/plate-studio/langchain-plate-tutor }
+  categories: [ai, education, graphics]
+  id: com.plate-studio.langchain-plate-tutor

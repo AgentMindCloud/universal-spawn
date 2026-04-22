@@ -1,0 +1,55 @@
+version: "1.0"
+name: MCP GitHub
+type: extension
+summary: Full GitHub MCP server with repos, PRs, issues, and review tools.
+description: >
+  Docker-hosted HTTP MCP server that advertises GitHub repository,
+  PR, issue, and review as resources, plus eight tools for mutating
+  operations (open PR, add comment, merge, close issue).
+
+platforms:
+  anthropic-mcp:
+    transport: http
+    url: "http://localhost:7811/mcp"
+    resources:
+      - uri_template: "github://{owner}/{repo}"
+        description: GitHub repository.
+      - uri_template: "github://{owner}/{repo}/pull/{n}"
+        description: GitHub pull request.
+      - uri_template: "github://{owner}/{repo}/issue/{n}"
+        description: GitHub issue.
+    tools:
+      - name: open_pr
+        description: Open a pull request.
+        input_schema_ref: schemas/open_pr.json
+      - name: merge_pr
+        description: Merge a pull request.
+        input_schema_ref: schemas/merge_pr.json
+      - name: add_comment
+        description: Add a comment to a PR or issue.
+        input_schema_ref: schemas/add_comment.json
+      - name: close_issue
+        description: Close an issue.
+        input_schema_ref: schemas/close_issue.json
+    hosts: [claude-desktop, claude-code, cursor, windsurf, zed]
+
+safety:
+  min_permissions:
+    - network:outbound:api.github.com
+    - network:inbound
+  cost_limit_usd_daily: 0
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: GITHUB_TOKEN
+    description: GitHub token with repo scope.
+    secret: true
+
+deployment:
+  targets: [mcp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: MCP Tooling, handle: mcp-tooling }
+  source: { type: git, url: https://github.com/mcp-tooling/mcp-github }
+  id: com.mcp-tooling.github

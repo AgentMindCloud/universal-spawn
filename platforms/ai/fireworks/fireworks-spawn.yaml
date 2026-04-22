@@ -1,0 +1,31 @@
+version: "1.0"
+name: Fireworks Template
+type: ai-agent
+description: Template for a Fireworks-targeted universal-spawn manifest.
+
+platforms:
+  fireworks:
+    model: accounts/fireworks/models/llama-v3p3-70b-instruct
+    tools:
+      - name: do_work
+        function_ref: tools/do_work.json
+        strict: true
+    response_format: text
+    temperature: 0.2
+
+safety:
+  min_permissions: [network:outbound:api.fireworks.ai]
+  rate_limit_qps: 5
+
+env_vars_required:
+  - name: FIREWORKS_API_KEY
+    description: Fireworks API key.
+    secret: true
+
+deployment:
+  targets: [fireworks]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/fireworks-template }

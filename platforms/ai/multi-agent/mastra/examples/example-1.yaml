@@ -1,0 +1,30 @@
+version: "1.0"
+name: Mastra Hello
+type: ai-agent
+summary: Minimal Mastra agent on Anthropic Sonnet.
+description: One agent, no workflow, in-memory state.
+
+platforms:
+  mastra:
+    agents:
+      - name: assistant
+        model: anthropic/claude-sonnet-4-6
+    deploy: { runtime: node }
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+
+deployment:
+  targets: [mastra]
+
+metadata:
+  license: MIT
+  author: { name: Hello Co., handle: hello-co }
+  source: { type: git, url: https://github.com/hello-co/mastra-hello }
+  id: com.hello-co.mastra-hello

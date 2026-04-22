@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://universal-spawn.dev/platforms/ai/./perplexity/perplexity-spawn.schema.json",
+  "title": "universal-spawn with Perplexity platform extension",
+  "allOf": [
+    {
+      "$ref": "https://universal-spawn.dev/spec/v1.0/universal-spawn.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "platforms"
+      ],
+      "properties": {
+        "platforms": {
+          "type": "object",
+          "required": [
+            "perplexity"
+          ],
+          "properties": {
+            "perplexity": {
+              "$ref": "#/definitions/perplexity"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "perplexity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": [
+            "sonar",
+            "sonar-pro",
+            "sonar-reasoning",
+            "sonar-reasoning-pro",
+            "sonar-deep-research"
+          ]
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "function_ref"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_-]{0,63}$"
+              },
+              "function_ref": {
+                "type": "string",
+                "description": "Relative path to the tool definition JSON."
+              },
+              "strict": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        },
+        "search_domain_filter": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "type": "string"
+          }
+        },
+        "search_recency_filter": {
+          "type": "string",
+          "enum": [
+            "hour",
+            "day",
+            "week",
+            "month"
+          ]
+        },
+        "return_citations": {
+          "type": "boolean",
+          "default": true
+        },
+        "return_images": {
+          "type": "boolean",
+          "default": false
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "system_prompt_file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

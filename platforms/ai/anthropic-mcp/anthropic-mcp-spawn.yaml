@@ -1,0 +1,29 @@
+version: "1.0"
+name: MCP Template
+type: extension
+description: Template for an MCP server universal-spawn manifest.
+
+platforms:
+  anthropic-mcp:
+    transport: stdio
+    command: "node"
+    args: ["dist/index.js"]
+    tools:
+      - name: example_tool
+        description: Example tool.
+        input_schema_ref: schemas/example_tool.json
+    hosts: [claude-desktop, claude-code, cursor, windsurf]
+
+safety:
+  min_permissions: [fs:read, network:outbound]
+  safe_for_auto_spawn: false
+
+env_vars_required: []
+
+deployment:
+  targets: [mcp]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/mcp-template }

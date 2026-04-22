@@ -1,0 +1,43 @@
+version: "1.0"
+name: Mastra Template
+type: ai-agent
+description: Template for a Mastra-targeted universal-spawn manifest.
+
+platforms:
+  mastra:
+    agents:
+      - name: assistant
+        model: anthropic/claude-sonnet-4-6
+        instructions_file: agents/assistant.md
+        tools: [search, math]
+        memory: true
+    workflows:
+      - name: triage
+        entry: classify
+        schema_ref: workflows/triage.state.ts
+    memory:
+      store: libsql
+      url_env: MASTRA_LIBSQL_URL
+    deploy:
+      runtime: nextjs
+
+safety:
+  min_permissions: [network:outbound:api.anthropic.com]
+  rate_limit_qps: 3
+  cost_limit_usd_daily: 10
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+  - name: MASTRA_LIBSQL_URL
+    description: libSQL URL.
+    secret: true
+
+deployment:
+  targets: [mastra]
+
+metadata:
+  license: MIT
+  author: { name: Your Name, handle: yourhandle }
+  source: { type: git, url: https://github.com/yourhandle/mastra-template }

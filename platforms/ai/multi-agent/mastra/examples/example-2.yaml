@@ -1,0 +1,66 @@
+version: "1.0"
+name: Mastra Booking Flow
+type: workflow
+summary: Full Mastra booking flow with three agents, two workflows, Postgres memory, Cloudflare deploy.
+description: >
+  Booking flow for a gym. Three agents (triage, search, confirm)
+  and two workflows (book, cancel). Postgres memory, Cloudflare Edge
+  runtime, OTEL telemetry to Axiom.
+
+platforms:
+  mastra:
+    agents:
+      - name: triage
+        model: anthropic/claude-haiku-4-5-20251001
+        instructions_file: agents/triage.md
+      - name: search
+        model: anthropic/claude-sonnet-4-6
+        instructions_file: agents/search.md
+        tools: [find_slot]
+      - name: confirm
+        model: anthropic/claude-sonnet-4-6
+        instructions_file: agents/confirm.md
+        tools: [reserve_slot]
+        memory: true
+    workflows:
+      - name: book
+        entry: triage
+        schema_ref: workflows/book.state.ts
+      - name: cancel
+        entry: lookup
+        schema_ref: workflows/cancel.state.ts
+    memory:
+      store: pg
+      url_env: MASTRA_PG_URL
+    telemetry:
+      otlp_endpoint_env: OTEL_EXPORTER_OTLP_ENDPOINT
+    deploy:
+      runtime: cloudflare
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:db.internal.gym.example
+  rate_limit_qps: 10
+  cost_limit_usd_daily: 25
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic key.
+    secret: true
+  - name: MASTRA_PG_URL
+    description: Postgres URL.
+    secret: true
+  - name: OTEL_EXPORTER_OTLP_ENDPOINT
+    description: OTEL endpoint.
+    secret: true
+
+deployment:
+  targets: [mastra, cloudflare]
+
+metadata:
+  license: proprietary
+  author: { name: Gym Co., handle: gym-co, org: Gym }
+  source: { type: git, url: https://github.com/gym-co/mastra-booking }
+  id: com.gym-co.mastra-booking

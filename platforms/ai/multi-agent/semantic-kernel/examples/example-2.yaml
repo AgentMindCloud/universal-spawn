@@ -1,0 +1,53 @@
+version: "1.0"
+name: SK Enterprise Agent
+type: ai-agent
+summary: Full Semantic Kernel agent on Azure OpenAI with Cognitive Search memory.
+description: >
+  C# kernel on Azure OpenAI. Four skills (Search, Summarize, Email,
+  Calendar), Cognitive Search memory, handlebars planner. Production-
+  shaped manifest.
+
+platforms:
+  semantic-kernel:
+    language: csharp
+    connector: azure-openai
+    model: gpt-5
+    endpoint_url: https://acme-openai.openai.azure.com
+    skills:
+      - { name: Search, kind: native, path: Skills/Search }
+      - { name: Summarize, kind: prompt, path: Skills/Summarize }
+      - { name: Email, kind: openapi, path: openapi/email.yaml }
+      - { name: Calendar, kind: openapi, path: openapi/calendar.yaml }
+    planner: handlebars
+    memory: { store: azure-cognitive-search }
+
+safety:
+  min_permissions:
+    - network:outbound:acme-openai.openai.azure.com
+    - network:outbound:acme-search.search.windows.net
+    - network:outbound:graph.microsoft.com
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 40
+  safe_for_auto_spawn: false
+  data_residency: [us, eu]
+
+env_vars_required:
+  - name: AZURE_OPENAI_ENDPOINT
+    description: Azure OpenAI endpoint URL.
+  - name: AZURE_OPENAI_API_KEY
+    description: Azure OpenAI key.
+    secret: true
+  - name: AZURE_SEARCH_ENDPOINT
+    description: Cognitive Search endpoint.
+  - name: AZURE_SEARCH_KEY
+    description: Cognitive Search key.
+    secret: true
+
+deployment:
+  targets: [semantic-kernel]
+
+metadata:
+  license: proprietary
+  author: { name: Acme IT, handle: acme-it, org: Acme }
+  source: { type: git, url: https://github.com/acme-it/sk-enterprise }
+  id: com.acme-it.sk-enterprise

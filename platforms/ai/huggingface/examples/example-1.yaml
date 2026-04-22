@@ -1,0 +1,34 @@
+version: "1.0"
+name: Plate Classifier
+type: ai-model
+summary: Minimal ViT-base finetune for parchment plate classification on HF.
+description: Public HF model repo with one inference-API endpoint.
+
+platforms:
+  huggingface:
+    repo_kind: model
+    visibility: public
+    card_file: README.md
+    tags: ["image-classification", "vit", "parchment"]
+    base_model: google/vit-base-patch16-224
+    inference:
+      pipeline_tag: image-classification
+      library_name: transformers
+
+safety:
+  min_permissions: [network:outbound:huggingface.co]
+  safe_for_auto_spawn: true
+
+env_vars_required:
+  - name: HF_TOKEN
+    description: Hugging Face access token.
+    secret: true
+
+deployment:
+  targets: [huggingface]
+
+metadata:
+  license: Apache-2.0
+  author: { name: Classifier Team, handle: classifier-team }
+  source: { type: git, url: https://github.com/classifier-team/plate-classifier }
+  id: com.classifier-team.plate-classifier

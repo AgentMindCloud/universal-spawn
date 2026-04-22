@@ -1,0 +1,59 @@
+version: "1.0"
+name: Crew Research Lab
+type: workflow
+summary: Full CrewAI research lab with four roles and hierarchical process.
+description: >
+  Research lab: PI delegates to researcher, critic, and editor.
+  Hierarchical process — the PI agent decides ordering. Verbose logs
+  for LangSmith-style inspection.
+
+platforms:
+  crewai:
+    process: hierarchical
+    roles:
+      - name: pi
+        goal: Direct the research lab toward producing a peer-reviewable brief.
+        backstory: Senior investigator with 20 years in the field.
+        llm: { provider: anthropic, model: claude-opus-4-7 }
+        allow_delegation: true
+      - name: researcher
+        goal: Surface citeable primary sources.
+        llm: { provider: openai, model: gpt-5 }
+        tools: [web_search, arxiv_search]
+      - name: critic
+        goal: Identify weak claims and missing counter-evidence.
+        llm: { provider: anthropic, model: claude-sonnet-4-6 }
+      - name: editor
+        goal: Enforce lab-notebook voice and citation formatting.
+        llm: { provider: anthropic, model: claude-sonnet-4-6 }
+    tasks:
+      - description: Produce a 500-word peer-reviewable brief on the topic.
+        expected_output: A 500-word brief with >=5 citations, reviewed by critic, edited by editor.
+        role: pi
+    verbose: true
+
+safety:
+  min_permissions:
+    - network:outbound:api.anthropic.com
+    - network:outbound:api.openai.com
+    - network:outbound:export.arxiv.org
+  rate_limit_qps: 5
+  cost_limit_usd_daily: 40
+  safe_for_auto_spawn: false
+
+env_vars_required:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key.
+    secret: true
+  - name: OPENAI_API_KEY
+    description: OpenAI API key.
+    secret: true
+
+deployment:
+  targets: [crewai]
+
+metadata:
+  license: proprietary
+  author: { name: Research Lab, handle: research-lab, org: Lab }
+  source: { type: git, url: https://github.com/research-lab/crew-lab }
+  id: com.research-lab.crew-lab
