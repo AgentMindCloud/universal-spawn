@@ -27,7 +27,7 @@
     "ajv-cli": "^5.0.0",
     "ajv-formats": "^3.0.1",
     "cspell": "^8.16.1",
-    "markdownlint-cli2": "^0.14.0",
+    "markdownlint-cli2": "^0.22.1",
     "prettier": "^3.4.2",
     "yaml-lint": "^1.7.0"
   },
