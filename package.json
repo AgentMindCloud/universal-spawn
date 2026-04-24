@@ -26,7 +26,7 @@
   "devDependencies": {
     "ajv-cli": "^5.0.0",
     "ajv-formats": "^3.0.1",
-    "cspell": "^8.16.1",
+    "cspell": "^10.0.0",
     "markdownlint-cli2": "^0.14.0",
     "prettier": "^3.4.2",
     "yaml-lint": "^1.7.0"
