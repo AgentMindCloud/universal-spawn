@@ -53,10 +53,19 @@ def main() -> int:
     core_v = Draft202012Validator(core_schema)
 
     total = 0
+    skipped = 0
     failed = 0
     for path in sorted(iter_manifests()):
-        total += 1
         doc = load_yaml(path)
+
+        # Skip files targeting the v1.0 (draft-07) track — they declare
+        # `version:` and are validated by the Node/ajv job. The legacy
+        # validator owns only v1.0.0 manifests, which declare
+        # `spawn_version:`.
+        if isinstance(doc, dict) and "spawn_version" not in doc:
+            skipped += 1
+            continue
+        total += 1
 
         core_errs = sorted(core_v.iter_errors(doc), key=lambda e: list(e.path))
 
@@ -81,7 +90,8 @@ def main() -> int:
         else:
             print(f"ok   {rel}")
 
-    print(f"\n{total} file(s) checked, {failed} failed.")
+    print(f"\n{total} file(s) checked, {failed} failed, "
+          f"{skipped} skipped (v1.0 draft-07 track).")
     return 0 if failed == 0 else 1
 
 
