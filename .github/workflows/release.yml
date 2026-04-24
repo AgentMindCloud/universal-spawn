@@ -69,7 +69,7 @@ jobs:
           [ -s dist/release/notes.md ] || echo "See CHANGELOG.md" > dist/release/notes.md
 
       - name: Publish GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.tag.outputs.tag }}
           name: "universal-spawn ${{ steps.tag.outputs.tag }}"
