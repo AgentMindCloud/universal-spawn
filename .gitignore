@@ -66,6 +66,7 @@ coverage/
 .turbo/
 .parcel-cache/
 tmp/
+.tmp/
 
 # Env / secrets
 .env
